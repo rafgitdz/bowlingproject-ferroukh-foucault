@@ -19,6 +19,11 @@ public class Duel implements Observer {
 		return (player1.getScore() > player2.getScore()) ? player1 : player2;
 	}
 
+	
+	/**
+	 * update is called whenever one of the players has finished his turn,
+	 * and tells the other player that he can play
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		player1.setItsMyTurn((Player) o == player2);

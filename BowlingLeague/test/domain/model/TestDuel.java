@@ -39,4 +39,5 @@ public class TestDuel {
 		p1.roll(4);
 		p1.roll(7);
 	}
+	
 }
