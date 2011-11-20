@@ -1,3 +1,4 @@
+
 package domain.model.game;
 
 public class FrameException extends RuntimeException {

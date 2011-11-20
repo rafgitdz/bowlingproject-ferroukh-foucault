@@ -1,12 +1,19 @@
 package domain.model.game;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public abstract class AbstractFrame implements Frame {
 
 	private static final long serialVersionUID = 8033550006877254984L;
 	protected static final int TOTAL_PINS = 10;
 	protected static final String ERROR_TOO_MUCH_PINS = "Impossible to knock down more than 10 pins";
 	
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected int id;
 	protected int roll1, roll2, roll3;
 	protected boolean roll1Played, roll2Played, roll3Played;
@@ -63,7 +70,3 @@ public abstract class AbstractFrame implements Frame {
 	}
 
 }
-
-
-
-
