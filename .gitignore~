@@ -1,0 +1,4 @@
+jboss*/
+*.class
+.project
+.metadata/
