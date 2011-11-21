@@ -8,7 +8,7 @@ import java.util.Observer;
 public class Duel extends Observable implements Observer, Serializable {
 
 	private static final long serialVersionUID = -3615220487693083734L;
-	private static final String GAME_NOT_OVER = "Game doesn't over for ";
+	private static final String GAME_NOT_OVER = "Game is not over for ";
 
 
 	private int id;

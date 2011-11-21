@@ -1,12 +1,14 @@
 package domain.model.team;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import domain.model.duel.Player;
 
-public class Team {
-
+public class Team implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	public static final int MAX_TEAM_SIZE = 5;
 	private static final String PLAYERS_NAMES_SEPARATOR = ", ";
 	private static final String ERROR_ALREADY_IN_TEAM = "is already in the team "  ;

@@ -6,6 +6,7 @@ import java.util.Observer;
 
 import domain.model.game.Game;
 import domain.model.game.GameException;
+import domain.model.game.GameFactory;
 
 public class Player extends Observable implements Observer, Serializable {
 
@@ -20,9 +21,10 @@ public class Player extends Observable implements Observer, Serializable {
 	private boolean itsMyTurn;
 
 	public Player(String name) {
-
+		GameFactory factory = new GameFactory();
+		
 		this.name = name;
-		currentGame = new Game();
+		currentGame = factory.newGame();
 		currentGame.addObserver(this);
 		itsMyTurn = false;
 	}

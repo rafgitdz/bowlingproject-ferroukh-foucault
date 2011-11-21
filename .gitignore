@@ -3,3 +3,6 @@ jboss*/
 .project
 .metadata/
 build/
+.classpath
+.settings/
+MANIFEST.MF

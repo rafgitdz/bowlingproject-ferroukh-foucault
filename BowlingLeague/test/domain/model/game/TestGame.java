@@ -16,7 +16,8 @@ public class TestGame {
 	
 	@Before
 	public void setUp() {
-		game = new Game();
+		GameFactory fct = new GameFactory();
+		game = fct.newGame();
 	}
 
 	@Test

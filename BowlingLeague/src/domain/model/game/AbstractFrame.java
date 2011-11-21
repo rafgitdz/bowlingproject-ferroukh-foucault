@@ -18,7 +18,7 @@ public abstract class AbstractFrame implements Frame {
 	protected int roll1, roll2, roll3;
 	protected boolean roll1Played, roll2Played, roll3Played;
 	
-	public AbstractFrame() {
+	AbstractFrame() {
 		roll1 = 0;
 		roll2 = 0;
 		roll3 = 0;
