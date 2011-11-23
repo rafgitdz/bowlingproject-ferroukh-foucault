@@ -25,14 +25,12 @@ public class Player extends Observable implements Observer, Serializable {
 	private Game currentGame;
 	private boolean itsMyTurn;
 
-	public Player() {
+	protected Player() {
 	}
 
-	public Player(String name) {
+	Player(String name) {
 
 		this.name = name;
-		GameFactory fct = new GameFactory();
-		currentGame = fct.newGame();
 		currentGame.addObserver(this);
 		itsMyTurn = false;
 	}
