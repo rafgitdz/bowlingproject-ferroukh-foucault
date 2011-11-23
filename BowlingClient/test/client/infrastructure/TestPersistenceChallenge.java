@@ -1,10 +1,9 @@
-package client.challenge;
+package client.infrastructure;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
-import javax.ejb.EJBException;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -13,8 +12,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import service.challenge.ChallengeServiceRemote;
+import domain.model.challenge.Challenge;
 
-public class TestChallengeClient {
+public class TestPersistenceChallenge {
 
 	private ChallengeServiceRemote challengeRemote;
 	private ArrayList<String> listTeam1;
@@ -34,10 +34,13 @@ public class TestChallengeClient {
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Test
+	public void testSaveChallenge() {
 
 		listTeam1 = new ArrayList<String>(5);
 		listTeam2 = new ArrayList<String>(5);
-
 		listTeam1.add("Jack");
 		listTeam2.add("Marc");
 		listTeam1.add("Cathy");
@@ -48,26 +51,21 @@ public class TestChallengeClient {
 		listTeam2.add("Faby");
 		listTeam1.add("Billy");
 		listTeam2.add("Meriyam");
-
 		nameTeam1 = "Cotagers";
 		nameTeam2 = "Maggpies";
-
-		challengeRemote.createChallenge(nameTeam1, nameTeam2, listTeam1,
-				listTeam2);
+		
+		challengeRemote.createChallenge(nameTeam1, nameTeam2, listTeam1, listTeam2);
+		Challenge challenge = challengeRemote.saveChallenge();
+		
+		int expected = 1;
+		assertEquals(expected, challenge.getId());
 	}
-
+	
 	@Test
-	public void testChallengeFirstDuel() {
-
-		play("Jack", "Marc", 3, 5, 8, 1);
-
-		String expected = "Marc";
-		assertEquals(challengeRemote.getWinnerOfDuel(0), expected);
-	}
-
-	@Test
-	public void testChallenge() {
-
+	public void testLoadChallenge() {
+		
+		challengeRemote.loadChallenge(1);
+		
 		play("Jack", "Marc", 3, 5, 8, 1);
 		play("Cathy", "Mick", 3, 5, 8, 1);
 		play("Mona", "Mary", 3, 5, 8, 1);
@@ -77,38 +75,7 @@ public class TestChallengeClient {
 		String expected = nameTeam2;
 		assertEquals(challengeRemote.getWinnerChallenge(), expected);
 	}
-
-	@Test(expected = EJBException.class)
-	public void testReplayGamePlayer() {
-
-		play("Jack", "Marc", 3, 5, 8, 1);
-		play("Jack", "Mick", 3, 5, 8, 1);
-		play("Mona", "Mary", 3, 5, 8, 1);
-		play("Franck", "Faby", 3, 5, 8, 1);
-		play("Billy", "Meriyam", 3, 5, 8, 1);
-	}
-
-	@Test(expected = EJBException.class)
-	public void testUnknownPlayer() {
-
-		play("Jack", "FERNANDO", 3, 5, 8, 1); // Unknown FERNANDO!
-		play("Cathy", "Mick", 3, 5, 8, 1);
-		play("Mona", "Mary", 3, 5, 8, 1);
-		play("Franck", "Faby", 3, 5, 8, 1);
-		play("Billy", "Meriyam", 3, 5, 8, 1);
-	}
-
-	@Test(expected = EJBException.class)
-	public void testRollAfterOverChallenge() {
-
-		play("Jack", "Marc", 3, 5, 8, 1);
-		play("Cathy", "Mick", 3, 5, 8, 1);
-		play("Mona", "Mary", 3, 5, 8, 1);
-		play("Franck", "Faby", 3, 5, 8, 1);
-		play("Billy", "Meriyam", 3, 5, 8, 1);
-		play("Jack", "Mick", 3, 5, 8, 1); // Can't replay ;)
-	}
-
+	
 	private void play(String name1, String name2, int roll1, int roll2,
 			int roll3, int roll4) {
 

@@ -2,8 +2,8 @@ package domain.model.league;
 
 import java.util.List;
 
-import domain.model.team.Challenge;
-import domain.model.team.Team;
+import domain.model.challenge.Challenge;
+import domain.model.challenge.Team;
 
 public class League {
 
@@ -16,7 +16,7 @@ public class League {
 	private int currentRound;
 
 	public League(String name, List<Team> teams) {
-		
+
 		this.name = name;
 		if (teams.size() != LEAGUE_SIZE)
 			throw new LeagueException(ERROR_TEAM_NUMBER);
@@ -27,22 +27,18 @@ public class League {
 	}
 
 	public String getName() {
-		
 		return this.name;
 	}
 
 	public List<Team> getTeams() {
-		
 		return teams;
 	}
 
 	public Schedule getSchedule() {
-		
 		return schedule;
 	}
 
 	public int getCurrentRound() {
-		
 		return currentRound;
 	}
 
@@ -60,14 +56,13 @@ public class League {
 	}
 
 	private void startRound(int round) {
-		
 		for (Challenge c : getCurrentRoundChallenges()) {
 			c.setDuels();
 		}
 	}
 
 	public Challenge getCurrentChallenge(Team team) {
-		
+	
 		for (Challenge c : getCurrentRoundChallenges())
 			if (c.getFirstTeam().getName().equals(team.getName())
 					|| c.getSecondTeam().getName().equals(team.getName()))
@@ -75,14 +70,13 @@ public class League {
 
 		return null;
 	}
-	
+
 	public List<Challenge> getCurrentRoundChallenges() {
-		
 		return schedule.getRoundSchedule(getCurrentRound());
 	}
 
 	public int getScore(Team t) {
-		
+	
 		int score = 0;
 		for (Challenge c : getSchedule(t)) {
 			if (!c.isOver())
@@ -94,8 +88,6 @@ public class League {
 	}
 
 	public List<Challenge> getSchedule(Team t) {
-		
 		return getSchedule().getTeamSchedule(t.getName());
 	}
-
 }

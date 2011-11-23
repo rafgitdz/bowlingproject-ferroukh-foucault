@@ -3,15 +3,27 @@ package domain.model.game;
 import java.io.Serializable;
 import java.util.Observable;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.IndexColumn;
+
+@Entity
 public class Game extends Observable implements Serializable {
 
 	private static final long serialVersionUID = 4684393781042750793L;
 	private static final int MAX_FRAMES = 10;
 	private static final String ERROR_GAME_ENDED = "GAME OVER FOR YOU !";
 
-
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	int id;
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = AbstractFrame.class)
+	@IndexColumn(base = 0, name = "FrameNumber")
 	private Frame[] frames;
 	private int currentFrame;
 
@@ -22,7 +34,7 @@ public class Game extends Observable implements Serializable {
 		this.frames = frames;
 		this.currentFrame = 0;
 	}
-
+	
 	public int getScore() {
 
 		return getScore(currentFrame);
@@ -57,9 +69,10 @@ public class Game extends Observable implements Serializable {
 
 	private void nextFrame() {
 
-		if (frames[currentFrame].isPlayed() && currentFrame < MAX_FRAMES - 1) {
+		if (frames[currentFrame].isPlayed() && (currentFrame < MAX_FRAMES - 1)) {
 			currentFrame++;
 			setChanged();
+			
 		} else if (isOver()) {
 			setChanged();
 		}
@@ -121,4 +134,11 @@ public class Game extends Observable implements Serializable {
 		return currentFrame;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 }

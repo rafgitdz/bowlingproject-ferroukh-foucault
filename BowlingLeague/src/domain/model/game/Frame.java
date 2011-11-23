@@ -2,6 +2,9 @@ package domain.model.game;
 
 import java.io.Serializable;
 
+import javax.persistence.MappedSuperclass;
+
+@MappedSuperclass
 public interface Frame extends Serializable {
 
 	public int getId();

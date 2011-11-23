@@ -21,8 +21,13 @@ public class TestDuel {
 		duel = new Duel(p1, p2);
 	}
 
+	@Test(expected = DuelException.class)
+	public void testSamePlayer() {
+		duel = new Duel(p1, p1);
+	}
+
 	@Test
-	public void playDuel() {
+	public void testPlayDuel() {
 
 		for (int i = 0; i < 10; i++) {
 			p1.roll(4);
@@ -40,5 +45,16 @@ public class TestDuel {
 		p1.roll(4);
 		p1.roll(7);
 	}
-	
+
+	@Test(expected = DuelException.class)
+	public void testDrawDuel() {
+
+		for (int i = 0; i < 10; i++) {
+			p1.roll(4);
+			p1.roll(4);
+			p2.roll(4);
+			p2.roll(4);
+		}
+		duel.getWinner();
+	}
 }

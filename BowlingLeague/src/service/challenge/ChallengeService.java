@@ -2,17 +2,24 @@ package service.challenge;
 
 import java.util.ArrayList;
 
-import javax.ejb.Stateless;
+import javax.ejb.EJB;
+import javax.ejb.Stateful;
 
+import domain.model.challenge.Challenge;
+import domain.model.challenge.Team;
+import domain.model.challenge.RepositoryChallenge;
+import domain.model.duel.Duel;
 import domain.model.duel.Player;
 import domain.model.game.GameException;
-import domain.model.team.Challenge;
-import domain.model.team.Team;
 
-@Stateless
+@Stateful
 public class ChallengeService implements ChallengeServiceRemote {
 
 	private static final String CHALLENGE_OVER = "CHALLENGE OVER !";
+
+	@EJB
+	private RepositoryChallenge eCJPA;
+
 	private Challenge challenge;
 	int countDuels;
 
@@ -35,20 +42,20 @@ public class ChallengeService implements ChallengeServiceRemote {
 
 	@Override
 	public void rollFirstTeam(String player, int roll) {
+
 		controlEndChallenge();
-		challenge.getFirstTeam().getPlayerEqualTo(player).roll(roll);
+		challenge.getFirstTeam().getPlayer(player).roll(roll);
 	}
 
 	@Override
 	public void rollSecondTeam(String player, int roll) {
+
 		controlEndChallenge();
-		Player p = challenge.getSecondTeam().getPlayerEqualTo(player);
+		Player p = challenge.getSecondTeam().getPlayer(player);
 		p.roll(roll);
 
-		if (p.getGame().isOver()) {
-		//	challenge.updateScoreChallenge(countDuels);
+		if (p.getGame().isOver())
 			countDuels++;
-		}
 	}
 
 	@Override
@@ -75,5 +82,27 @@ public class ChallengeService implements ChallengeServiceRemote {
 	public void controlEndChallenge() {
 		if (challenge.isOver())
 			throw new GameException(CHALLENGE_OVER);
+	}
+
+	@Override
+	public Duel getDuel(int num) {
+		return challenge.getDuel(num);
+	}
+
+	@Override
+	public Challenge newChallenge(String name1, String name2) {
+
+		Challenge challenge = new Challenge(new Team(name1), new Team(name2));
+		return challenge;
+	}
+
+	@Override
+	public Challenge saveChallenge() {
+		return eCJPA.save(challenge);
+	}
+
+	@Override
+	public Challenge loadChallenge(int id) {
+		return challenge = eCJPA.load(id);
 	}
 }

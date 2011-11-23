@@ -1,5 +1,8 @@
 package domain.model.game;
 
+import javax.persistence.Entity;
+
+@Entity
 public class NormalFrame extends AbstractFrame {
 
 	private static final long serialVersionUID = 2088774330786241871L;
@@ -10,6 +13,7 @@ public class NormalFrame extends AbstractFrame {
 		super.roll(pinsDown);
 
 		if (!roll1Played) {
+
 			roll1 = pinsDown;
 			roll1Played = true;
 			if (isStrike())
@@ -17,6 +21,7 @@ public class NormalFrame extends AbstractFrame {
 		}
 
 		else if (!roll2Played) {
+
 			if (roll1 + pinsDown > TOTAL_PINS)
 				displayError(ERROR_TOO_MUCH_PINS);
 
@@ -25,5 +30,4 @@ public class NormalFrame extends AbstractFrame {
 		}
 
 	}
-
 }

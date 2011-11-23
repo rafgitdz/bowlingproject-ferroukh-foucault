@@ -1,15 +1,16 @@
 package domain.model.league;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
+import domain.model.challenge.Challenge;
+import domain.model.challenge.Team;
 import domain.model.duel.Player;
-import domain.model.team.Challenge;
-import domain.model.team.Team;
 
 public class TestLeague {
 
@@ -19,6 +20,7 @@ public class TestLeague {
 
 	@Before
 	public void setUp() {
+
 		teams = new ArrayList<Team>();
 		for (int i = 0; i < 20; i++) {
 			Team t = new Team("Team" + i);
@@ -48,14 +50,15 @@ public class TestLeague {
 
 	@Test(expected = LeagueException.class)
 	public void testLeague19Teams() {
+
 		teams.remove(0);
 		league = new League(name, teams);
 	}
 
 	@Test
 	public void testGetSchedule() {
+		
 		Schedule schedule = league.getSchedule();
-
 		for (Team t : teams) {
 			assertEquals(19, schedule.getTeamSchedule(t.getName()).size());
 		}
@@ -108,14 +111,11 @@ public class TestLeague {
 				assertEquals(0, league.getScore(t));
 		}
 	}
-	
-	/*@Test(expected=LeagueException.class)
-	public void testPlay20Rounds() {
-		for (int i= 0; i < 20 ; ++i) {
-			playRound();
-			league.nextRound();
-		}
-	}*/
+
+	/*
+	 * @Test(expected=LeagueException.class) public void testPlay20Rounds() {
+	 * for (int i= 0; i < 20 ; ++i) { playRound(); league.nextRound(); } }
+	 */
 
 	private void playRound() {
 		for (Challenge c : league.getCurrentRoundChallenges()) {

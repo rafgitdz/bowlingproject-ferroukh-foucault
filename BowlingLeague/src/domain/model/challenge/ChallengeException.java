@@ -1,4 +1,4 @@
-package domain.model.team;
+package domain.model.challenge;
 
 public class ChallengeException extends RuntimeException {
 

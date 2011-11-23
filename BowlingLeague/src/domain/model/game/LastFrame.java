@@ -1,5 +1,8 @@
 package domain.model.game;
 
+import javax.persistence.Entity;
+
+@Entity
 public class LastFrame extends AbstractFrame {
 
 	private static final long serialVersionUID = -5353520182708691879L;
@@ -29,5 +32,4 @@ public class LastFrame extends AbstractFrame {
 			roll3Played = true;
 		}
 	}
-
 }

@@ -68,10 +68,8 @@ public class TestGameClient {
 	public void testPlayAfterGameOver() {
 
 		for (int i = 0; i < 21; i++) {
-
 			rolls.add(0);
 			gameRemote.getScore(rolls);
 		}
 	}
-
 }

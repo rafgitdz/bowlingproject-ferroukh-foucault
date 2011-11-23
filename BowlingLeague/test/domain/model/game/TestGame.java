@@ -9,7 +9,6 @@ import domain.model.game.FrameException;
 import domain.model.game.Game;
 import domain.model.game.GameException;
 
-
 public class TestGame {
 
 	private Game game;

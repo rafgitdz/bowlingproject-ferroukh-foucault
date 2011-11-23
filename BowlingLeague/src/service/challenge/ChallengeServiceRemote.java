@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import javax.ejb.Remote;
 
+import domain.model.challenge.Challenge;
+import domain.model.duel.Duel;
+
 @Remote
 public interface ChallengeServiceRemote {
 
@@ -23,5 +26,13 @@ public interface ChallengeServiceRemote {
 	public String getWinnerOfDuel(int num);
 	
 	public void controlEndChallenge();
+	
+	public Duel getDuel(int num);
+
+	public Challenge newChallenge(String name1, String name2);
+
+	public Challenge saveChallenge();
+
+	public Challenge loadChallenge(int id);
 
 }

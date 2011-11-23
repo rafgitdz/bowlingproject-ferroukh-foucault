@@ -2,24 +2,60 @@ package service.game;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateful;
 
 import domain.model.game.Game;
-import domain.model.game.GameFactory;
-
+import domain.model.game.RepositoryGame;
 
 @Stateful
 public class GameService implements GameServiceRemote {
 
+	@EJB
+	private RepositoryGame eGJPA;
+
 	@Override
 	public int getScore(List<Integer> rolls) {
-		
+
 		GameFactory gamefactory = new GameFactory();
 		Game game = gamefactory.newGame();
 		for (int i = 0; i < rolls.size(); i++) {
 			game.roll(rolls.get(i));
 		}
-		
+
 		return game.getScore();
+	}
+
+	@Override
+	public Game newGame() {
+
+		GameFactory gamefactory = new GameFactory();
+		Game game = gamefactory.newGame();
+		for (int i = 0; i < 18; i++) {
+			game.roll(4);
+		}
+
+		game = eGJPA.save(game);
+		return game;
+	}
+
+	@Override
+	public void saveGame(Game game) {
+		eGJPA.save(game);
+	}
+
+	@Override
+	public Game loadGame(int id) {
+
+		Game game = eGJPA.load(id);
+		if (game == null)
+			game = new Game();
+		return game;
+	}
+
+	@Override
+	public void deleteGame(Game game) {
+
+		eGJPA.delete(game);
 	}
 }

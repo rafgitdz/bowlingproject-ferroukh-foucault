@@ -7,4 +7,8 @@ public class DuelException extends RuntimeException {
 	public DuelException(String message) {
 		super(message);
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> MyRepos/master
