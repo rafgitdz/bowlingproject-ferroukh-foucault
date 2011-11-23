@@ -5,17 +5,9 @@ import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 
-<<<<<<< HEAD
-import domain.model.challenge.Team;
-import domain.model.challenge.RepositoryTeam;
-import domain.model.challenge.TeamException;
-import domain.model.duel.Player;
-=======
-
 import domain.model.player.Player;
 import domain.model.team.RepositoryTeam;
 import domain.model.team.Team;
->>>>>>> 7dc33c52d1693596c0790dd09d4ae428bc9f0ee9
 
 @Stateful
 public class TeamService implements TeamServiceRemote {
