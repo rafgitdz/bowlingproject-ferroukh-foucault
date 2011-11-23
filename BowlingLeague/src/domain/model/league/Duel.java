@@ -20,6 +20,7 @@ public class Duel extends Observable implements Observer, Serializable {
 	private static final String GAME_NOT_OVER = "Game doesn't over for ";
 	private static final String NO_DRAW_DUEL = "No Draw Match !";
 	private static final String NOT_SAME_PLAYER_IN_DUEL = "No same player in a duel !";
+	public static final String DUEL_NOT_EXIST = "Duel doesn't exist !";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

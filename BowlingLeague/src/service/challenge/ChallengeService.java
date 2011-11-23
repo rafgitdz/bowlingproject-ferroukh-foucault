@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 
-
 import domain.model.league.Challenge;
 import domain.model.league.Duel;
 import domain.model.league.RepositoryChallenge;
@@ -104,6 +103,10 @@ public class ChallengeService implements ChallengeServiceRemote {
 
 	@Override
 	public Challenge loadChallenge(int id) {
-		return challenge = eCJPA.load(id);
+		
+		challenge = eCJPA.load(id);
+		if(challenge == null) 
+			throw new ChallengeException(Challenge.UNKNWON_CHALLENGE);
+		return challenge;
 	}
 }

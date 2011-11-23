@@ -49,16 +49,14 @@ public class GameService implements GameServiceRemote {
 	public Game loadGame(int id) {
 
 		Game game = eGJPA.load(id);
-		if (game == null) {
-			GameFactory gamefactory = new GameFactory();
-			game = gamefactory.newGame();
-		}
+
+		if(game==null) throw new GameException(Game.UNKNOWN_GAME);
+
 		return game;
 	}
 
 	@Override
 	public void deleteGame(Game game) {
-
 		eGJPA.delete(game);
 	}
 }

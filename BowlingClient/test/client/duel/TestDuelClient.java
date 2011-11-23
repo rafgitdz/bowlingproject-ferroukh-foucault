@@ -27,12 +27,12 @@ public class TestDuelClient {
 			duelRemote = (DuelServiceRemote) context
 					.lookup("DuelService/remote");
 
-			Context context1 = new InitialContext();
-			playerRemote1 = (PlayerServiceRemote) context1
+//			Context context1 = new InitialContext();
+			playerRemote1 = (PlayerServiceRemote) context
 					.lookup("PlayerService/remote");
 
-			Context context2 = new InitialContext();
-			playerRemote2 = (PlayerServiceRemote) context2
+//			Context context2 = new InitialContext();
+			playerRemote2 = (PlayerServiceRemote) context
 					.lookup("PlayerService/remote");
 
 		} catch (NamingException e) {

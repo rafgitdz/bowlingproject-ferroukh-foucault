@@ -10,4 +10,7 @@ public interface DuelServiceRemote {
 
 	public Duel createDuel(Player player1, Player player2);
 	public Player getWinner();
+	public Duel newDuel(Player player1, Player player2);
+	public Duel loadDuel(int id);
+	public void deleteDuel(int id);
 }

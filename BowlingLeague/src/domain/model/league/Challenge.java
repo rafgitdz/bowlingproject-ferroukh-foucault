@@ -27,6 +27,7 @@ public class Challenge implements Observer, Serializable {
 
 	private static final long serialVersionUID = -3828260190036366964L;
 	private static final String CHALLENGE_NOT_OVER = "The challenge is not over !";
+	public static final String UNKNWON_CHALLENGE = "Unknown challenge !";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

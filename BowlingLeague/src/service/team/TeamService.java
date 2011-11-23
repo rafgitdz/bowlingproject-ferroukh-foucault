@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 
-
 import domain.model.player.Player;
 import domain.model.team.RepositoryTeam;
 import domain.model.team.Team;
@@ -15,7 +14,7 @@ public class TeamService implements TeamServiceRemote {
 
 	@EJB
 	private RepositoryTeam eTJPA;
-	
+
 	private Team team;
 
 	@Override
@@ -58,6 +57,8 @@ public class TeamService implements TeamServiceRemote {
 	public Team loadTeam(String name) {
 
 		Team team = eTJPA.load(name);
+		if (team == null)
+			throw new TeamException(Team.UNKNOWN_TEAM);
 		return team;
 	}
 }
