@@ -4,8 +4,10 @@ import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import domain.model.challenge.Team;
-import domain.model.challenge.RepositoryTeam;
+import domain.model.team.RepositoryTeam;
+import domain.model.team.Team;
+
+
 
 @Stateful
 public class RepositoryTeamJPA implements RepositoryTeam {

@@ -1,4 +1,4 @@
-package domain.model.game;
+package domain.model.player;
 
 import java.io.Serializable;
 import java.util.Observable;
@@ -28,18 +28,14 @@ public class Game extends Observable implements Serializable {
 	private Frame[] frames;
 	private int currentFrame;
 
-	public Game() {
+	protected Game() {}
+	
+	Game(Frame[] frames) {
 
-		this.frames = new Frame[MAX_FRAMES];
+		this.frames = frames;
 		this.currentFrame = 0;
-
-		for (int i = 0; i < MAX_FRAMES - 1; i++) {
-
-			frames[i] = new NormalFrame();
-		}
-		frames[MAX_FRAMES - 1] = new LastFrame();
 	}
-
+	
 	public int getScore() {
 
 		return getScore(currentFrame);

@@ -2,6 +2,7 @@ package client.infrastructure;
 
 import static org.junit.Assert.*;
 
+import javax.ejb.EJBException;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -10,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import service.player.PlayerServiceRemote;
-import domain.model.duel.Player;
+import domain.model.player.Player;
 
 public class TestPersistencePlayer {
 
@@ -49,13 +50,12 @@ public class TestPersistencePlayer {
 		assertEquals(expected, player.getName());
 	}
 
-	@Test
+	@Test(expected = EJBException.class)
 	public void testDeletePlayer() {
 
 		expected = "Marvin";
 		player = playerRemote.newPlayer(expected);
 		playerRemote.deletePlayer(player);
-		player = playerRemote.loadPlayer(expected);
-		assertTrue(player == null);
+		playerRemote.loadPlayer(expected);
 	}
 }

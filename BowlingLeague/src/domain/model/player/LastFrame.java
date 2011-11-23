@@ -1,4 +1,4 @@
-package domain.model.game;
+package domain.model.player;
 
 import javax.persistence.Entity;
 
@@ -32,5 +32,4 @@ public class LastFrame extends AbstractFrame {
 			roll3Played = true;
 		}
 	}
-
 }

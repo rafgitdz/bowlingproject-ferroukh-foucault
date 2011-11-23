@@ -5,6 +5,5 @@ jboss*/
 build/
 .classpath
 .settings/
-MANIFEST*
+MANIFEST.MF
 .directory
-

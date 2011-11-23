@@ -2,7 +2,7 @@ package service.player;
 
 import javax.ejb.Remote;
 
-import domain.model.duel.Player;
+import domain.model.player.Player;
 
 @Remote
 public interface PlayerServiceRemote {

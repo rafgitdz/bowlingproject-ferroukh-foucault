@@ -1,4 +1,4 @@
-package domain.model.game;
+package domain.model.player;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,6 +19,7 @@ public class AbstractFrame implements Frame {
 	protected boolean roll1Played, roll2Played, roll3Played;
 
 	public AbstractFrame() {
+	
 		roll1 = 0;
 		roll2 = 0;
 		roll3 = 0;

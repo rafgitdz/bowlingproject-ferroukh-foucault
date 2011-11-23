@@ -1,4 +1,4 @@
-package domain.model.challenge;
+package domain.model.team;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.IndexColumn;
 
-import domain.model.duel.Player;
+import domain.model.player.Player;
 
 @Entity
 public class Team implements Serializable {

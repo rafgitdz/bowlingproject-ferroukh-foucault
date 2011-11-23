@@ -1,4 +1,4 @@
-package domain.model.duel;
+package domain.model.league;
 
 public class DuelException extends RuntimeException {
 
@@ -8,3 +8,4 @@ public class DuelException extends RuntimeException {
 		super(message);
 	}
 }
+

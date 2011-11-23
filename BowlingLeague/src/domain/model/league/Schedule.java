@@ -3,10 +3,12 @@ package domain.model.league;
 import java.util.ArrayList;
 import java.util.List;
 
-import domain.model.challenge.Challenge;
-import domain.model.challenge.Team;
+import domain.model.team.Team;
+
+
 
 public class Schedule {
+
 	private int rounds;
 	private int challengesPerRound;
 	private Challenge[][] schedule;
@@ -30,7 +32,7 @@ public class Schedule {
 			teams.remove(1);
 		}
 	}
-
+	
 	public List<Challenge> getTeamSchedule(String teamName) {
 		List<Challenge> challenges = new ArrayList<Challenge>(rounds);
 		for (int i = 0; i < rounds; ++i)
@@ -45,11 +47,11 @@ public class Schedule {
 	}
 
 	public List<Challenge> getRoundSchedule(int roundNumber) {
+
 		List<Challenge> challenges = new ArrayList<Challenge>(
 				challengesPerRound);
 		for (int i = 0; i < challengesPerRound; ++i)
 			challenges.add(schedule[roundNumber - 1][i]);
 		return challenges;
 	}
-
 }

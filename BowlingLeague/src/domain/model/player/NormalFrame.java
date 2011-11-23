@@ -1,4 +1,4 @@
-package domain.model.game;
+package domain.model.player;
 
 import javax.persistence.Entity;
 
@@ -30,5 +30,4 @@ public class NormalFrame extends AbstractFrame {
 		}
 
 	}
-
 }

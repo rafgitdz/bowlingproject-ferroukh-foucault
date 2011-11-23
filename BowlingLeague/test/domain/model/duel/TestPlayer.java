@@ -5,8 +5,9 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import domain.model.game.Game;
-import domain.model.game.GameException;
+import domain.model.player.Game;
+import domain.model.player.GameException;
+import domain.model.player.Player;
 
 public class TestPlayer {
 

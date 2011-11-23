@@ -5,10 +5,11 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import domain.model.challenge.Challenge;
-import domain.model.challenge.ChallengeException;
-import domain.model.challenge.Team;
-import domain.model.duel.Player;
+
+import domain.model.league.Challenge;
+import domain.model.league.ChallengeException;
+import domain.model.player.Player;
+import domain.model.team.Team;
 
 public class TestChallenge {
 

@@ -8,9 +8,9 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import domain.model.challenge.Challenge;
-import domain.model.challenge.Team;
-import domain.model.duel.Player;
+
+import domain.model.player.Player;
+import domain.model.team.Team;
 
 public class TestLeague {
 
@@ -20,7 +20,7 @@ public class TestLeague {
 
 	@Before
 	public void setUp() {
-		
+
 		teams = new ArrayList<Team>();
 		for (int i = 0; i < 20; i++) {
 			Team t = new Team("Team" + i);
@@ -50,7 +50,7 @@ public class TestLeague {
 
 	@Test(expected = LeagueException.class)
 	public void testLeague19Teams() {
-		
+
 		teams.remove(0);
 		league = new League(name, teams);
 	}

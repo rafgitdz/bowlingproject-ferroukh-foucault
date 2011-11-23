@@ -4,8 +4,8 @@ import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import domain.model.game.Game;
-import domain.model.game.RepositoryGame;
+import domain.model.player.Game;
+import domain.model.player.RepositoryGame;
 
 @Stateful
 public class RepositoryGameJPA implements RepositoryGame {

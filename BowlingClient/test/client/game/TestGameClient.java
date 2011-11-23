@@ -72,5 +72,4 @@ public class TestGameClient {
 			gameRemote.getScore(rolls);
 		}
 	}
-
 }

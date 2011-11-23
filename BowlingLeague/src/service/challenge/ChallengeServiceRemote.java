@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import javax.ejb.Remote;
 
-import domain.model.challenge.Challenge;
-import domain.model.duel.Duel;
+import domain.model.league.Challenge;
+import domain.model.league.Duel;
 
 @Remote
 public interface ChallengeServiceRemote {

@@ -3,9 +3,9 @@ package service.player;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 
-import domain.model.duel.Player;
-import domain.model.duel.PlayerException;
-import domain.model.duel.RepositoryPlayer;
+import domain.model.player.Player;
+import domain.model.player.PlayerException;
+import domain.model.player.RepositoryPlayer;
 
 @Stateful
 public class PlayerService implements PlayerServiceRemote {

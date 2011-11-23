@@ -1,4 +1,4 @@
-package domain.model.challenge;
+package domain.model.league;
 
 import javax.ejb.Remote;
 

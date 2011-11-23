@@ -1,4 +1,4 @@
-package domain.model.challenge;
+package domain.model.league;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,8 +18,9 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.IndexColumn;
 
-import domain.model.duel.Duel;
-import domain.model.duel.Player;
+
+import domain.model.player.Player;
+import domain.model.team.Team;
 
 @Entity
 public class Challenge implements Observer, Serializable {
