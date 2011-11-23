@@ -6,6 +6,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateful;
 
 import domain.model.game.Game;
+import domain.model.game.GameException;
 import domain.model.game.RepositoryGame;
 
 @Stateful
@@ -46,14 +47,12 @@ public class GameService implements GameServiceRemote {
 	public Game loadGame(int id) {
 
 		Game game = eGJPA.load(id);
-		if (game == null)
-			game = new Game();
+		if(game==null) throw new GameException(Game.UNKNOWN_GAME);
 		return game;
 	}
 
 	@Override
 	public void deleteGame(Game game) {
-
 		eGJPA.delete(game);
 	}
 }

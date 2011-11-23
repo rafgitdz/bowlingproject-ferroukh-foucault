@@ -6,6 +6,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateful;
 
 import domain.model.challenge.Challenge;
+import domain.model.challenge.ChallengeException;
 import domain.model.challenge.Team;
 import domain.model.challenge.RepositoryChallenge;
 import domain.model.duel.Duel;
@@ -103,6 +104,10 @@ public class ChallengeService implements ChallengeServiceRemote {
 
 	@Override
 	public Challenge loadChallenge(int id) {
-		return challenge = eCJPA.load(id);
+		
+		challenge = eCJPA.load(id);
+		if(challenge == null) 
+			throw new ChallengeException(Challenge.UNKNWON_CHALLENGE);
+		return challenge;
 	}
 }

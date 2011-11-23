@@ -65,7 +65,7 @@ public class PlayerService implements PlayerServiceRemote {
 
 		Player player = ePJPA.load(name);
 		if (player == null)
-			throw new PlayerException(PLAYER_NOT_EXIST);
+			throw new PlayerException(Player.PLAYER_NOT_EXIST);
 		return player;
 	}
 

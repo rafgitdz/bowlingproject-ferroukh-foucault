@@ -7,6 +7,7 @@ import javax.ejb.Stateful;
 
 import domain.model.challenge.Team;
 import domain.model.challenge.RepositoryTeam;
+import domain.model.challenge.TeamException;
 import domain.model.duel.Player;
 
 @Stateful
@@ -14,7 +15,7 @@ public class TeamService implements TeamServiceRemote {
 
 	@EJB
 	private RepositoryTeam eTJPA;
-	
+
 	private Team team;
 
 	@Override
@@ -57,6 +58,8 @@ public class TeamService implements TeamServiceRemote {
 	public Team loadTeam(String name) {
 
 		Team team = eTJPA.load(name);
+		if (team == null)
+			throw new TeamException(Team.UNKNOWN_TEAM);
 		return team;
 	}
 }

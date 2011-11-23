@@ -18,6 +18,7 @@ public class Player extends Observable implements Observer, Serializable {
 
 	private static final long serialVersionUID = 4505445387411090683L;
 	private static final String ERROR_NOT_YOUR_TURN = " !, It is not your turn!";
+	public static final String PLAYER_NOT_EXIST = "Player doesn't exist !";
 
 	@Id
 	private String name;

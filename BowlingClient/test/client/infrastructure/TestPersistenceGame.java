@@ -3,6 +3,7 @@ package client.infrastructure;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+import javax.ejb.EJBException;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -41,6 +42,7 @@ public class TestPersistenceGame {
 
 	@Test
 	public void testLoadGame() {
+		
 		Game g2 = gameRemote.loadGame(game.getId());
 		assertEquals(game.getId(), g2.getId());
 		assertEquals(game.getScore(), g2.getScore());
@@ -49,6 +51,7 @@ public class TestPersistenceGame {
 
 	@Test
 	public void testLoadAndSaveGame() {
+		
 		game = gameRemote.loadGame(game.getId());
 		game.roll(10);
 		game.roll(4);
@@ -56,5 +59,10 @@ public class TestPersistenceGame {
 		gameRemote.saveGame(game);
 		assertEquals(game.getScore(), gameRemote.loadGame(game.getId())
 				.getScore());
+	}
+
+	@Test(expected = EJBException.class)
+	public void testLoadUnkwnownGame() {
+		game = gameRemote.loadGame(1233);
 	}
 }

@@ -22,6 +22,7 @@ public class Team implements Serializable {
 	private static final String ERROR_ALREADY_IN_TEAM = "is already in the team ";
 	private static final String ERROR_TEAM_IS_FULL = "This team is full, you cannot add another player";
 	private static final String UNKONWN_PLAYER_TEAM = "Unknown player in this team -> ";
+	public static final String UNKNOWN_TEAM = "Unknown team !";
 
 	@Id
 	private String teamName;
