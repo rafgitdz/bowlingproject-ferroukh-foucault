@@ -5,8 +5,9 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 
-import domain.model.game.Game;
-import domain.model.game.RepositoryGame;
+import domain.model.player.Game;
+import domain.model.player.GameFactory;
+import domain.model.player.RepositoryGame;
 
 @Stateful
 public class GameService implements GameServiceRemote {
@@ -48,8 +49,10 @@ public class GameService implements GameServiceRemote {
 	public Game loadGame(int id) {
 
 		Game game = eGJPA.load(id);
-		if (game == null)
-			game = new Game();
+		if (game == null) {
+			GameFactory gamefactory = new GameFactory();
+			game = gamefactory.newGame();
+		}
 		return game;
 	}
 

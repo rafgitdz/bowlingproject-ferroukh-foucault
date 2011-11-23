@@ -3,8 +3,9 @@ package domain.model.league;
 import java.util.ArrayList;
 import java.util.List;
 
-import domain.model.challenge.Challenge;
-import domain.model.challenge.Team;
+import domain.model.team.Team;
+
+
 
 public class Schedule {
 

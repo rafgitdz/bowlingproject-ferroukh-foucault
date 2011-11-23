@@ -1,4 +1,4 @@
-package domain.model.game;
+package domain.model.player;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

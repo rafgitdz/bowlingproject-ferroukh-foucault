@@ -7,9 +7,10 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import domain.model.challenge.Team;
-import domain.model.challenge.TeamException;
-import domain.model.duel.Player;
+
+import domain.model.player.Player;
+import domain.model.team.Team;
+import domain.model.team.TeamException;
 
 public class TestTeam {
 

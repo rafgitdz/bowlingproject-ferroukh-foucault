@@ -4,8 +4,8 @@ import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import domain.model.duel.Player;
-import domain.model.duel.RepositoryPlayer;
+import domain.model.player.Player;
+import domain.model.player.RepositoryPlayer;
 
 @Stateful
 public class RepositoryPlayerJPA implements RepositoryPlayer {

@@ -1,6 +1,6 @@
 package client.infrastructure;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
@@ -12,7 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import service.challenge.ChallengeServiceRemote;
-import domain.model.challenge.Challenge;
+import domain.model.league.Challenge;
 
 public class TestPersistenceChallenge {
 

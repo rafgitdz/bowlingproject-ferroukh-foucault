@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.ejb.Remote;
 
-import domain.model.game.Game;
+import domain.model.player.Game;
 
 @Remote
 public interface GameServiceRemote {

@@ -1,4 +1,4 @@
-package domain.model.duel;
+package domain.model.league;
 
 import java.io.Serializable;
 import java.util.Observable;
@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+
+import domain.model.player.Player;
 
 @Entity
 public class Duel extends Observable implements Observer, Serializable {

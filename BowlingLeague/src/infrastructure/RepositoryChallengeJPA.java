@@ -4,8 +4,8 @@ import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import domain.model.challenge.Challenge;
-import domain.model.challenge.RepositoryChallenge;
+import domain.model.league.Challenge;
+import domain.model.league.RepositoryChallenge;
 
 @Stateful
 public class RepositoryChallengeJPA implements RepositoryChallenge {

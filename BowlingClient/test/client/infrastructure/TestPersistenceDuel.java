@@ -3,8 +3,8 @@ package client.infrastructure;
 import org.junit.Before;
 import org.junit.Test;
 
-import domain.model.duel.Duel;
-import domain.model.duel.Player;
+import domain.model.league.Duel;
+import domain.model.player.Player;
 
 public class TestPersistenceDuel {
 

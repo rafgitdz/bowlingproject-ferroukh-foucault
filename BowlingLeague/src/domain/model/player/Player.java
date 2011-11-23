@@ -1,4 +1,4 @@
-package domain.model.duel;
+package domain.model.player;
 
 import java.io.Serializable;
 import java.util.Observable;
@@ -10,8 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
-import domain.model.game.Game;
-import domain.model.game.GameException;
 
 @Entity
 public class Player extends Observable implements Observer, Serializable {
@@ -33,7 +31,8 @@ public class Player extends Observable implements Observer, Serializable {
 	public Player(String name) {
 
 		this.name = name;
-		currentGame = new Game();
+		GameFactory fct = new GameFactory();
+		currentGame = fct.newGame();
 		currentGame.addObserver(this);
 		itsMyTurn = false;
 	}

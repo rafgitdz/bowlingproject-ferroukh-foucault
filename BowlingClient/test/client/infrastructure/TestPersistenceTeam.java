@@ -10,8 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import service.team.TeamServiceRemote;
-import domain.model.challenge.Team;
-import domain.model.duel.Player;
+import domain.model.player.Player;
+import domain.model.team.Team;
 
 public class TestPersistenceTeam {
 

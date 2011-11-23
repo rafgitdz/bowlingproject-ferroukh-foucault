@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import service.game.GameServiceRemote;
-import domain.model.game.Game;
+import domain.model.player.Game;
 
 public class TestPersistenceGame {
 

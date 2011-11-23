@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 
-import domain.model.challenge.Challenge;
-import domain.model.challenge.Team;
-import domain.model.challenge.RepositoryChallenge;
-import domain.model.duel.Duel;
-import domain.model.duel.Player;
-import domain.model.game.GameException;
+
+import domain.model.league.Challenge;
+import domain.model.league.Duel;
+import domain.model.league.RepositoryChallenge;
+import domain.model.player.GameException;
+import domain.model.player.Player;
+import domain.model.team.Team;
 
 @Stateful
 public class ChallengeService implements ChallengeServiceRemote {

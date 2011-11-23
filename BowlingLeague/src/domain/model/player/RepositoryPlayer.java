@@ -1,4 +1,4 @@
-package domain.model.duel;
+package domain.model.player;
 
 import javax.ejb.Remote;
 

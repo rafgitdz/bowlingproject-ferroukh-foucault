@@ -2,8 +2,8 @@ package service.duel;
 
 import javax.ejb.Stateful;
 
-import domain.model.duel.Duel;
-import domain.model.duel.Player;
+import domain.model.league.Duel;
+import domain.model.player.Player;
 
 @Stateful
 public class DuelService implements DuelServiceRemote {

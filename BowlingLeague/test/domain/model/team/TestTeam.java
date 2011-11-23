@@ -1,11 +1,14 @@
 package domain.model.team;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import domain.model.duel.Player;
+
+import domain.model.player.Player;
+import domain.model.team.Team;
+import domain.model.team.TeamException;
 
 public class TestTeam {
 

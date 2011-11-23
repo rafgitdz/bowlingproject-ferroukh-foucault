@@ -2,3 +2,8 @@ jboss*/
 *.class
 .project
 .metadata/
+build/
+.classpath
+.settings/
+MANIFEST.MF
+.directory

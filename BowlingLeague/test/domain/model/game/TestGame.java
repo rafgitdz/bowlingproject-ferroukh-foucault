@@ -5,9 +5,10 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import domain.model.game.FrameException;
-import domain.model.game.Game;
-import domain.model.game.GameException;
+import domain.model.player.FrameException;
+import domain.model.player.Game;
+import domain.model.player.GameException;
+import domain.model.player.GameFactory;
 
 public class TestGame {
 
