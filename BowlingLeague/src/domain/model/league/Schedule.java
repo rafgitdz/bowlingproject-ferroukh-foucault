@@ -15,8 +15,8 @@ public class Schedule {
 
 	public Schedule(List<Team> teams) {
 
-		rounds = League.LEAGUE_SIZE - 1;
-		challengesPerRound = League.LEAGUE_SIZE / 2;
+		rounds = teams.size() - 1;
+		challengesPerRound = teams.size() / 2;
 		schedule = new Challenge[rounds][challengesPerRound];
 		buildSchedule(teams);
 

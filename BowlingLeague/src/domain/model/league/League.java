@@ -1,30 +1,34 @@
 package domain.model.league;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import domain.model.team.Team;
 
 
 
 public class League {
-
-	public static final int LEAGUE_SIZE = 20;
-	private final static String ERROR_TEAM_NUMBER = "The league has to be composed of "
-			+ LEAGUE_SIZE + " Teams.";
+	
 	private String name;
 	private List<Team> teams;
 	private Schedule schedule;
 	private int currentRound;
 
-	public League(String name, List<Team> teams) {
+	protected League() {}
+	
+	League(String name, List<Team> teams) {
 
 		this.name = name;
-		if (teams.size() != LEAGUE_SIZE)
-			throw new LeagueException(ERROR_TEAM_NUMBER);
 		this.teams = teams;
 		schedule = new Schedule(teams);
 		currentRound = 1;
 		startRound(currentRound);
+	}
+	
+	public int getSize() {
+		return teams.size();
 	}
 
 	public String getName() {
@@ -87,8 +91,30 @@ public class League {
 		}
 		return score;
 	}
+	
+	public List<Team> getRanking() {
+		
+		Map<Team, Integer> scores = new HashMap<Team, Integer>();
+		List<Team> ranking = new ArrayList<Team>();
 
+		for (Team t : teams) {
+			int score = getScore(t);
+			int rank = 0;
+			scores.put(t, score);
+			for(int i = 0; i< ranking.size(); ++i) {
+				if (scores.get(ranking.get(i)) <=  score) {
+					rank = i;
+					break;
+				}
+			}
+			ranking.add(rank, t);
+		}
+		
+		return ranking;
+	}
+	
 	public List<Challenge> getSchedule(Team t) {
+
 		return getSchedule().getTeamSchedule(t.getName());
 	}
 }
