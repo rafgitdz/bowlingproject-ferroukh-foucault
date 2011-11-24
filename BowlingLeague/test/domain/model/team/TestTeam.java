@@ -2,16 +2,21 @@ package domain.model.team;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 
 
 import domain.model.player.Player;
+import domain.model.player.PlayerFactoryForTest;
 import domain.model.team.Team;
 import domain.model.team.TeamException;
 
 public class TestTeam {
 
+	
+	private PlayerFactoryForTest playerFactory = new PlayerFactoryForTest();
 	private Team t;
 	private String teamName = "The A Team";
 	private Player bob;
@@ -19,7 +24,7 @@ public class TestTeam {
 	public void setUp() {
 		
 		t = new Team(teamName);
-		bob = new Player("Bob");
+		bob = playerFactory.newPlayer("Bob");
 	}
 	
 	@Test
@@ -32,9 +37,11 @@ public class TestTeam {
 	public void testAddPlayers() {
 		
 		t.addPlayer(bob);
-		Player alice = new Player("Alice");
+		Player alice = playerFactory.newPlayer("Alice");
 		t.addPlayer(alice);
-		String expected = "Bob, Alice";
+		ArrayList<String> expected = new ArrayList<String>();
+		expected.add("Bob");
+		expected.add("Alice");
 		assertEquals(expected, t.getPlayersNames());
 		
 	}
@@ -52,7 +59,7 @@ public class TestTeam {
 		
 		for (int i = 0; i < Team.MAX_TEAM_SIZE + 1; i++) {
 			
-			Player p = new Player("p" + i);
+			Player p = playerFactory.newPlayer("p" + i);
 			t.addPlayer(p);
 		}
 	}

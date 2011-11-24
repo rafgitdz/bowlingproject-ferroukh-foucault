@@ -1,31 +1,42 @@
 package service.team;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 
 import domain.model.player.Player;
+import domain.model.player.RepositoryPlayer;
 import domain.model.team.RepositoryTeam;
 import domain.model.team.Team;
 import domain.model.team.TeamException;
+import domain.model.team.TeamFactoryLocal;
 
 @Stateful
 public class TeamService implements TeamServiceRemote {
 
 	@EJB
 	private RepositoryTeam eTJPA;
-
+	
+	@EJB
+	private RepositoryPlayer ePJPA;
+	
+	@EJB
+	private TeamFactoryLocal teamFactory;
+	
 	private Team team;
 
 	@Override
 	public Team createTeam(String name, ArrayList<String> teamMembers) {
 
-		team = new Team(name);
-		for (String s : teamMembers)
-			team.addPlayer(new Player(s));
-
+		List<Player> players = new ArrayList<Player>();
+		for (String playerName : teamMembers) {
+			players.add(ePJPA.load(playerName));
+		}
+		team = eTJPA.save(teamFactory.newTeam(name, players));
 		return team;
+
 	}
 
 	@Override
@@ -45,7 +56,8 @@ public class TeamService implements TeamServiceRemote {
 	@Override
 	public Team newTeam(String name) {
 
-		team = eTJPA.save(new Team(name));
+		
+		team = eTJPA.save(teamFactory.newTeam(name));
 		return team;
 	}
 

@@ -30,10 +30,9 @@ public class Team implements Serializable {
 	@IndexColumn(base = 0, name = "PlayerName")
 	private List<Player> players;
 
-	public Team() {
-	}
+	protected Team() { }
 
-	public Team(String name) {
+	Team(String name) {
 		this.teamName = name;
 		players = new ArrayList<Player>();
 	}
