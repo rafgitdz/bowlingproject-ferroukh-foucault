@@ -5,6 +5,7 @@ import javax.ejb.Stateful;
 
 import domain.model.player.Player;
 import domain.model.player.PlayerException;
+import domain.model.player.PlayerFactoryLocal;
 import domain.model.player.RepositoryPlayer;
 
 @Stateful
@@ -14,6 +15,9 @@ public class PlayerService implements PlayerServiceRemote {
 
 	@EJB
 	private RepositoryPlayer ePJPA;
+	
+	@EJB
+	private PlayerFactoryLocal playerFactory;
 
 	@Override
 	public void roll(int roll) {
@@ -40,7 +44,7 @@ public class PlayerService implements PlayerServiceRemote {
 
 	@Override
 	public Player newPlayer(String name) {
-		player = ePJPA.save(new Player(name));
+		player = ePJPA.save(playerFactory.newPlayer(name));
 		return player;
 	}
 
