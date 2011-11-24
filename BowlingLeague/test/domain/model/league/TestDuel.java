@@ -9,16 +9,19 @@ import domain.model.league.Duel;
 import domain.model.league.DuelException;
 import domain.model.player.GameException;
 import domain.model.player.Player;
+import domain.model.player.PlayerFactoryForTest;
 
 public class TestDuel {
 
+	private PlayerFactoryForTest playerFactory = new PlayerFactoryForTest();
+	
 	private Duel duel;
 	private Player p1, p2;
 
 	@Before
 	public void setUp() {
-		p1 = new Player("Bob");
-		p2 = new Player("Alice");
+		p1 = playerFactory.newPlayer("Bob");
+		p2 = playerFactory.newPlayer("Alice");
 		duel = new Duel(p1, p2);
 	}
 

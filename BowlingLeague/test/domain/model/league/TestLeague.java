@@ -10,10 +10,15 @@ import org.junit.Test;
 
 
 import domain.model.player.Player;
+import domain.model.player.PlayerFactoryForTest;
 import domain.model.team.Team;
+import domain.model.team.TeamFactoryForTest;
 
 public class TestLeague {
 
+	TeamFactoryForTest teamFactory = new TeamFactoryForTest();
+	PlayerFactoryForTest playerFactory = new PlayerFactoryForTest();
+	
 	List<Team> teams;
 	private League league;
 	String name = "Barclay's";
@@ -23,9 +28,9 @@ public class TestLeague {
 
 		teams = new ArrayList<Team>();
 		for (int i = 0; i < 20; i++) {
-			Team t = new Team("Team" + i);
+			Team t = teamFactory.newTeam("Team" + i);
 			for (int j = 0; j < 5; j++)
-				t.addPlayer(new Player("Player" + i + j));
+				t.addPlayer(playerFactory.newPlayer("Player" + i + j));
 			teams.add(t);
 		}
 		league = new League(name, teams);
@@ -39,20 +44,6 @@ public class TestLeague {
 			assertEquals(league.getTeams().get(i).getName(), teams.get(i)
 					.getName());
 		}
-	}
-
-	@Test(expected = LeagueException.class)
-	public void testLeague21Teams() {
-		teams.add(new Team("Team21"));
-		league = new League(name, teams);
-
-	}
-
-	@Test(expected = LeagueException.class)
-	public void testLeague19Teams() {
-
-		teams.remove(0);
-		league = new League(name, teams);
 	}
 
 	@Test

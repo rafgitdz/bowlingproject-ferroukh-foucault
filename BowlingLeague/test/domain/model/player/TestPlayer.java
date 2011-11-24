@@ -11,11 +11,13 @@ import domain.model.player.Player;
 
 public class TestPlayer {
 
+	private PlayerFactoryForTest playerFactory = new PlayerFactoryForTest();
+	
 	private Player player;
 
 	@Before
 	public void setUp() {
-		player = new Player("Matteo");
+		player = playerFactory.newPlayer("Matteo");
 	}
 
 	@Test

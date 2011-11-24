@@ -5,22 +5,25 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-
-import domain.model.league.Challenge;
-import domain.model.league.ChallengeException;
 import domain.model.player.Player;
+import domain.model.player.PlayerFactoryForTest;
 import domain.model.team.Team;
+import domain.model.team.TeamFactoryForTest;
 
 public class TestChallenge {
 
+	private TeamFactoryForTest teamFactory = new TeamFactoryForTest(); 
+	private PlayerFactoryForTest playerFactory = new PlayerFactoryForTest();
+	
 	private Challenge challenge;
 	private Player p1, p2;
+	
 
 	@Before
 	public void setUp() {
 
-		Team firstTeam = new Team("Cotagers");
-		Team secondTeam = new Team("Citizens");
+		Team firstTeam = teamFactory.newTeam("Cotagers");
+		Team secondTeam = teamFactory.newTeam("Citizens");
 
 		buildTeam(firstTeam, firstTeam.getName());
 		buildTeam(secondTeam, secondTeam.getName());
@@ -99,7 +102,7 @@ public class TestChallenge {
 
 		for (int i = 0; i < 5; i++) {
 
-			Player p = new Player(name + (i + 1));
+			Player p = playerFactory.newPlayer(name + (i + 1));
 			team.addPlayer(p);
 		}
 	}

@@ -1,23 +1,21 @@
 package domain.model.player;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import domain.model.player.FrameException;
-import domain.model.player.Game;
-import domain.model.player.GameException;
-import domain.model.player.GameFactory;
-
 public class TestGame {
 
+	private GameFactoryForTest gameFactory = new GameFactoryForTest();
+	
 	private Game game;
 	
 	@Before
 	public void setUp() {
-		GameFactory fct = new GameFactory();
-		game = fct.newGame();
+		game = gameFactory.newGame();
 	}
 
 	@Test

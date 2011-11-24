@@ -32,7 +32,6 @@ public class Player extends Observable implements Observer, Serializable {
 	Player(String name) {
 
 		this.name = name;
-		currentGame.addObserver(this);
 		itsMyTurn = false;
 	}
 
@@ -85,6 +84,7 @@ public class Player extends Observable implements Observer, Serializable {
 
 	public void setGame(Game game) {
 		currentGame = game;
+		currentGame.addObserver(this);
 	}
 }
 
