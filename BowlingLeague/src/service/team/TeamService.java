@@ -8,6 +8,7 @@ import javax.ejb.Stateful;
 import domain.model.player.Player;
 import domain.model.team.RepositoryTeam;
 import domain.model.team.Team;
+import domain.model.team.TeamException;
 
 @Stateful
 public class TeamService implements TeamServiceRemote {
