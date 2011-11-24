@@ -2,17 +2,31 @@ package domain.model.league;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.IndexColumn;
+
 import domain.model.team.Team;
 
-
-
+@Entity
 public class League {
 
 	public static final int LEAGUE_SIZE = 20;
 	private final static String ERROR_TEAM_NUMBER = "The league has to be composed of "
 			+ LEAGUE_SIZE + " Teams.";
+	@Id
 	private String name;
+
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = Team.class)
+	@IndexColumn(base = 0, name = "TeamIndex")
 	private List<Team> teams;
+	@OneToOne
+	@JoinColumn(name = "Schedule_ID")
 	private Schedule schedule;
 	private int currentRound;
 
@@ -63,7 +77,7 @@ public class League {
 	}
 
 	public Challenge getCurrentChallenge(Team team) {
-	
+
 		for (Challenge c : getCurrentRoundChallenges())
 			if (c.getFirstTeam().getName().equals(team.getName())
 					|| c.getSecondTeam().getName().equals(team.getName()))
@@ -77,7 +91,7 @@ public class League {
 	}
 
 	public int getScore(Team t) {
-	
+
 		int score = 0;
 		for (Challenge c : getSchedule(t)) {
 			if (!c.isOver())

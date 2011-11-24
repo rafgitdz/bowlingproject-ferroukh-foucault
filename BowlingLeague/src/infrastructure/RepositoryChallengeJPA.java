@@ -15,6 +15,7 @@ public class RepositoryChallengeJPA implements RepositoryChallenge {
 
 	@Override
 	public Challenge save(Challenge challenge) {
+		
 		if (em.find(Challenge.class, challenge.getId()) == null)
 			em.persist(challenge);
 		else
