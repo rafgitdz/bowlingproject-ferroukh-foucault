@@ -23,7 +23,7 @@ public class Schedule {
 
 	@OneToMany(cascade = CascadeType.ALL, targetEntity = Challenge.class)
 	@IndexColumn(base = 0, name = "ChallengeIndex")
-	private Challenge[][] schedule;
+	private List<LeagueRound> schedule;
 	private int rounds;
 	private int challengesPerRound;
 
@@ -31,7 +31,7 @@ public class Schedule {
 
 		rounds = teams.size() - 1;
 		challengesPerRound = teams.size() / 2;
-		schedule = new Challenge[rounds][challengesPerRound];
+		schedule = new ArrayList<LeagueRound>(rounds);
 		buildSchedule(teams);
 
 	}
@@ -39,10 +39,12 @@ public class Schedule {
 	private void buildSchedule(List<Team> teams) {
 
 		for (int i = 0; i < rounds; i++) {
+			List<Challenge> roundChallenges = new ArrayList<Challenge>(challengesPerRound);
 			for (int j = 0; j < challengesPerRound; j++) {
-				schedule[i][j] = new Challenge(teams.get(j), teams.get(j
-						+ challengesPerRound));
+				roundChallenges.add(new Challenge(teams.get(j), teams.get(j
+						+ challengesPerRound)));
 			}
+			schedule.add(new LeagueRound(roundChallenges));
 			teams.add(teams.get(1));
 			teams.remove(1);
 		}
@@ -51,12 +53,12 @@ public class Schedule {
 	public List<Challenge> getTeamSchedule(String teamName) {
 
 		List<Challenge> challenges = new ArrayList<Challenge>(rounds);
-		for (int i = 0; i < rounds; ++i)
-			for (int j = 0; j < challengesPerRound; ++j) {
+		for (LeagueRound round : schedule)
+			for (Challenge c : round.getChallenges()) {
 
-				if (schedule[i][j].getFirstTeam().getName() == teamName
-						|| schedule[i][j].getSecondTeam().getName() == teamName) {
-					challenges.add(schedule[i][j]);
+				if (c.getFirstTeam().getName() == teamName
+						|| c.getSecondTeam().getName() == teamName) {
+					challenges.add(c);
 					break;
 				}
 			}
@@ -65,11 +67,7 @@ public class Schedule {
 
 	public List<Challenge> getRoundSchedule(int roundNumber) {
 
-		List<Challenge> challenges = new ArrayList<Challenge>(
-				challengesPerRound);
-		for (int i = 0; i < challengesPerRound; ++i)
-			challenges.add(schedule[roundNumber - 1][i]);
-		return challenges;
+		return schedule.get(roundNumber).getChallenges();
 	}
 
 	public int getId() {
