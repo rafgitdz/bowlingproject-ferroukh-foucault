@@ -1,4 +1,4 @@
-package domain.model.duel;
+package domain.model.player;
 
 import static org.junit.Assert.assertEquals;
 
@@ -15,7 +15,6 @@ public class TestPlayer {
 
 	@Before
 	public void setUp() {
-
 		player = new Player("Matteo");
 	}
 

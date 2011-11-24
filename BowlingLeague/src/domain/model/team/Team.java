@@ -48,6 +48,10 @@ public class Team implements Serializable {
 		else
 			players.add(player);
 	}
+	
+	public void deletePlayer(Player player) {
+		players.remove(player);
+	}
 
 	public String getName() {
 		return teamName;
@@ -77,7 +81,6 @@ public class Team implements Serializable {
 	}
 
 	private boolean isFull() {
-
 		return players.size() == MAX_TEAM_SIZE;
 	}
 

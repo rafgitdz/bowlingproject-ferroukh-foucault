@@ -3,8 +3,8 @@ package infrastructure;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import domain.model.duel.Duel;
-import domain.model.duel.RepositoryDuel;
+import domain.model.league.Duel;
+import domain.model.league.RepositoryDuel;
 
 public class RepositoryDuelJPA implements RepositoryDuel {
 

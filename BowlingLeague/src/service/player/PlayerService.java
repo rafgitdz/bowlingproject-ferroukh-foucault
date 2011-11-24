@@ -10,16 +10,10 @@ import domain.model.player.RepositoryPlayer;
 @Stateful
 public class PlayerService implements PlayerServiceRemote {
 
-	private static final String PLAYER_NOT_EXIST = "Player doesn't exist !";
 	Player player;
 
 	@EJB
 	private RepositoryPlayer ePJPA;
-
-	@Override
-	public Player createPlayer(String name) {
-		return player = new Player(name);
-	}
 
 	@Override
 	public void roll(int roll) {
@@ -27,7 +21,7 @@ public class PlayerService implements PlayerServiceRemote {
 		if (player != null)
 			player.roll(roll);
 		else
-			throw new PlayerException(PLAYER_NOT_EXIST);
+			throw new PlayerException(Player.PLAYER_NOT_EXIST);
 	}
 
 	@Override
@@ -42,11 +36,6 @@ public class PlayerService implements PlayerServiceRemote {
 
 	@Override
 	public void getStat() {
-	}
-
-	@Override
-	public Player getPlayer() {
-		return player;
 	}
 
 	@Override
