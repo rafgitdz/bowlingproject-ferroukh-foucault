@@ -12,7 +12,6 @@ import domain.model.player.Player;
 public class TestPlayer {
 
 	private PlayerFactoryForTest playerFactory = new PlayerFactoryForTest();
-	
 	private Player player;
 
 	@Before

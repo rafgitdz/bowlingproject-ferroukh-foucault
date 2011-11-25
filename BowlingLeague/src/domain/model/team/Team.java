@@ -30,7 +30,8 @@ public class Team implements Serializable {
 	@IndexColumn(base = 0, name = "PlayerName")
 	private List<Player> players;
 
-	protected Team() { }
+	protected Team() {
+	}
 
 	Team(String name) {
 		this.teamName = name;
@@ -48,7 +49,7 @@ public class Team implements Serializable {
 		else
 			players.add(player);
 	}
-	
+
 	public void deletePlayer(Player player) {
 		players.remove(player);
 	}
@@ -57,13 +58,8 @@ public class Team implements Serializable {
 		return teamName;
 	}
 
-	public ArrayList<Player> getPlayers() {
-
-		ArrayList<Player> playersNames = new ArrayList<Player>();
-		for (Player p : players)
-			playersNames.add(p);
-
-		return playersNames;
+	public List<Player> getPlayers() {
+		return players;
 	}
 
 	public ArrayList<String> getPlayersNames() {

@@ -45,7 +45,6 @@ public class Duel extends Observable implements Observer, Serializable {
 		p1.addObserver(this);
 		player2 = p2;
 		p2.addObserver(this);
-		System.out.println("set turn for " + player1.getName());
 		player1.setItsMyTurn(true);
 		scorePlayer1 = 0;
 		scorePlayer2 = 0;
