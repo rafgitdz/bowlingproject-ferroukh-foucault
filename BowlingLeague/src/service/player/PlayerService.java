@@ -64,6 +64,6 @@ public class PlayerService implements PlayerServiceRemote {
 
 	@Override
 	public void deletePlayer(Player player) {
-		ePJPA.delete(player);
+		ePJPA.delete(player.getName());
 	}
 }

@@ -2,14 +2,11 @@ package domain.model.team;
 
 import javax.ejb.Remote;
 
+import domain.model.RepositoryGeneric;
+
 @Remote
-public interface RepositoryTeam {
+public interface RepositoryTeam extends RepositoryGeneric<Team, String>{
 
-	public Team save(Team team);
-
-	public Team load(String name);
-
-	public void delete(String name);
-	
 	public void clearAll();
+
 }
