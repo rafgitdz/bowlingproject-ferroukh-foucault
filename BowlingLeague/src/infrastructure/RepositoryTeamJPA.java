@@ -7,8 +7,6 @@ import javax.persistence.PersistenceContext;
 import domain.model.team.RepositoryTeam;
 import domain.model.team.Team;
 
-
-
 @Stateful
 public class RepositoryTeamJPA implements RepositoryTeam {
 
@@ -30,8 +28,14 @@ public class RepositoryTeamJPA implements RepositoryTeam {
 	}
 
 	@Override
-	public void delete(Team team) {
-		em.remove(em.merge(team.getName()));
+	public void delete(String name) {
+		em.remove(em.merge(name));
 	}
 
+	@Override
+	public void clearAll() {
+		em.clear();
+	}
+	
+	
 }

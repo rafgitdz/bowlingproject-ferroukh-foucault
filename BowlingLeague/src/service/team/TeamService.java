@@ -18,29 +18,23 @@ public class TeamService implements TeamServiceRemote {
 
 	@EJB
 	private RepositoryTeam eTJPA;
-	
+
 	@EJB
 	private RepositoryPlayer ePJPA;
-	
+
 	@EJB
 	private TeamFactoryLocal teamFactory;
-	
+
 	private Team team;
 
 	@Override
-	public Team createTeam(String name, ArrayList<String> teamMembers) {
-
-		List<Player> players = new ArrayList<Player>();
-		for (String playerName : teamMembers) {
-			players.add(ePJPA.load(playerName));
-		}
-		team = eTJPA.save(teamFactory.newTeam(name, players));
-		return team;
-
+	public void addPlayer(String name) {
+		team.addPlayer(ePJPA.load(name));
+		eTJPA.save(team);
 	}
 
 	@Override
-	public ArrayList<Player> getPlayers() {
+	public List<Player> getPlayers() {
 		return team.getPlayers();
 	}
 
@@ -56,7 +50,6 @@ public class TeamService implements TeamServiceRemote {
 	@Override
 	public Team newTeam(String name) {
 
-		
 		team = eTJPA.save(teamFactory.newTeam(name));
 		return team;
 	}
@@ -74,4 +67,16 @@ public class TeamService implements TeamServiceRemote {
 			throw new TeamException(Team.UNKNOWN_TEAM);
 		return team;
 	}
+
+	@Override
+	public void deleteTeam(String name) {
+		eTJPA.delete(name);
+	}
+
+	@Override
+	public void clearAll() {
+		eTJPA.clearAll();
+	}
+	
+	
 }

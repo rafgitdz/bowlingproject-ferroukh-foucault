@@ -9,5 +9,7 @@ public interface RepositoryTeam {
 
 	public Team load(String name);
 
-	public void delete(Team team);
+	public void delete(String name);
+	
+	public void clearAll();
 }

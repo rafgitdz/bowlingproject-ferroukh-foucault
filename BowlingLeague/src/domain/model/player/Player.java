@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
-
 @Entity
 public class Player extends Observable implements Observer, Serializable {
 
@@ -41,11 +40,10 @@ public class Player extends Observable implements Observer, Serializable {
 			currentGame.roll(pinsDown);
 		else
 			displayError(this.getName() + ERROR_NOT_YOUR_TURN);
-		
+
 	}
 
 	public void setItsMyTurn(boolean b) {
-
 		itsMyTurn = b;
 	}
 
@@ -86,4 +84,3 @@ public class Player extends Observable implements Observer, Serializable {
 		currentGame.addObserver(this);
 	}
 }
-

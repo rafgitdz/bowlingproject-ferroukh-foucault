@@ -1,9 +1,9 @@
 package service.team;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.ejb.Remote;
-
 
 import domain.model.player.Player;
 import domain.model.team.Team;
@@ -11,9 +11,9 @@ import domain.model.team.Team;
 @Remote
 public interface TeamServiceRemote {
 
-	public Team createTeam(String name, ArrayList<String> team);
-
-	public ArrayList<Player> getPlayers();
+	public void addPlayer(String name);
+	
+	public List<Player> getPlayers();
 
 	public ArrayList<String> getPlayersNames();
 
@@ -24,5 +24,8 @@ public interface TeamServiceRemote {
 	public void saveTeam(Team team);
 
 	public Team newTeam(String name);
-
+	
+	public void deleteTeam(String name);
+	
+	public void clearAll();
 }
