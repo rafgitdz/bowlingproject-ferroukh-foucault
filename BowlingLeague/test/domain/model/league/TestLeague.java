@@ -94,7 +94,10 @@ public class TestLeague {
 			assertEquals(0, league.getScore(t));
 		playRound();
 		for (Team t : teams) {
-				System.out.println(league.getScore(t));
+			if (teams.indexOf(t) < teams.size()/2)
+				assertEquals(1, league.getScore(t));
+			else
+				assertEquals(0, league.getScore(t));
 		}
 	}
 

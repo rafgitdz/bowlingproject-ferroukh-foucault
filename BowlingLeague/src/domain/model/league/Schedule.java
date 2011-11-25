@@ -56,8 +56,8 @@ public class Schedule {
 		for (LeagueRound round : schedule)
 			for (Challenge c : round.getChallenges()) {
 
-				if (c.getFirstTeam().getName() == teamName
-						|| c.getSecondTeam().getName() == teamName) {
+				if (c.getFirstTeam().getName().equals(teamName)
+						|| c.getSecondTeam().getName().equals(teamName)) {
 					challenges.add(c);
 					break;
 				}
@@ -67,7 +67,7 @@ public class Schedule {
 
 	public List<Challenge> getRoundSchedule(int roundNumber) {
 
-		return schedule.get(roundNumber).getChallenges();
+		return schedule.get(roundNumber-1).getChallenges();
 	}
 
 	public int getId() {
