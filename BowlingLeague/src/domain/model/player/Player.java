@@ -47,7 +47,6 @@ public class Player extends Observable implements Observer, Serializable {
 	public void setItsMyTurn(boolean b) {
 
 		itsMyTurn = b;
-		System.out.println("it's my turn !");
 	}
 
 	public int getScore() {
