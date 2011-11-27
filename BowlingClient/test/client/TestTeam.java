@@ -2,6 +2,9 @@ package client;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.EJBException;
 
 import org.junit.Before;
@@ -17,6 +20,7 @@ public class TestTeam {
 
 	private TeamServiceRemote teamRemote;
 	private PlayerServiceRemote playerRemote;
+	private List<String> players;
 
 	@Before
 	public void setUp() {
@@ -28,22 +32,28 @@ public class TestTeam {
 	public void testSaveOnlyTeam() {
 
 		String expected = "Jaguars";
-		Team team = teamRemote.newTeam("Jaguars");
+		players = new ArrayList<String>();
+		buildPlayer("Jack");
+		buildPlayer("Franck");
+		buildPlayer("Matthew");
+		buildPlayer("Lance");
+		buildPlayer("Fabian");
+		Team team = teamRemote.newTeam("Jaguars", players);
 		assertEquals(expected, team.getName());
 	}
 
 	@Test
 	public void testSaveAllTeam() {
 
-		teamRemote.newTeam("Cotagers");
-		String expected = "Matthew";
+		String expected = "Estelle";
+		players = new ArrayList<String>();
+		buildPlayer("Chris");
+		buildPlayer("David");
+		buildPlayer("Estelle");
+		buildPlayer("Magic");
+		buildPlayer("Batman");
 
-		addPlayerTeam("Jack");
-		addPlayerTeam("Franck");
-		addPlayerTeam("Matthew");
-		addPlayerTeam("Lance");
-		addPlayerTeam("Fabian");
-
+		teamRemote.newTeam("Cotagers", players);
 		assertEquals(expected, teamRemote.getPlayersNames().get(2));
 	}
 
@@ -51,35 +61,35 @@ public class TestTeam {
 	public void testLoadTeam() {
 
 		String expected = "Leo";
-		teamRemote.newTeam("Canadians");
+		players = new ArrayList<String>();
+		buildPlayer("Milan");
+		buildPlayer("Cyril");
+		buildPlayer("Leo");
+		buildPlayer("Rafik");
+		buildPlayer("Alessia");
 
-		addPlayerTeam("Milan");
-		addPlayerTeam("Cyril");
-		addPlayerTeam("Leo");
-		addPlayerTeam("Rafik");
-		addPlayerTeam("Alessia");
-
-		assertEquals(expected, teamRemote.loadTeam("Canadians")
+		teamRemote.newTeam("Fabulous", players);
+		assertEquals(expected, teamRemote.loadTeam("Fabulous")
 				.getPlayersNames().get(2));
 	}
 
 	@Test(expected = EJBException.class)
 	public void testDeleteTeam() {
 
-		teamRemote.newTeam("Maggpies");
+		players = new ArrayList<String>();
+		buildPlayer("Marc");
+		buildPlayer("Anthony");
+		buildPlayer("Samy");
+		buildPlayer("Alex");
+		buildPlayer("Marine");
 
-		addPlayerTeam("Marc");
-		addPlayerTeam("Anthony");
-		addPlayerTeam("Samy");
-		addPlayerTeam("Alex");
-		addPlayerTeam("Marine");
-
+		teamRemote.newTeam("Maggpies", players);
 		teamRemote.deleteTeam("Maggpies");
 		teamRemote.loadTeam("Maggpies");
 	}
 
-	private void addPlayerTeam(String name) {
+	private void buildPlayer(String name) {
 		playerRemote.newPlayer(name);
-		teamRemote.addPlayer(name);
+		players.add(name);
 	}
 }

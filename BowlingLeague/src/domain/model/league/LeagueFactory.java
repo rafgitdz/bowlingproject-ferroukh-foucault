@@ -2,9 +2,12 @@ package domain.model.league;
 
 import java.util.List;
 
+import javax.ejb.Stateless;
+
 import domain.model.team.Team;
 import domain.model.team.TeamException;
 
+@Stateless
 public class LeagueFactory implements LeagueFactoryLocal {
 
 	private final static String ERROR_TEAM_NUMBER_ODD = "You must have an even number of teams to create a league";

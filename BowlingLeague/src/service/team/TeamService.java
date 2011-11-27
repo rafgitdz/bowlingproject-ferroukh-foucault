@@ -43,9 +43,13 @@ public class TeamService implements TeamServiceRemote {
 	}
 
 	@Override
-	public Team newTeam(String name, List<Player> players) {
+	public Team newTeam(String name, List<String> players) {
 
-		team = eTJPA.save(teamFactory.newTeam(name,players));
+		List<Player> playersList = new ArrayList<Player>();
+		for(String p : players)
+			playersList.add(ePJPA.load(p));
+		
+		team = eTJPA.save(teamFactory.newTeam(name,playersList));
 		return team;
 	}
 
