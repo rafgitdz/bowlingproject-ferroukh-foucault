@@ -8,6 +8,7 @@ import javax.ejb.Stateful;
 
 import domain.model.league.League;
 import domain.model.league.LeagueFactoryLocal;
+import domain.model.league.RepositoryLeague;
 import domain.model.league.Schedule;
 import domain.model.team.Team;
 
@@ -15,10 +16,12 @@ import domain.model.team.Team;
 public class LeagueService implements LeagueServiceRemote {
 
 	League league;
-	
+
+	@EJB
+	private RepositoryLeague eLPA;
 	@EJB
 	private LeagueFactoryLocal leagueFactory;
-	
+
 	@Override
 	public void createLeague(String name, List<Team> teams) {
 		league = leagueFactory.newLeague(name, teams);
@@ -73,5 +76,26 @@ public class LeagueService implements LeagueServiceRemote {
 	@Override
 	public String getName() {
 		return league.getName();
+	}
+
+	@Override
+	public League newLeague(String leagueName, List<Team> teams) {
+		league = eLPA.save(leagueFactory.newLeague(leagueName, teams));
+		return league;
+	}
+
+	@Override
+	public League loadLeague(String name) {
+		return eLPA.load(name);
+	}
+
+	@Override
+	public void deleteLeague(String name) {
+		eLPA.delete(name);
+	}
+
+	@Override
+	public void saveLeague(League league) {
+		eLPA.save(league);
 	}
 }

@@ -21,9 +21,10 @@ public class Schedule {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	int id;
 
-	@OneToMany(cascade = CascadeType.ALL, targetEntity = Challenge.class)
-	@IndexColumn(base = 0, name = "ChallengeIndex")
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = LeagueRound.class)
+	@IndexColumn(base = 0, name = "LeagueRoundIndex")
 	private List<LeagueRound> schedule;
+	
 	private int rounds;
 	private int challengesPerRound;
 
