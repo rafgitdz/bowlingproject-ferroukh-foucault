@@ -1,7 +1,6 @@
 package service.league;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
@@ -9,7 +8,6 @@ import javax.ejb.Stateful;
 import domain.model.league.League;
 import domain.model.league.LeagueFactoryLocal;
 import domain.model.league.RepositoryLeague;
-import domain.model.league.Schedule;
 import domain.model.team.Team;
 
 @Stateful
@@ -28,52 +26,6 @@ public class LeagueService implements LeagueServiceRemote {
 	}
 
 	@Override
-	public void goToNextRound(int round) {
-	}
-
-	@Override
-	public List<Team> getRanking() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int getRankingTeam(Team team) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Team getWinnerChallenge(int round, Team team1, Team team2) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Schedule getSchedule(Team team) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Schedule getSchedule(int round) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Map<Integer, Integer> getScoreChallenge(Team team1, Team team2) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int getScore(Team team) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public String getName() {
 		return league.getName();
 	}
@@ -86,11 +38,18 @@ public class LeagueService implements LeagueServiceRemote {
 
 	@Override
 	public League loadLeague(String name) {
-		return eLPA.load(name);
+
+		League league = eLPA.find(name);
+		if (league == null)
+			throw new LeagueException(League.LEAGUE_NOT_EXIST);
+		return league;
 	}
 
 	@Override
 	public void deleteLeague(String name) {
+		
+		if (eLPA.find(name) == null)
+			throw new LeagueException(League.LEAGUE_NOT_EXIST);
 		eLPA.delete(name);
 	}
 

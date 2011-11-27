@@ -21,6 +21,6 @@ public interface PlayerServiceRemote {
 
 	Player loadPlayer(String name);
 
-	public void deletePlayer(Player player);
+	public void deletePlayer(String name);
 
 }

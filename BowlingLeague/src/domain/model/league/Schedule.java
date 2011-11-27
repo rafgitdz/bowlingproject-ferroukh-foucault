@@ -22,12 +22,15 @@ public class Schedule {
 	int id;
 
 	@OneToMany(cascade = CascadeType.ALL, targetEntity = LeagueRound.class)
-	@IndexColumn(base = 0, name = "LeagueRoundIndex")
+	@IndexColumn(base = 0, name = "LRIndex")
 	private List<LeagueRound> schedule;
 	
 	private int rounds;
 	private int challengesPerRound;
 
+	protected Schedule() {
+	}
+	
 	protected Schedule(List<Team> teams) {
 
 		rounds = teams.size() - 1;
@@ -77,5 +80,9 @@ public class Schedule {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public List<LeagueRound> getSchedule() {
+		return schedule;
 	}
 }

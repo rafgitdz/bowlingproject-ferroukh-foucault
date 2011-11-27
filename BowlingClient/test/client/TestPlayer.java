@@ -39,7 +39,7 @@ public class TestPlayer {
 	public void testDeletePlayer() {
 
 		expected = "Marvin";
-		playerRemote.deletePlayer(playerRemote.newPlayer(expected));
+		playerRemote.deletePlayer(playerRemote.newPlayer(expected).getName());
 		playerRemote.loadPlayer(expected);
 	}
 }
