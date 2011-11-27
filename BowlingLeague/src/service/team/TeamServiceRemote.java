@@ -10,8 +10,6 @@ import domain.model.team.Team;
 
 @Remote
 public interface TeamServiceRemote {
-
-	public void addPlayer(String name);
 	
 	public List<Player> getPlayers();
 
@@ -23,7 +21,7 @@ public interface TeamServiceRemote {
 
 	public void saveTeam(Team team);
 
-	public Team newTeam(String name);
+	public Team newTeam(String name, List<Player> players);
 	
 	public void deleteTeam(String name);
 	

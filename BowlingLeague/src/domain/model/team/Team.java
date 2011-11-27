@@ -18,9 +18,7 @@ import domain.model.player.Player;
 public class Team implements Serializable {
 
 	private static final long serialVersionUID = 2133149340833314015L;
-	public static final int MAX_TEAM_SIZE = 5;
-	private static final String ERROR_ALREADY_IN_TEAM = "is already in the team ";
-	private static final String ERROR_TEAM_IS_FULL = "This team is full, you cannot add another player";
+	public static final int TEAM_SIZE = 5;
 	private static final String UNKONWN_PLAYER_TEAM = "Unknown player in this team -> ";
 	public static final String UNKNOWN_TEAM = "Unknown team !";
 
@@ -33,25 +31,9 @@ public class Team implements Serializable {
 	protected Team() {
 	}
 
-	Team(String name) {
+	Team(String name, List<Player> players) {
 		this.teamName = name;
-		players = new ArrayList<Player>();
-	}
-
-	public void addPlayer(Player player) {
-
-		if (isInTeam(player))
-			displayError(player.getName() + ERROR_ALREADY_IN_TEAM + teamName);
-
-		else if (isFull())
-			displayError(ERROR_TEAM_IS_FULL);
-
-		else
-			players.add(player);
-	}
-
-	public void deletePlayer(Player player) {
-		players.remove(player);
+		this.players = players;
 	}
 
 	public String getName() {
@@ -70,20 +52,7 @@ public class Team implements Serializable {
 
 		return playersNames;
 	}
-
-	private boolean isInTeam(Player player) {
-
-		return players.contains(player);
-	}
-
-	private boolean isFull() {
-		return players.size() == MAX_TEAM_SIZE;
-	}
-
-	private void displayError(String message) {
-		throw new TeamException(message);
-	}
-
+	
 	public Player getPlayer(int i) {
 		return players.get(i);
 	}
