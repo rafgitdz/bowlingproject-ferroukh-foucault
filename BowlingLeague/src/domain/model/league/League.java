@@ -33,7 +33,7 @@ public class League {
 	protected League() {
 	}
 
-	League(String name, List<Team> teams) {
+	protected League(String name, List<Team> teams) {
 
 		this.name = name;
 		this.teams = teams;
