@@ -4,12 +4,9 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-public final class UniqueContext {
+public abstract class OnlyOneContext {
 
 	private static Context context = null;
-
-	UniqueContext() {
-	}
 
 	public static Context getInstanceContext() {
 

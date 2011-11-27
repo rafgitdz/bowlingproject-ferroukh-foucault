@@ -30,8 +30,9 @@ public class League {
 	private Schedule schedule;
 	private int currentRound;
 
-	protected League() {}
-	
+	protected League() {
+	}
+
 	League(String name, List<Team> teams) {
 
 		this.name = name;
@@ -40,7 +41,7 @@ public class League {
 		currentRound = 1;
 		startRound(currentRound);
 	}
-	
+
 	public int getSize() {
 		return teams.size();
 	}
@@ -75,9 +76,8 @@ public class League {
 	}
 
 	private void startRound(int round) {
-		for (Challenge c : getCurrentRoundChallenges()) {
+		for (Challenge c : getCurrentRoundChallenges())
 			c.setDuels();
-		}
 	}
 
 	public Challenge getCurrentChallenge(Team team) {
@@ -105,9 +105,9 @@ public class League {
 		}
 		return score;
 	}
-	
+
 	public List<Team> getRanking() {
-		
+
 		Map<Team, Integer> scores = new HashMap<Team, Integer>();
 		List<Team> ranking = new ArrayList<Team>();
 
@@ -115,18 +115,18 @@ public class League {
 			int score = getScore(t);
 			int rank = 0;
 			scores.put(t, score);
-			for(int i = 0; i< ranking.size(); ++i) {
-				if (scores.get(ranking.get(i)) <=  score) {
+			for (int i = 0; i < ranking.size(); ++i) {
+				if (scores.get(ranking.get(i)) <= score) {
 					rank = i;
 					break;
 				}
 			}
 			ranking.add(rank, t);
 		}
-		
+
 		return ranking;
 	}
-	
+
 	public List<Challenge> getSchedule(Team t) {
 
 		return getSchedule().getTeamSchedule(t.getName());

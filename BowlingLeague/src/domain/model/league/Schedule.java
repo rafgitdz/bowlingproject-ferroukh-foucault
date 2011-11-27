@@ -33,13 +33,13 @@ public class Schedule {
 		challengesPerRound = teams.size() / 2;
 		schedule = new ArrayList<LeagueRound>(rounds);
 		buildSchedule(teams);
-
 	}
 
 	private void buildSchedule(List<Team> teams) {
 
 		for (int i = 0; i < rounds; i++) {
-			List<Challenge> roundChallenges = new ArrayList<Challenge>(challengesPerRound);
+			List<Challenge> roundChallenges = new ArrayList<Challenge>(
+					challengesPerRound);
 			for (int j = 0; j < challengesPerRound; j++) {
 				roundChallenges.add(new Challenge(teams.get(j), teams.get(j
 						+ challengesPerRound)));
@@ -67,7 +67,7 @@ public class Schedule {
 
 	public List<Challenge> getRoundSchedule(int roundNumber) {
 
-		return schedule.get(roundNumber-1).getChallenges();
+		return schedule.get(roundNumber - 1).getChallenges();
 	}
 
 	public int getId() {

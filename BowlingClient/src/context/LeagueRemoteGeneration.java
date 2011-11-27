@@ -15,7 +15,7 @@ public final class LeagueRemoteGeneration {
 	public static LeagueServiceRemote getInstance() {
 
 		try {
-			Context context = UniqueContext.getInstanceContext();
+			Context context = OnlyOneContext.getInstanceContext();
 			if (leagueRemote == null)
 				leagueRemote = (LeagueServiceRemote) context
 						.lookup("LeagueService/remote");

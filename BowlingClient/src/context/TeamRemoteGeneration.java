@@ -15,7 +15,7 @@ public final class TeamRemoteGeneration {
 	public static TeamServiceRemote getInstance() {
 
 		try {
-			Context context = UniqueContext.getInstanceContext();
+			Context context = OnlyOneContext.getInstanceContext();
 			if (teamRemote == null)
 				teamRemote = (TeamServiceRemote) context
 						.lookup("TeamService/remote");

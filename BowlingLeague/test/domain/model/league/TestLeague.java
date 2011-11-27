@@ -8,7 +8,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import domain.model.player.Player;
 import domain.model.player.PlayerFactoryForTest;
 import domain.model.team.Team;
@@ -18,7 +17,7 @@ public class TestLeague {
 
 	TeamFactoryForTest teamFactory = new TeamFactoryForTest();
 	PlayerFactoryForTest playerFactory = new PlayerFactoryForTest();
-	
+
 	List<Team> teams;
 	private League league;
 	String name = "Barclay's";
@@ -48,10 +47,11 @@ public class TestLeague {
 
 	@Test
 	public void testGetSchedule() {
-		
+
 		Schedule schedule = league.getSchedule();
 		for (Team t : teams) {
-			assertEquals(teams.size()-1, schedule.getTeamSchedule(t.getName()).size());
+			assertEquals(teams.size() - 1, schedule
+					.getTeamSchedule(t.getName()).size());
 		}
 	}
 
@@ -90,11 +90,12 @@ public class TestLeague {
 
 	@Test
 	public void testGetTeamScore() {
+
 		for (Team t : teams)
 			assertEquals(0, league.getScore(t));
 		playRound();
 		for (Team t : teams) {
-			if (teams.indexOf(t) < teams.size()/2)
+			if (teams.indexOf(t) < teams.size() / 2)
 				assertEquals(1, league.getScore(t));
 			else
 				assertEquals(0, league.getScore(t));
@@ -107,10 +108,13 @@ public class TestLeague {
 	 */
 
 	private void playRound() {
+
 		for (Challenge c : league.getCurrentRoundChallenges()) {
+			
 			for (int i = 0; i < 5; ++i) {
 				Player p1 = c.getFirstTeamPlayer(i);
 				Player p2 = c.getSecondTeamPlayer(i);
+				
 				for (int j = 0; j < 10; ++j) {
 					p1.roll(4);
 					p1.roll(4);

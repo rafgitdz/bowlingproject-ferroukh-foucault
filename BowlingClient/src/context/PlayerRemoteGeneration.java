@@ -15,7 +15,7 @@ public final class PlayerRemoteGeneration {
 	public static PlayerServiceRemote getInstance() {
 
 		try {
-			Context context = UniqueContext.getInstanceContext();
+			Context context = OnlyOneContext.getInstanceContext();
 			if (playerRemote == null)
 				playerRemote = (PlayerServiceRemote) context
 						.lookup("PlayerService/remote");
