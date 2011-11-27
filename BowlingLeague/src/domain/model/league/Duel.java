@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import domain.model.exception.DuelException;
 import domain.model.player.Player;
 import domain.model.player.PlayerFactory;
 import domain.model.player.PlayerFactoryLocal;

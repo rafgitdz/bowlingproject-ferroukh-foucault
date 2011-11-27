@@ -6,11 +6,11 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 
+import domain.model.exception.TeamException;
 import domain.model.player.Player;
 import domain.model.player.RepositoryPlayer;
 import domain.model.team.RepositoryTeam;
 import domain.model.team.Team;
-import domain.model.team.TeamException;
 import domain.model.team.TeamFactoryLocal;
 
 @Stateful

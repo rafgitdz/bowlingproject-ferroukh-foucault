@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.IndexColumn;
 
+import domain.model.exception.GameException;
+
 @Entity
 public class Game extends Observable implements Serializable {
 

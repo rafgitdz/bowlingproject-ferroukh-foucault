@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 
+import domain.model.exception.TeamException;
 import domain.model.team.Team;
-import domain.model.team.TeamException;
 
 @Stateless
 public class LeagueFactory implements LeagueFactoryLocal {

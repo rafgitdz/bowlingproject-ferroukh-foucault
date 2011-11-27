@@ -7,6 +7,9 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import domain.model.exception.FrameException;
+import domain.model.exception.GameException;
+
 public class TestGame {
 
 	private GameFactoryForTest gameFactory = new GameFactoryForTest();

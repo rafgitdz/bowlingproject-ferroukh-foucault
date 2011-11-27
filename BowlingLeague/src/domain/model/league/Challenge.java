@@ -19,6 +19,7 @@ import javax.persistence.OneToOne;
 import org.hibernate.annotations.IndexColumn;
 
 
+import domain.model.exception.ChallengeException;
 import domain.model.player.Player;
 import domain.model.team.Team;
 

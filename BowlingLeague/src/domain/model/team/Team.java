@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.IndexColumn;
 
+import domain.model.exception.TeamException;
 import domain.model.player.Player;
 
 @Entity
