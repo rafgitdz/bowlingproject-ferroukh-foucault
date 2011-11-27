@@ -27,9 +27,10 @@ public class TestLeague {
 
 		teams = new ArrayList<Team>();
 		for (int i = 0; i < 4; i++) {
-			Team t = teamFactory.newTeam("Team" + i);
+			List<Player> players = new ArrayList<Player>();
 			for (int j = 0; j < 5; j++)
-				t.addPlayer(playerFactory.newPlayer("Player" + i + j));
+				players.add(playerFactory.newPlayer("Player" + i + j));
+			Team t = teamFactory.newTeam("Team" + i,players);
 			teams.add(t);
 		}
 		league = new League(name, teams);

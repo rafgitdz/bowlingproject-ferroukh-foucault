@@ -19,7 +19,7 @@ public class LeagueFactory implements LeagueFactoryLocal {
 			throw new TeamException(ERROR_TEAM_NUMBER_ODD);
 		if (teams.size() == 0)
 			throw new TeamException(ERROR_TEAM_NUMBER_NULL);
-		
+
 		return new League(name, teams);
 	}
 }

@@ -55,11 +55,11 @@ public class Challenge implements Observer, Serializable {
 		secondTeam = secondT;
 		scoreFirstTeam = 0;
 		scoreSecondTeam = 0;
-		duels = new ArrayList<Duel>(Team.MAX_TEAM_SIZE);
+		duels = new ArrayList<Duel>(Team.TEAM_SIZE);
 	}
 
 	public Team getWinner() {
-		if (scoreFirstTeam + scoreSecondTeam < Team.MAX_TEAM_SIZE)
+		if (scoreFirstTeam + scoreSecondTeam < Team.TEAM_SIZE)
 			throw new ChallengeException(CHALLENGE_NOT_OVER);
 		return scoreFirstTeam > scoreSecondTeam ? firstTeam : secondTeam;
 	}
@@ -105,7 +105,7 @@ public class Challenge implements Observer, Serializable {
 	}
 
 	public boolean isOver() {
-		return (scoreFirstTeam + scoreSecondTeam == Team.MAX_TEAM_SIZE) ? true : false;
+		return (scoreFirstTeam + scoreSecondTeam == Team.TEAM_SIZE) ? true : false;
 	}
 
 	public int getId() {

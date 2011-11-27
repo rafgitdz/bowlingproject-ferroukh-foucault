@@ -9,18 +9,13 @@ import domain.model.player.Player;
 @Stateless
 public class TeamFactory implements TeamFactoryLocal {
 
-	@Override
-	public Team newTeam(String name) {
-		Team t = new Team(name);
-		return t;
-	}
+	private static final String ERROR_TEAM_SIZE = "The team must have " + Team.TEAM_SIZE + "players";
 	
 	public Team newTeam(String name, List<Player> players) {
-		Team t = newTeam(name);
-		for (Player p: players) {
-			t.addPlayer(p);
-		}
+		if (players.size() != Team.TEAM_SIZE)
+			throw new TeamException(ERROR_TEAM_SIZE);
 		
+		Team t = new Team(name, players);		
 		return t;
 	}
 

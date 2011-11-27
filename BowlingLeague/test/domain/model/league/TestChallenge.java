@@ -2,6 +2,9 @@ package domain.model.league;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,11 +25,9 @@ public class TestChallenge {
 	@Before
 	public void setUp() {
 
-		Team firstTeam = teamFactory.newTeam("Cotagers");
-		Team secondTeam = teamFactory.newTeam("Citizens");
+		Team firstTeam = buildTeam("Cottagers");
+		Team secondTeam = buildTeam("Citizens");
 
-		buildTeam(firstTeam, firstTeam.getName());
-		buildTeam(secondTeam, secondTeam.getName());
 
 		challenge = new Challenge(firstTeam, secondTeam);
 		challenge.setDuels();
@@ -98,13 +99,14 @@ public class TestChallenge {
 		assertEquals(expected, challenge.getWinner());
 	}
 
-	private void buildTeam(Team team, String name) {
+	private Team buildTeam(String name) {
 
+		List<Player> players = new ArrayList<Player>();
 		for (int i = 0; i < 5; i++) {
 
-			Player p = playerFactory.newPlayer(name + (i + 1));
-			team.addPlayer(p);
+			players.add(playerFactory.newPlayer(name + (i + 1)));	
 		}
+		return teamFactory.newTeam(name, players);
 	}
 
 	private void play(int roll1, int roll2, int roll3, int roll4) {
