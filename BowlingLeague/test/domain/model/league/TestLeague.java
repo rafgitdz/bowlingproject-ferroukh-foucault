@@ -26,7 +26,9 @@ public class TestLeague {
 	public void setUp() {
 
 		teams = new ArrayList<Team>();
+		
 		for (int i = 0; i < 4; i++) {
+			
 			List<Player> players = new ArrayList<Player>();
 			for (int j = 0; j < 5; j++)
 				players.add(playerFactory.newPlayer("Player" + i + j));
@@ -78,8 +80,11 @@ public class TestLeague {
 	}
 
 	@Test
-	public void testPlayRound() {
+	public void testPlay2Rounds() {
 
+		playRound();
+		league.nextRound();
+		System.out.println("TOUR 2\n\n");
 		playRound();
 		league.nextRound();
 	}
@@ -103,15 +108,20 @@ public class TestLeague {
 		}
 	}
 
-	/*
-	 * @Test(expected=LeagueException.class) public void testPlay20Rounds() {
-	 * for (int i= 0; i < 20 ; ++i) { playRound(); league.nextRound(); } }
-	 */
+	/* @Test(expected=LeagueException.class) 
+	 public void testPlayRounds() {
+		 
+		 for (int i= 0; i < teams.size()-1 ; ++i) 
+			 playRound(); 
+		 	 league.nextRound(); 
+		 
+		 }*/
+
 
 	private void playRound() {
-
-		for (Challenge c : league.getCurrentRoundChallenges()) {
-			
+		List<Challenge> challenges = league.getCurrentRoundChallenges();
+		for (Challenge c : challenges) {
+			System.out.println("Challenge entre " + c.getFirstTeam().getName() + "et " + c.getSecondTeam().getName());
 			for (int i = 0; i < 5; ++i) {
 				Player p1 = c.getFirstTeamPlayer(i);
 				Player p2 = c.getSecondTeamPlayer(i);
@@ -119,8 +129,8 @@ public class TestLeague {
 				for (int j = 0; j < 10; ++j) {
 					p1.roll(4);
 					p1.roll(4);
-					p2.roll(3);
-					p2.roll(4);
+					p2.roll(2);
+					p2.roll(2);
 				}
 			}
 		}

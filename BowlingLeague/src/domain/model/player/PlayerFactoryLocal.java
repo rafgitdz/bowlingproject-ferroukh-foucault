@@ -6,5 +6,7 @@ import javax.ejb.Local;
 public interface PlayerFactoryLocal {
 
 	public Player newPlayer(String name);
+
+	public Player newGame(Player player);
 	
 }

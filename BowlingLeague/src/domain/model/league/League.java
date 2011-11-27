@@ -14,6 +14,7 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.IndexColumn;
 
+import domain.model.player.Player;
 import domain.model.team.Team;
 
 @Entity
@@ -76,8 +77,18 @@ public class League {
 	}
 
 	private void startRound(int round) {
+		System.out.println("TOUR " + currentRound + "\n\n");
+		System.out.println("Compo teams: \n");
+		for (Team t : teams)
+			for (Player p : t.getPlayers())
+				System.out.println(p.getName());
 		for (Challenge c : getCurrentRoundChallenges())
 			c.setDuels();
+		
+		System.out.println("Compo teams apres: \n");
+		for (Team t : teams)
+			for (Player p : t.getPlayers())
+				System.out.println(p.getName());
 	}
 
 	public Challenge getCurrentChallenge(Team team) {
