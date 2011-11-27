@@ -49,4 +49,9 @@ public class RepositoryGenericJPA<T, TId> implements RepositoryGeneric<T, TId> {
 		return entity;
 	}
 
+	@Override
+	public T find(TId id) {
+		return em.find(persistentClass, id);
+	}
+
 }

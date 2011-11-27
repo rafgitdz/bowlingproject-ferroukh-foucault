@@ -11,5 +11,7 @@ public interface RepositoryGeneric<T, TId> {
 	public void delete(TId id);
 
 	public List<T> loadAll();
+	
+	public T find(TId id);
 
 }

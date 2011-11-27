@@ -23,7 +23,7 @@ public class LeagueRound {
 	private List<Challenge> challenges;
 
 	protected LeagueRound() {
-	};
+	}
 
 	protected LeagueRound(List<Challenge> challenges) {
 		this.challenges = challenges;
@@ -31,5 +31,13 @@ public class LeagueRound {
 
 	public List<Challenge> getChallenges() {
 		return challenges;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

@@ -21,6 +21,8 @@ import domain.model.team.Team;
 @Entity
 public class League {
 
+	public static final String LEAGUE_NOT_EXIST = "Unknown league !";
+
 	@Id
 	private String name;
 
@@ -142,5 +144,9 @@ public class League {
 	public List<Challenge> getSchedule(Team t) {
 
 		return getSchedule().getTeamSchedule(t.getName());
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }
