@@ -1,36 +1,46 @@
 package domain.model.league;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.IndexColumn;
 
 import domain.model.team.Team;
 
 @Entity
-public class Schedule {
+public class Schedule implements Serializable {
+
+	private static final long serialVersionUID = -5883474850303639189L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	int id;
 
-	@OneToMany(cascade = CascadeType.ALL, targetEntity = LeagueRound.class)
-	@IndexColumn(base = 0, name = "LRIndex")
+	@OneToMany(cascade = CascadeType.PERSIST, targetEntity = LeagueRound.class, fetch = FetchType.EAGER)
+	@IndexColumn(base = 1, name = "LRIndex")
 	private List<LeagueRound> schedule;
-	
+
+	@OneToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "League_ID")
+	private League league;
+
 	private int rounds;
 	private int challengesPerRound;
 
 	protected Schedule() {
 	}
-	
+
 	protected Schedule(List<Team> teams) {
 
 		rounds = teams.size() - 1;
@@ -84,5 +94,17 @@ public class Schedule {
 
 	public List<LeagueRound> getSchedule() {
 		return schedule;
+	}
+
+	public void setSchedule(List<LeagueRound> schedule) {
+		this.schedule = schedule;
+	}
+
+	public League getLeague() {
+		return league;
+	}
+
+	public void setLeague(League league) {
+		this.league = league;
 	}
 }

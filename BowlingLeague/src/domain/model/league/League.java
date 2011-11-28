@@ -1,5 +1,6 @@
 package domain.model.league;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -17,19 +19,23 @@ import org.hibernate.annotations.IndexColumn;
 import domain.model.team.Team;
 
 @Entity
-public class League {
+public class League implements Serializable {
+
+	private static final long serialVersionUID = 5625666263840044089L;
 
 	public static final String LEAGUE_NOT_EXIST = "Unknown league !";
 
 	@Id
 	private String name;
 
-	@OneToMany(cascade = CascadeType.ALL, targetEntity = Team.class)
+	@OneToMany(targetEntity = Team.class, fetch = FetchType.EAGER)
 	@IndexColumn(base = 0, name = "TeamIndex")
 	private List<Team> teams;
-	@OneToOne
+
+	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "Schedule_ID")
 	private Schedule schedule;
+
 	private int currentRound;
 
 	protected League() {

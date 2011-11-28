@@ -8,10 +8,14 @@ public interface RepositoryGeneric<T, TId> {
 
 	public T save(T entity);
 
+	public T save(T entity, TId id);
+	
 	public void delete(TId id);
 
 	public List<T> loadAll();
-	
+
 	public T find(TId id);
+
+	public T update(T entity);
 
 }

@@ -55,7 +55,7 @@ public class TeamService implements TeamServiceRemote {
 
 	@Override
 	public void saveTeam(Team team) {
-		eTJPA.save(team);
+		eTJPA.save(team, team.getName());
 	}
 
 	@Override

@@ -32,7 +32,7 @@ public class LeagueService implements LeagueServiceRemote {
 
 	@Override
 	public League newLeague(String leagueName, List<Team> teams) {
-		league = eLPA.save(leagueFactory.newLeague(leagueName, teams));
+		league = eLPA.save(leagueFactory.newLeague(leagueName, teams), league.getName());
 		return league;
 	}
 
@@ -47,7 +47,7 @@ public class LeagueService implements LeagueServiceRemote {
 
 	@Override
 	public void deleteLeague(String name) {
-		
+
 		if (eLPA.find(name) == null)
 			throw new LeagueException(League.LEAGUE_NOT_EXIST);
 		eLPA.delete(name);

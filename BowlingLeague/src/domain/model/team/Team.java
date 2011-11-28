@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -24,8 +23,8 @@ public class Team implements Serializable {
 
 	@Id
 	private String teamName;
-	@OneToMany(cascade = CascadeType.ALL, targetEntity = Player.class, fetch = FetchType.EAGER)
-	@IndexColumn(base = 0, name = "PlayerName")
+	@OneToMany(targetEntity = Player.class, fetch = FetchType.EAGER)
+	@IndexColumn(base = 0, name = "PlayerIndex")
 	private List<Player> players;
 
 	protected Team() {

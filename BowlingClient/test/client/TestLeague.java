@@ -46,6 +46,7 @@ public class TestLeague {
 
 				playersNames.add("Player" + i + j);
 				playersList.add(playerRemote.newPlayer("Player" + i + j));
+				System.out.println("Player" + i + j);
 			}
 			Team t = teamRemote.newTeam("Team" + i, playersNames);
 			teams.add(t);
