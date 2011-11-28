@@ -25,4 +25,8 @@ public final class TeamRemoteGeneration {
 		}
 		return teamRemote;
 	}
+	
+	public static void cleanInstance() {
+		teamRemote = null;
+	}
 }

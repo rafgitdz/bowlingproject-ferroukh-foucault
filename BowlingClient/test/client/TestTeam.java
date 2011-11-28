@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.ejb.EJBException;
 
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,6 +29,12 @@ public class TestTeam {
 		playerRemote = PlayerRemoteGeneration.getInstance();
 	}
 
+	@AfterClass
+	public static void cleanService() {
+		TeamRemoteGeneration.cleanInstance();
+		PlayerRemoteGeneration.cleanInstance();
+	}
+	
 	@Test
 	public void testSaveOnlyTeam() {
 
