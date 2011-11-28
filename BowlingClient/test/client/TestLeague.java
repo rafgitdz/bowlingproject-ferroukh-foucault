@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -53,6 +54,13 @@ public class TestLeague {
 		}
 	}
 
+	@AfterClass
+	public static void cleanServices() {
+		TeamRemoteGeneration.cleanInstance();
+		PlayerRemoteGeneration.cleanInstance();
+		LeagueRemoteGeneration.cleanInstance();
+	}
+	
 	@Test
 	public void testCreateLeague() {
 		leagueRemote.newLeague(leagueName, teams);

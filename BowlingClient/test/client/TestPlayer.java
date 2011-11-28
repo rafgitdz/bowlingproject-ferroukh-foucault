@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import javax.ejb.EJBException;
 
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,6 +19,11 @@ public class TestPlayer {
 	@Before
 	public void setUp() throws Exception {
 		playerRemote = PlayerRemoteGeneration.getInstance();
+	}
+	
+	@AfterClass
+	public static void cleanServices() {
+		PlayerRemoteGeneration.cleanInstance();
 	}
 
 	@Test
