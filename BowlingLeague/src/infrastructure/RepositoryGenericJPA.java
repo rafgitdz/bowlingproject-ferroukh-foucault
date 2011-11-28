@@ -62,10 +62,10 @@ public class RepositoryGenericJPA<T, TId> implements RepositoryGeneric<T, TId> {
 
 		if (em.find(persistentClass, id) != null)
 			em.merge(entity);
-		else
+		else {
+			System.out.println(entity + " " + id);
 			em.persist(entity);
-		
+		}
 		return entity;
 	}
-
 }

@@ -24,6 +24,7 @@ public class TestLeague {
 	private PlayerServiceRemote playerRemote;
 	String leagueName;
 	List<Team> teams;
+	List<String> teamNames;
 
 	@Before
 	public void setUp() {
@@ -34,9 +35,11 @@ public class TestLeague {
 
 		leagueName = "Premiership";
 		teams = new ArrayList<Team>();
+		teamNames = new ArrayList<String>();
 		List<Player> playersList;
 		List<String> playersNames = null;
 
+		System.out.println("setUp");
 		for (int i = 0; i < 2; i++) {
 
 			playersList = new ArrayList<Player>();
@@ -49,13 +52,18 @@ public class TestLeague {
 				System.out.println("Player" + i + j);
 			}
 			Team t = teamRemote.newTeam("Team" + i, playersNames);
+			teamNames.add("Team" + i);
 			teams.add(t);
 		}
 	}
 
 	@Test
 	public void testCreateLeague() {
-		leagueRemote.newLeague(leagueName, teams);
+
+		leagueRemote.newLeague(leagueName, teamNames);
+		// leagueRemote.addTeam(leagueRemote.getName(), teams.get(0).getName());
+		// leagueRemote.addTeam(leagueRemote.getName(), teams.get(1).getName());
+		// leagueRemote.startLeague(leagueName, teamNames);
 		assertEquals(leagueName, leagueRemote.getName());
 	}
 }

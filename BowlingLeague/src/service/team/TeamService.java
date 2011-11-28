@@ -71,11 +71,4 @@ public class TeamService implements TeamServiceRemote {
 	public void deleteTeam(String name) {
 		eTJPA.delete(name);
 	}
-
-	@Override
-	public void clearAll() {
-		eTJPA.clearAll();
-	}
-	
-	
 }

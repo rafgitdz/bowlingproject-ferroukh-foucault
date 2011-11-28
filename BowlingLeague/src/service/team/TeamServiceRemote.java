@@ -24,7 +24,5 @@ public interface TeamServiceRemote {
 	Team newTeam(String name, List<String> players);
 	
 	public void deleteTeam(String name);
-	
-	public void clearAll();
 
 }

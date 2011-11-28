@@ -21,7 +21,7 @@ public class LeagueRound implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	int id;
 
-	@OneToMany(cascade = CascadeType.PERSIST, targetEntity = Challenge.class)
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = Challenge.class)
 	@IndexColumn(base = 0, name = "ChallengeIndex")
 	private List<Challenge> challenges;
 

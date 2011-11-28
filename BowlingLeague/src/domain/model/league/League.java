@@ -8,7 +8,6 @@ import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -29,24 +28,25 @@ public class League implements Serializable {
 	@Id
 	private String name;
 
-	@OneToMany(targetEntity = Team.class, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = Team.class)
 	@IndexColumn(base = 0, name = "TeamIndex")
 	private List<Team> teams;
 
-	@OneToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "Schedule_ID")
+	@OneToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "schedule_Id")
 	private Schedule schedule;
 
 	private int currentRound;
 
 	protected League() {
+		currentRound = 1;
 	}
 
 	protected League(String name, List<Team> teams) {
 
 		this.name = name;
 		this.teams = teams;
-		schedule = new Schedule(teams);
+		// schedule = new Schedule(teams);
 		currentRound = 1;
 		startRound(currentRound);
 	}
@@ -72,9 +72,9 @@ public class League implements Serializable {
 	}
 
 	public void nextRound() {
-		if (currentRound == teams.size()-1)
+		if (currentRound == teams.size() - 1)
 			throw new LeagueException("The league is over");
-		
+
 		List<Challenge> challenges = schedule
 				.getRoundSchedule(getCurrentRound());
 		for (Challenge c : challenges)
@@ -87,7 +87,7 @@ public class League implements Serializable {
 	}
 
 	private void startRound(int round) {
-		
+
 		for (Challenge c : getCurrentRoundChallenges())
 			c.setDuels();
 	}
@@ -115,7 +115,7 @@ public class League implements Serializable {
 				break;
 			if (c.isOver() && c.getWinner().getName().equals(t.getName()))
 				score++;
-				
+
 		}
 		return score;
 	}
@@ -147,7 +147,23 @@ public class League implements Serializable {
 	}
 
 	public void setName(String name) {
-		
 		this.name = name;
+	}
+
+	protected void setTeams(List<Team> teams) {
+		this.teams = teams;
+	}
+	
+	protected void addTeam(Team team) {
+		teams.add(team);
+	}
+
+	public void setSchedule(Schedule schedule2) {
+		this.schedule = schedule2;
+	}
+
+	public void startLeague() {
+		schedule.buildSchedule(teams);
+		startRound(currentRound);
 	}
 }

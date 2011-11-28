@@ -1,5 +1,6 @@
 package service.league;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -8,6 +9,7 @@ import javax.ejb.Stateful;
 import domain.model.league.League;
 import domain.model.league.LeagueFactoryLocal;
 import domain.model.league.RepositoryLeague;
+import domain.model.team.RepositoryTeam;
 import domain.model.team.Team;
 
 @Stateful
@@ -18,12 +20,9 @@ public class LeagueService implements LeagueServiceRemote {
 	@EJB
 	private RepositoryLeague eLPA;
 	@EJB
+	private RepositoryTeam eTPA;
+	@EJB
 	private LeagueFactoryLocal leagueFactory;
-
-	@Override
-	public void createLeague(String name, List<Team> teams) {
-		league = leagueFactory.newLeague(name, teams);
-	}
 
 	@Override
 	public String getName() {
@@ -31,8 +30,13 @@ public class LeagueService implements LeagueServiceRemote {
 	}
 
 	@Override
-	public League newLeague(String leagueName, List<Team> teams) {
-		league = eLPA.save(leagueFactory.newLeague(leagueName, teams), league.getName());
+	public League newLeague(String leagueName, List<String> namesTeam) {
+
+		List<Team> teamList = new ArrayList<Team>();
+		for (String t : namesTeam) {
+			teamList.add(eTPA.load(t));
+		}
+		league = leagueFactory.newLeague(leagueName, teamList);
 		return league;
 	}
 
@@ -56,5 +60,20 @@ public class LeagueService implements LeagueServiceRemote {
 	@Override
 	public void saveLeague(League league) {
 		eLPA.save(league);
+	}
+
+	@Override
+	public void addTeam(String name, String nameTeam) {
+		leagueFactory.updateLeague(name, eTPA.load(nameTeam));
+	}
+
+	@Override
+	public void startLeague(String name, List<String> namesTeam) {
+
+		List<Team> teamList = new ArrayList<Team>();
+		for (String t : namesTeam) {
+			teamList.add(eTPA.load(t));
+		}
+		leagueFactory.StartLeague(name, teamList);
 	}
 }
