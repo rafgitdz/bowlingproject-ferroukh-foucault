@@ -12,7 +12,6 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.IndexColumn;
 
-import domain.model.exception.TeamException;
 import domain.model.player.Player;
 
 @Entity
@@ -58,9 +57,9 @@ public class Team implements Serializable {
 		return players.get(i);
 	}
 
-	public void setPlayer(int i, Player p) {
+	/*public void setPlayer(int i, Player p) {
 		players.set(i, p);
-	}
+	}*/
 
 	public Player getPlayer(String name) {
 

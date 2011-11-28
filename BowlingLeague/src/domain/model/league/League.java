@@ -15,7 +15,6 @@ import javax.persistence.OneToOne;
 import org.hibernate.annotations.IndexColumn;
 
 import domain.model.exception.LeagueException;
-import domain.model.player.Player;
 import domain.model.team.Team;
 
 @Entity
@@ -67,7 +66,9 @@ public class League {
 	}
 
 	public void nextRound() {
-
+		if (currentRound == teams.size()-1)
+			throw new LeagueException("The league is over");
+		
 		List<Challenge> challenges = schedule
 				.getRoundSchedule(getCurrentRound());
 		for (Challenge c : challenges)
@@ -80,18 +81,9 @@ public class League {
 	}
 
 	private void startRound(int round) {
-		System.out.println("TOUR " + currentRound + "\n\n");
-		System.out.println("Compo teams: \n");
-		for (Team t : teams)
-			for (Player p : t.getPlayers())
-				System.out.println(p.getName());
+		
 		for (Challenge c : getCurrentRoundChallenges())
 			c.setDuels();
-		
-		System.out.println("Compo teams apres: \n");
-		for (Team t : teams)
-			for (Player p : t.getPlayers())
-				System.out.println(p.getName());
 	}
 
 	public Challenge getCurrentChallenge(Team team) {
@@ -111,11 +103,13 @@ public class League {
 	public int getScore(Team t) {
 
 		int score = 0;
-		for (Challenge c : getSchedule(t)) {
+		List<Challenge> challenges = getSchedule(t);
+		for (Challenge c : challenges) {
 			if (!c.isOver())
 				break;
-			if (c.getWinner().getName().equals(t.getName()))
+			if (c.isOver() && c.getWinner().getName().equals(t.getName()))
 				score++;
+				
 		}
 		return score;
 	}
@@ -147,6 +141,7 @@ public class League {
 	}
 
 	public void setName(String name) {
+		
 		this.name = name;
 	}
 }

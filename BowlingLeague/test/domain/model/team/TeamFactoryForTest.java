@@ -2,7 +2,6 @@ package domain.model.team;
 
 import java.util.List;
 
-import domain.model.exception.TeamException;
 import domain.model.player.Player;
 
 public class TeamFactoryForTest implements TeamFactoryLocal {

@@ -75,7 +75,7 @@ public class Challenge implements Observer, Serializable {
 
 	public void setDuels() {
 
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < Team.TEAM_SIZE; i++) {
 
 			Player p1 = firstTeam.getPlayer(i);
 			Player p2 = secondTeam.getPlayer(i);
@@ -85,13 +85,13 @@ public class Challenge implements Observer, Serializable {
 		}
 	}
 
-	public Player getFirstTeamPlayer(int i) {
-		return firstTeam.getPlayer(i);
-	}
-
-	public Player getSecondTeamPlayer(int i) {
-		return secondTeam.getPlayer(i);
-	}
+//	public Player getFirstTeamPlayer(int i) {
+//		return firstTeam.getPlayer(i);
+//	}
+//
+//	public Player getSecondTeamPlayer(int i) {
+//		return secondTeam.getPlayer(i);
+//	}
 
 	public Duel getDuel(int i) {
 		return duels.get(i);
@@ -106,7 +106,7 @@ public class Challenge implements Observer, Serializable {
 	}
 
 	public boolean isOver() {
-		return (scoreFirstTeam + scoreSecondTeam == Team.TEAM_SIZE) ? true : false;
+		return (scoreFirstTeam + scoreSecondTeam == Team.TEAM_SIZE);
 	}
 
 	public int getId() {

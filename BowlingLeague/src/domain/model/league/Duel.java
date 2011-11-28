@@ -60,20 +60,14 @@ public class Duel extends Observable implements Observer, Serializable {
 			displayError(GAME_NOT_OVER + player1.getName());
 		if (!player2.getGame().isOver())
 			displayError(GAME_NOT_OVER + player2.getName());
-
-		// return (player1.getScore() > player2.getScore()) ? player1 : player2;
-		System.out.println("score joueur 1: " + player1.getName() + " " + player1.getScore());
-		System.out.println("score joueur 2: " + player2.getName() + " " + player2.getScore());
+		
 		if (player1.getScore() > player2.getScore())
 			return player1;
 		else if (player1.getScore() < player2.getScore())
 			return player2;
-		else
+		else {
 			throw new DuelException(NO_DRAW_DUEL);
-
-		// Random aleatoire = new Random();
-		// int win = aleatoire.nextInt(2);
-		// return win + 1 == 1 ? player1 : player2;
+		}
 	}
 
 	private void displayError(String error) {

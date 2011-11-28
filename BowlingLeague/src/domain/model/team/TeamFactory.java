@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 
-import domain.model.exception.TeamException;
 import domain.model.player.Player;
 
 @Stateless
