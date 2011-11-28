@@ -1,4 +1,4 @@
-package domain.model.player;
+package domain.model.exception;
 
 public class PlayerException extends RuntimeException {
 

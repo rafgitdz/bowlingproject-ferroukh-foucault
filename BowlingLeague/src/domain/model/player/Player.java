@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import domain.model.exception.GameException;
+
 @Entity
 public class Player extends Observable implements Observer, Serializable {
 

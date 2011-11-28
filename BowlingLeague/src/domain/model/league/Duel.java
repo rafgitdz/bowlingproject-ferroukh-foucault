@@ -11,7 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import domain.model.exception.DuelException;
 import domain.model.player.Player;
+import domain.model.player.PlayerFactory;
+import domain.model.player.PlayerFactoryLocal;
 
 @Entity
 public class Duel extends Observable implements Observer, Serializable {
@@ -38,12 +41,13 @@ public class Duel extends Observable implements Observer, Serializable {
 	}
 
 	public Duel(Player p1, Player p2) {
-
+		PlayerFactoryLocal playerFactory = new PlayerFactory();
+		
 		if (p1.getName().equals(p2.getName()))
 			displayError(NOT_SAME_PLAYER_IN_DUEL);
-		player1 = p1;
+		player1 = playerFactory.newGame(p1);
 		p1.addObserver(this);
-		player2 = p2;
+		player2 = playerFactory.newGame(p2);
 		p2.addObserver(this);
 		player1.setItsMyTurn(true);
 		scorePlayer1 = 0;
@@ -56,19 +60,14 @@ public class Duel extends Observable implements Observer, Serializable {
 			displayError(GAME_NOT_OVER + player1.getName());
 		if (!player2.getGame().isOver())
 			displayError(GAME_NOT_OVER + player2.getName());
-
-		// return (player1.getScore() > player2.getScore()) ? player1 : player2;
-
+		
 		if (player1.getScore() > player2.getScore())
 			return player1;
 		else if (player1.getScore() < player2.getScore())
 			return player2;
-		else
+		else {
 			throw new DuelException(NO_DRAW_DUEL);
-
-		// Random aleatoire = new Random();
-		// int win = aleatoire.nextInt(2);
-		// return win + 1 == 1 ? player1 : player2;
+		}
 	}
 
 	private void displayError(String error) {

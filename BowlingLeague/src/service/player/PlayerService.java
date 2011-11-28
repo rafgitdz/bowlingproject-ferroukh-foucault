@@ -3,8 +3,8 @@ package service.player;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 
+import domain.model.exception.PlayerException;
 import domain.model.player.Player;
-import domain.model.player.PlayerException;
 import domain.model.player.PlayerFactoryLocal;
 import domain.model.player.RepositoryPlayer;
 

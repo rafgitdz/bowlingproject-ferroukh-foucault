@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import domain.model.exception.LeagueException;
 import domain.model.player.Player;
 import domain.model.player.PlayerFactoryForTest;
 import domain.model.team.Team;
@@ -26,7 +27,9 @@ public class TestLeague {
 	public void setUp() {
 
 		teams = new ArrayList<Team>();
+		
 		for (int i = 0; i < 4; i++) {
+			
 			List<Player> players = new ArrayList<Player>();
 			for (int j = 0; j < 5; j++)
 				players.add(playerFactory.newPlayer("Player" + i + j));
@@ -78,10 +81,13 @@ public class TestLeague {
 	}
 
 	@Test
-	public void testPlayRound() {
+	public void testPlay2Rounds() {
 
 		playRound();
 		league.nextRound();
+		playRound();
+		league.nextRound();
+		playRound();
 	}
 
 	@Test(expected = LeagueException.class)
@@ -92,37 +98,29 @@ public class TestLeague {
 	@Test
 	public void testGetTeamScore() {
 
+		int totalScores = 0;
+		int expectedTotal = teams.size()/2;
 		for (Team t : teams)
 			assertEquals(0, league.getScore(t));
 		playRound();
+		league.nextRound();
 		for (Team t : teams) {
-			if (teams.indexOf(t) < teams.size() / 2)
-				assertEquals(1, league.getScore(t));
-			else
-				assertEquals(0, league.getScore(t));
+			totalScores += league.getScore(t);
 		}
+		assertEquals(expectedTotal, totalScores);
 	}
 
-	/*
-	 * @Test(expected=LeagueException.class) public void testPlay20Rounds() {
-	 * for (int i= 0; i < 20 ; ++i) { playRound(); league.nextRound(); } }
-	 */
-
 	private void playRound() {
-
-		for (Challenge c : league.getCurrentRoundChallenges()) {
-			
-			for (int i = 0; i < 5; ++i) {
-				Player p1 = c.getFirstTeamPlayer(i);
-				Player p2 = c.getSecondTeamPlayer(i);
-				
-				for (int j = 0; j < 10; ++j) {
-					p1.roll(4);
-					p1.roll(4);
-					p2.roll(3);
-					p2.roll(4);
-				}
+		
+		for (int i = 0; i < 10; ++i) {
+			for (int teamIdx = 0; teamIdx < teams.size(); ++teamIdx) {
+				Team t = teams.get(teamIdx);
+			for (Player p : t.getPlayers())
+			{
+					p.roll(teamIdx);
+					p.roll(teamIdx);
 			}
+		}
 		}
 	}
 

@@ -16,6 +16,7 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.IndexColumn;
 
+import domain.model.exception.LeagueException;
 import domain.model.team.Team;
 
 @Entity
@@ -71,7 +72,9 @@ public class League implements Serializable {
 	}
 
 	public void nextRound() {
-
+		if (currentRound == teams.size()-1)
+			throw new LeagueException("The league is over");
+		
 		List<Challenge> challenges = schedule
 				.getRoundSchedule(getCurrentRound());
 		for (Challenge c : challenges)
@@ -84,6 +87,7 @@ public class League implements Serializable {
 	}
 
 	private void startRound(int round) {
+		
 		for (Challenge c : getCurrentRoundChallenges())
 			c.setDuels();
 	}
@@ -105,11 +109,13 @@ public class League implements Serializable {
 	public int getScore(Team t) {
 
 		int score = 0;
-		for (Challenge c : getSchedule(t)) {
+		List<Challenge> challenges = getSchedule(t);
+		for (Challenge c : challenges) {
 			if (!c.isOver())
 				break;
-			if (c.getWinner().getName().equals(t.getName()))
+			if (c.isOver() && c.getWinner().getName().equals(t.getName()))
 				score++;
+				
 		}
 		return score;
 	}
@@ -141,6 +147,7 @@ public class League implements Serializable {
 	}
 
 	public void setName(String name) {
+		
 		this.name = name;
 	}
 }

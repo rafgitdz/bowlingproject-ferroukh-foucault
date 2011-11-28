@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import domain.model.exception.ChallengeException;
 import domain.model.player.Player;
 import domain.model.player.PlayerFactoryForTest;
 import domain.model.team.Team;
@@ -36,8 +37,8 @@ public class TestChallenge {
 	@Test
 	public void testFirstDuelWinner() {
 
-		p1 = challenge.getFirstTeamPlayer(0);
-		p2 = challenge.getSecondTeamPlayer(0);
+		p1 = challenge.getFirstTeam().getPlayer(0);
+		p2 = challenge.getSecondTeam().getPlayer(0);
 
 		play(3, 4, 2, 6);
 
@@ -50,8 +51,8 @@ public class TestChallenge {
 
 		for (int i = 0; i < 5; i++) {
 
-			p1 = challenge.getFirstTeamPlayer(i);
-			p2 = challenge.getSecondTeamPlayer(i);
+			p1 = challenge.getFirstTeam().getPlayer(i);
+			p2 = challenge.getSecondTeam().getPlayer(i);
 
 			play(4, 4, 5, 4);
 		}
@@ -63,18 +64,18 @@ public class TestChallenge {
 	@Test
 	public void testCurrentScoreChallenge() {
 
-		p1 = challenge.getFirstTeamPlayer(0);
-		p2 = challenge.getSecondTeamPlayer(0);
+		p1 = challenge.getFirstTeam().getPlayer(0);
+		p2 = challenge.getSecondTeam().getPlayer(0);
 
 		play(4, 4, 5, 4);
 
-		p1 = challenge.getFirstTeamPlayer(1);
-		p2 = challenge.getSecondTeamPlayer(1);
+		p1 = challenge.getFirstTeam().getPlayer(1);
+		p2 = challenge.getSecondTeam().getPlayer(1);
 
 		play(5, 4, 5, 1);
 
-		p1 = challenge.getFirstTeamPlayer(2);
-		p2 = challenge.getSecondTeamPlayer(2);
+		p1 = challenge.getFirstTeam().getPlayer(2);
+		p2 = challenge.getSecondTeam().getPlayer(2);
 
 		play(4, 4, 6, 3);
 
@@ -90,8 +91,8 @@ public class TestChallenge {
 
 		for (int i = 0; i < 4; i++) {
 
-			p1 = challenge.getFirstTeamPlayer(i);
-			p2 = challenge.getSecondTeamPlayer(i);
+			p1 = challenge.getFirstTeam().getPlayer(i);
+			p2 = challenge.getSecondTeam().getPlayer(i);
 			play(4, 4, 5, 4);
 		}
 

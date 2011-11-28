@@ -1,4 +1,4 @@
-package domain.model.player;
+package domain.model.exception;
 
 public class FrameException extends RuntimeException {
 	private static final long serialVersionUID = -1863752134063789545L;
