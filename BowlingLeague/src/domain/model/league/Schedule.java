@@ -88,4 +88,10 @@ public class Schedule implements Serializable {
 	public void setSchedule(List<LeagueRound> schedule) {
 		this.scheduleRounds = schedule;
 	}
+
+	public void build() {
+		rounds = 0;
+		challengesPerRound = 0;
+		scheduleRounds = new ArrayList<LeagueRound>();
+	}
 }

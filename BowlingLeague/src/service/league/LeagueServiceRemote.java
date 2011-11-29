@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Remote;
 
 import domain.model.league.League;
+import domain.model.team.Team;
 
 @Remote
 public interface LeagueServiceRemote {
@@ -22,6 +23,8 @@ public interface LeagueServiceRemote {
 	public void addTeam(String name, String nameTeam);
 	
 	public void startLeague(String name, List<String> namesTeam);
+	
+	public List<Team> getTeams(List<String> namesTeam);
 
 	// public void goToNextRound(int round);
 	//

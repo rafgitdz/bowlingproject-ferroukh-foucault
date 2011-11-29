@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -28,11 +29,11 @@ public class League implements Serializable {
 	@Id
 	private String name;
 
-	@OneToMany(targetEntity = Team.class)
+	@OneToMany(targetEntity = Team.class, fetch = FetchType.EAGER)
 	@IndexColumn(base = 0, name = "TeamIndex")
 	private List<Team> teams;
 
-	@OneToOne(cascade = CascadeType.MERGE)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "schedule_Id")
 	private Schedule schedule;
 
@@ -159,7 +160,8 @@ public class League implements Serializable {
 	}
 
 	public void setSchedule(Schedule schedule2) {
-		this.schedule = schedule2;
+		schedule = schedule2;
+		schedule.build();
 	}
 
 	public void startLeague() {

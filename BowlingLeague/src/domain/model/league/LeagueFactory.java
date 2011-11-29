@@ -1,5 +1,6 @@
 package domain.model.league;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -20,19 +21,12 @@ public class LeagueFactory implements LeagueFactoryLocal {
 	@Override
 	public League newLeague(String name, List<Team> teams) {
 
-		// if (teams.size() % 2 == 1)
-		// throw new TeamException(ERROR_TEAM_NUMBER_ODD);
-		// if (teams.size() == 0)
-		// throw new TeamException(ERROR_TEAM_NUMBER_NULL);
-
 		League league = new League();
 		league.setName(name);
 		league.setSchedule(new Schedule());
+		league.setTeams(new ArrayList<Team>());
 		eLPA.save(league);
 
-		// league.setTeams(teams);
-		// league.startLeague();
-		// eLPA.update(league);
 		return league;
 	}
 

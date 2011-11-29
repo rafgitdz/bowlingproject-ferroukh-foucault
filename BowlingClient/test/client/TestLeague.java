@@ -23,7 +23,6 @@ public class TestLeague {
 	private LeagueServiceRemote leagueRemote;
 	private TeamServiceRemote teamRemote;
 	private PlayerServiceRemote playerRemote;
-	String leagueName;
 	List<Team> teams;
 	List<String> teamNames;
 
@@ -34,14 +33,45 @@ public class TestLeague {
 		leagueRemote = LeagueRemoteGeneration.getInstance();
 		playerRemote = PlayerRemoteGeneration.getInstance();
 
-		leagueName = "Premiership";
 		teams = new ArrayList<Team>();
 		teamNames = new ArrayList<String>();
+	}
+
+	@AfterClass
+	public static void cleanServices() {
+		TeamRemoteGeneration.cleanInstance();
+		PlayerRemoteGeneration.cleanInstance();
+		LeagueRemoteGeneration.cleanInstance();
+	}
+
+	@Test
+	public void testCreateLeague() {
+
+		String leagueName = "PremierShip";
+		leagueRemote.newLeague(leagueName, teamNames);
+		assertEquals(leagueName, leagueRemote.getName());
+	}
+
+	@Test
+	public void testCreateLeagueWithTeams() {
+
+		String leagueName = "Ligue1";
+		build(0, 2);
+		leagueRemote.newLeague(leagueName, teamNames);
+		leagueRemote.addTeam(leagueRemote.getName(), teams.get(0).getName());
+		leagueRemote.addTeam(leagueRemote.getName(), teams.get(1).getName());
+		leagueRemote.startLeague(leagueName, teamNames);
+		String expected = "Player00";
+		assertEquals(expected, leagueRemote.getTeams(teamNames).get(0)
+				.getPlayersNames().get(0));
+	}
+
+	private void build(int k, int l) {
+
 		List<Player> playersList;
 		List<String> playersNames = null;
 
-		System.out.println("setUp");
-		for (int i = 0; i < 2; i++) {
+		for (int i = k; i < l; i++) {
 
 			playersList = new ArrayList<Player>();
 			playersNames = new ArrayList<String>();
@@ -56,22 +86,5 @@ public class TestLeague {
 			teamNames.add("Team" + i);
 			teams.add(t);
 		}
-	}
-
-	@AfterClass
-	public static void cleanServices() {
-		TeamRemoteGeneration.cleanInstance();
-		PlayerRemoteGeneration.cleanInstance();
-		LeagueRemoteGeneration.cleanInstance();
-	}
-	
-	@Test
-	public void testCreateLeague() {
-
-		leagueRemote.newLeague(leagueName, teamNames);
-		// leagueRemote.addTeam(leagueRemote.getName(), teams.get(0).getName());
-		// leagueRemote.addTeam(leagueRemote.getName(), teams.get(1).getName());
-		// leagueRemote.startLeague(leagueName, teamNames);
-		assertEquals(leagueName, leagueRemote.getName());
 	}
 }

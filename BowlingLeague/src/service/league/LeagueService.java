@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 
+import domain.model.exception.LeagueException;
 import domain.model.league.League;
 import domain.model.league.LeagueFactoryLocal;
 import domain.model.league.RepositoryLeague;
@@ -75,5 +76,15 @@ public class LeagueService implements LeagueServiceRemote {
 			teamList.add(eTPA.load(t));
 		}
 		leagueFactory.StartLeague(name, teamList);
+	}
+
+	@Override
+	public List<Team> getTeams(List<String> namesTeam) {
+
+		List<Team> teamList = new ArrayList<Team>();
+		for (String t : namesTeam) {
+			teamList.add(eTPA.load(t));
+		}
+		return teamList;
 	}
 }
