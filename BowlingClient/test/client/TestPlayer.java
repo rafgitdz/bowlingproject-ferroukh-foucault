@@ -2,14 +2,13 @@ package client;
 
 import static org.junit.Assert.assertEquals;
 
-import javax.ejb.EJBException;
-
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
 import service.player.PlayerServiceRemote;
 import context.PlayerRemoteGeneration;
+import domain.model.exception.PlayerException;
 
 public class TestPlayer {
 
@@ -41,7 +40,7 @@ public class TestPlayer {
 		assertEquals(expected, playerRemote.loadPlayer(expected).getName());
 	}
 
-	@Test(expected = EJBException.class)
+	@Test(expected = PlayerException.class)
 	public void testDeletePlayer() {
 
 		expected = "Marvin";

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 
 import domain.model.exception.LeagueException;
 import domain.model.league.League;
@@ -13,22 +13,15 @@ import domain.model.league.RepositoryLeague;
 import domain.model.team.RepositoryTeam;
 import domain.model.team.Team;
 
-@Stateful
+@Stateless
 public class LeagueService implements LeagueServiceRemote {
-
-	League league;
-
+	
 	@EJB
-	private RepositoryLeague eLPA;
+	private RepositoryLeague repositoryLeague;
 	@EJB
 	private RepositoryTeam eTPA;
 	@EJB
 	private LeagueFactoryLocal leagueFactory;
-
-	@Override
-	public String getName() {
-		return league.getName();
-	}
 
 	@Override
 	public League newLeague(String leagueName, List<String> namesTeam) {
@@ -37,14 +30,13 @@ public class LeagueService implements LeagueServiceRemote {
 		for (String t : namesTeam) {
 			teamList.add(eTPA.load(t));
 		}
-		league = leagueFactory.newLeague(leagueName, teamList);
-		return league;
+		return leagueFactory.newLeague(leagueName, teamList);
 	}
 
 	@Override
 	public League loadLeague(String name) {
 
-		League league = eLPA.find(name);
+		League league = repositoryLeague.find(name);
 		if (league == null)
 			throw new LeagueException(League.LEAGUE_NOT_EXIST);
 		return league;
@@ -53,14 +45,14 @@ public class LeagueService implements LeagueServiceRemote {
 	@Override
 	public void deleteLeague(String name) {
 
-		if (eLPA.find(name) == null)
+		if (repositoryLeague.find(name) == null)
 			throw new LeagueException(League.LEAGUE_NOT_EXIST);
-		eLPA.delete(name);
+		repositoryLeague.delete(name);
 	}
 
 	@Override
 	public void saveLeague(League league) {
-		eLPA.save(league);
+		repositoryLeague.save(league);
 	}
 
 	@Override

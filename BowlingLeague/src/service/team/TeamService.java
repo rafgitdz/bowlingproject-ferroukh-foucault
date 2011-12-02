@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 
 import domain.model.player.Player;
 import domain.model.player.RepositoryPlayer;
@@ -13,55 +13,37 @@ import domain.model.team.Team;
 import domain.model.team.TeamException;
 import domain.model.team.TeamFactoryLocal;
 
-@Stateful
+@Stateless
 public class TeamService implements TeamServiceRemote {
 
 	@EJB
-	private RepositoryTeam eTJPA;
+	private RepositoryTeam repositoryTeam;
 
 	@EJB
-	private RepositoryPlayer ePJPA;
+	private RepositoryPlayer repositoryPlayer;
 
 	@EJB
 	private TeamFactoryLocal teamFactory;
-
-	private Team team;
-
-
-	@Override
-	public List<Player> getPlayers() {
-		return team.getPlayers();
-	}
-
-	@Override
-	public ArrayList<String> getPlayersNames() {
-		return team.getPlayersNames();
-	}
-
-	@Override
-	public void getStat() {
-	}
 
 	@Override
 	public Team newTeam(String name, List<String> players) {
 
 		List<Player> playersList = new ArrayList<Player>();
-		for(String p : players)
-			playersList.add(ePJPA.load(p));
-		
-		team = eTJPA.save(teamFactory.newTeam(name,playersList));
-		return team;
+		for (String p : players)
+			playersList.add(repositoryPlayer.load(p));
+
+		return repositoryTeam.save(teamFactory.newTeam(name, playersList));
 	}
 
 	@Override
 	public void saveTeam(Team team) {
-		eTJPA.save(team, team.getName());
+		repositoryTeam.save(team, team.getName());
 	}
 
 	@Override
 	public Team loadTeam(String name) {
 
-		Team team = eTJPA.load(name);
+		Team team = repositoryTeam.load(name);
 		if (team == null)
 			throw new TeamException(Team.UNKNOWN_TEAM);
 		return team;
@@ -69,6 +51,20 @@ public class TeamService implements TeamServiceRemote {
 
 	@Override
 	public void deleteTeam(String name) {
-		eTJPA.delete(name);
+		repositoryTeam.delete(name);
+	}
+
+	@Override
+	public ArrayList<String> getPlayersNames(String nameTeam) {
+		return repositoryTeam.load(nameTeam).getPlayersNames();
+	}
+
+	@Override
+	public void getStat(String nameTeam) {
+	}
+
+	@Override
+	public List<Player> getPlayers(String nameTeam) {
+		return repositoryTeam.load(nameTeam).getPlayers();
 	}
 }

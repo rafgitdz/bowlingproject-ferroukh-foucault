@@ -15,6 +15,7 @@ import service.team.TeamServiceRemote;
 import context.LeagueRemoteGeneration;
 import context.PlayerRemoteGeneration;
 import context.TeamRemoteGeneration;
+import domain.model.exception.LeagueException;
 import domain.model.player.Player;
 import domain.model.team.Team;
 
@@ -49,7 +50,7 @@ public class TestLeague {
 
 		String leagueName = "PremierShip";
 		leagueRemote.newLeague(leagueName, teamNames);
-		assertEquals(leagueName, leagueRemote.getName());
+		assertEquals(leagueName, leagueRemote.loadLeague(leagueName).getName());
 	}
 
 	@Test
@@ -58,12 +59,26 @@ public class TestLeague {
 		String leagueName = "Ligue1";
 		build(0, 2);
 		leagueRemote.newLeague(leagueName, teamNames);
-		leagueRemote.addTeam(leagueRemote.getName(), teams.get(0).getName());
-		leagueRemote.addTeam(leagueRemote.getName(), teams.get(1).getName());
+		leagueRemote.addTeam(leagueName, teams.get(0).getName());
+		leagueRemote.addTeam(leagueName, teams.get(1).getName());
 		leagueRemote.startLeague(leagueName, teamNames);
 		String expected = "Player00";
 		assertEquals(expected, leagueRemote.getTeams(teamNames).get(0)
 				.getPlayersNames().get(0));
+	}
+
+	@Test(expected = LeagueException.class)
+	public void testDeleteLeague() {
+
+		String leagueName = "BundesLiga";
+		build(3, 5);
+		leagueRemote.newLeague(leagueName, teamNames);
+		leagueRemote.addTeam(leagueName, teams.get(0).getName());
+		leagueRemote.addTeam(leagueName, teams.get(1).getName());
+		leagueRemote.startLeague(leagueName, teamNames);
+		leagueRemote.deleteLeague(leagueName);
+		String expected = leagueName;
+		assertEquals(expected, leagueRemote.loadLeague(leagueName).getName());
 	}
 
 	private void build(int k, int l) {

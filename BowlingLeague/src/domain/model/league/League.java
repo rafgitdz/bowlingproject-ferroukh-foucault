@@ -154,14 +154,14 @@ public class League implements Serializable {
 	protected void setTeams(List<Team> teams) {
 		this.teams = teams;
 	}
-	
+
 	protected void addTeam(Team team) {
 		teams.add(team);
 	}
 
-	public void setSchedule(Schedule schedule2) {
-		schedule = schedule2;
-		schedule.build();
+	public void setSchedule(Schedule schedule) {
+		this.schedule = schedule;
+		this.schedule.build();
 	}
 
 	public void startLeague() {

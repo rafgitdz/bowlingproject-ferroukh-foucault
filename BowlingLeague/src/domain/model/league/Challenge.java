@@ -34,10 +34,10 @@ public class Challenge implements Observer, Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	int Id;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	@JoinColumn(name = "firstTeam")
 	private Team firstTeam;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	@JoinColumn(name = "secondTeam")
 	private Team secondTeam;
 	@OneToMany(cascade = CascadeType.ALL, targetEntity = Duel.class, fetch = FetchType.EAGER)

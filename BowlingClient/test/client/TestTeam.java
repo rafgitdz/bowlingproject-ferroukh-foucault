@@ -5,8 +5,6 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ejb.EJBException;
-
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +14,7 @@ import service.team.TeamServiceRemote;
 import context.PlayerRemoteGeneration;
 import context.TeamRemoteGeneration;
 import domain.model.team.Team;
+import domain.model.team.TeamException;
 
 public class TestTeam {
 
@@ -61,7 +60,7 @@ public class TestTeam {
 		buildPlayer("Batman");
 
 		teamRemote.newTeam("Cotagers", players);
-		assertEquals(expected, teamRemote.getPlayersNames().get(2));
+		assertEquals(expected, teamRemote.getPlayersNames("Cotagers").get(2));
 	}
 
 	@Test
@@ -80,7 +79,7 @@ public class TestTeam {
 				.getPlayersNames().get(2));
 	}
 
-	@Test(expected = EJBException.class)
+	@Test(expected = TeamException.class)
 	public void testDeleteTeam() {
 
 		players = new ArrayList<String>();
@@ -94,7 +93,7 @@ public class TestTeam {
 		teamRemote.deleteTeam("Maggpies");
 		teamRemote.loadTeam("Maggpies");
 	}
-
+	
 	private void buildPlayer(String name) {
 		playerRemote.newPlayer(name);
 		players.add(name);

@@ -7,13 +7,11 @@ import domain.model.player.Player;
 @Remote
 public interface PlayerServiceRemote {
 
-	public void roll(int roll);
+	public void roll(String name, int roll);
 
-	public int getScore();
+	public int getScore(String name);
 
-	public String getName();
-
-	public void getStat();
+	public void getStat(String name);
 
 	public Player newPlayer(String name);
 

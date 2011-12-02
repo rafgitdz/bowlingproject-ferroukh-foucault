@@ -17,8 +17,6 @@ public interface LeagueServiceRemote {
 	public void deleteLeague(String name);
 
 	public void saveLeague(League league);
-
-	public String getName();
 	
 	public void addTeam(String name, String nameTeam);
 	
