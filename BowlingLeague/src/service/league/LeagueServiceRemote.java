@@ -10,17 +10,19 @@ import domain.model.team.Team;
 @Remote
 public interface LeagueServiceRemote {
 
-	public void createLeague(String name, List<Team> teams);
-
-	public League newLeague(String leagueName, List<Team> teams);
+	public League newLeague(String leagueName, List<String> namesTeam);
 
 	public League loadLeague(String name);
 
 	public void deleteLeague(String name);
 
 	public void saveLeague(League league);
-
-	public String getName();
+	
+	public void addTeam(String name, String nameTeam);
+	
+	public void startLeague(String name, List<String> namesTeam);
+	
+	public List<Team> getTeams(List<String> namesTeam);
 
 	// public void goToNextRound(int round);
 	//

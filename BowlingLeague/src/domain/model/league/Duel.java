@@ -4,16 +4,17 @@ import java.io.Serializable;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.ejb.EJB;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import domain.model.exception.DuelException;
 import domain.model.player.Player;
-import domain.model.player.PlayerFactory;
 import domain.model.player.PlayerFactoryLocal;
 
 @Entity
@@ -25,6 +26,10 @@ public class Duel extends Observable implements Observer, Serializable {
 	private static final String NOT_SAME_PLAYER_IN_DUEL = "No same player in a duel !";
 	public static final String DUEL_NOT_EXIST = "Duel doesn't exist !";
 
+	@EJB
+	@Transient
+	PlayerFactoryLocal playerFactory;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
@@ -37,11 +42,9 @@ public class Duel extends Observable implements Observer, Serializable {
 	int scorePlayer1;
 	int scorePlayer2;
 
-	public Duel() {
-	}
+	Duel() { }
 
-	public Duel(Player p1, Player p2) {
-		PlayerFactoryLocal playerFactory = new PlayerFactory();
+	Duel(Player p1, Player p2) {
 		
 		if (p1.getName().equals(p2.getName()))
 			displayError(NOT_SAME_PLAYER_IN_DUEL);

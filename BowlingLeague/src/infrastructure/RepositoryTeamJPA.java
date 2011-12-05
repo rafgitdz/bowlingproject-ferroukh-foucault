@@ -8,10 +8,4 @@ import domain.model.team.Team;
 @Stateful
 public class RepositoryTeamJPA extends RepositoryGenericJPA<Team, String>
 		implements RepositoryTeam {
-
-	@Override
-	public void clearAll() {
-		em.clear();
-	}
-
 }

@@ -15,6 +15,7 @@ import service.team.TeamServiceRemote;
 import context.LeagueRemoteGeneration;
 import context.PlayerRemoteGeneration;
 import context.TeamRemoteGeneration;
+import domain.model.exception.LeagueException;
 import domain.model.player.Player;
 import domain.model.team.Team;
 
@@ -23,8 +24,8 @@ public class TestLeague {
 	private LeagueServiceRemote leagueRemote;
 	private TeamServiceRemote teamRemote;
 	private PlayerServiceRemote playerRemote;
-	String leagueName;
 	List<Team> teams;
+	List<String> teamNames;
 
 	@Before
 	public void setUp() {
@@ -33,12 +34,59 @@ public class TestLeague {
 		leagueRemote = LeagueRemoteGeneration.getInstance();
 		playerRemote = PlayerRemoteGeneration.getInstance();
 
-		leagueName = "Premiership";
 		teams = new ArrayList<Team>();
+		teamNames = new ArrayList<String>();
+	}
+
+	@AfterClass
+	public static void cleanServices() {
+		TeamRemoteGeneration.cleanInstance();
+		PlayerRemoteGeneration.cleanInstance();
+		LeagueRemoteGeneration.cleanInstance();
+	}
+
+	@Test
+	public void testCreateLeague() {
+
+		String leagueName = "PremierShip";
+		leagueRemote.newLeague(leagueName, teamNames);
+		assertEquals(leagueName, leagueRemote.loadLeague(leagueName).getName());
+	}
+
+	@Test
+	public void testCreateLeagueWithTeams() {
+
+		String leagueName = "Ligue1";
+		build(0, 2);
+		leagueRemote.newLeague(leagueName, teamNames);
+		leagueRemote.addTeam(leagueName, teams.get(0).getName());
+		leagueRemote.addTeam(leagueName, teams.get(1).getName());
+		leagueRemote.startLeague(leagueName, teamNames);
+		String expected = "Player00";
+		assertEquals(expected, leagueRemote.getTeams(teamNames).get(0)
+				.getPlayersNames().get(0));
+	}
+
+	@Test(expected = LeagueException.class)
+	public void testDeleteLeague() {
+
+		String leagueName = "BundesLiga";
+		build(3, 5);
+		leagueRemote.newLeague(leagueName, teamNames);
+		leagueRemote.addTeam(leagueName, teams.get(0).getName());
+		leagueRemote.addTeam(leagueName, teams.get(1).getName());
+		leagueRemote.startLeague(leagueName, teamNames);
+		leagueRemote.deleteLeague(leagueName);
+		String expected = leagueName;
+		assertEquals(expected, leagueRemote.loadLeague(leagueName).getName());
+	}
+
+	private void build(int k, int l) {
+
 		List<Player> playersList;
 		List<String> playersNames = null;
 
-		for (int i = 0; i < 2; i++) {
+		for (int i = k; i < l; i++) {
 
 			playersList = new ArrayList<Player>();
 			playersNames = new ArrayList<String>();
@@ -50,20 +98,8 @@ public class TestLeague {
 				System.out.println("Player" + i + j);
 			}
 			Team t = teamRemote.newTeam("Team" + i, playersNames);
+			teamNames.add("Team" + i);
 			teams.add(t);
 		}
-	}
-
-	@AfterClass
-	public static void cleanServices() {
-		TeamRemoteGeneration.cleanInstance();
-		PlayerRemoteGeneration.cleanInstance();
-		LeagueRemoteGeneration.cleanInstance();
-	}
-	
-	@Test
-	public void testCreateLeague() {
-		leagueRemote.newLeague(leagueName, teams);
-		assertEquals(leagueName, leagueRemote.getName());
 	}
 }

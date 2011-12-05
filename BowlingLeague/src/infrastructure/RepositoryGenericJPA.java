@@ -34,7 +34,7 @@ public class RepositoryGenericJPA<T, TId> implements RepositoryGeneric<T, TId> {
 	}
 
 	@Override
-	public List<T> loadAll() {
+	public List<T> loadAll() {		
 		@SuppressWarnings("unchecked")
 		List<T> entities = em.createQuery(
 				"SELECT FROM" + persistentClass.getName()).getResultList();
@@ -62,10 +62,10 @@ public class RepositoryGenericJPA<T, TId> implements RepositoryGeneric<T, TId> {
 
 		if (em.find(persistentClass, id) != null)
 			em.merge(entity);
-		else
+		else {
+			System.out.println(entity + " " + id);
 			em.persist(entity);
-		
+		}
 		return entity;
 	}
-
 }

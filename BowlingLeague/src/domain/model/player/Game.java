@@ -30,7 +30,7 @@ public class Game extends Observable implements Serializable {
 	private Frame[] frames;
 	private int currentFrame;
 
-	protected Game() {}
+	Game() {}
 	
 	Game(Frame[] frames) {
 

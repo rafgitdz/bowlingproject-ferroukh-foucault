@@ -13,13 +13,13 @@ public class PlayerFactory implements PlayerFactoryLocal {
 		p.setGame(createGame());
 		return p;
 	}
-	
+
 	@Override
 	public Player newGame(Player player) {
 		player.setGame(createGame());
 		return player;
 	}
-	
+
 	private Game createGame() {
 		Frame[] frames = new Frame[10];
 

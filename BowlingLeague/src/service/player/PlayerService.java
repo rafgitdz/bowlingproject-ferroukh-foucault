@@ -1,62 +1,36 @@
 package service.player;
 
 import javax.ejb.EJB;
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 
 import domain.model.exception.PlayerException;
 import domain.model.player.Player;
 import domain.model.player.PlayerFactoryLocal;
 import domain.model.player.RepositoryPlayer;
 
-@Stateful
+@Stateless
 public class PlayerService implements PlayerServiceRemote {
 
-	Player player;
-
 	@EJB
-	private RepositoryPlayer ePJPA;
-	
+	private RepositoryPlayer repositoryPlayer;
+
 	@EJB
 	private PlayerFactoryLocal playerFactory;
 
 	@Override
-	public void roll(int roll) {
-
-		if (player != null)
-			player.roll(roll);
-		else
-			throw new PlayerException(Player.PLAYER_NOT_EXIST);
-	}
-
-	@Override
-	public int getScore() {
-		return player.getScore();
-	}
-
-	@Override
-	public String getName() {
-		return player.getName();
-	}
-
-	@Override
-	public void getStat() {
-	}
-
-	@Override
 	public Player newPlayer(String name) {
-		player = ePJPA.save(playerFactory.newPlayer(name));
-		return player;
+		return repositoryPlayer.save(playerFactory.newPlayer(name));
 	}
 
 	@Override
 	public void savePlayer(Player player) {
-		ePJPA.save(player);
+		repositoryPlayer.save(player);
 	}
 
 	@Override
 	public Player loadPlayer(String name) {
 
-		Player player = ePJPA.load(name);
+		Player player = repositoryPlayer.load(name);
 		if (player == null)
 			throw new PlayerException(Player.PLAYER_NOT_EXIST);
 		return player;
@@ -64,6 +38,20 @@ public class PlayerService implements PlayerServiceRemote {
 
 	@Override
 	public void deletePlayer(String name) {
-		ePJPA.delete(name);
+		repositoryPlayer.delete(name);
+	}
+
+	@Override
+	public void roll(String name, int roll) {
+		repositoryPlayer.load(name).roll(roll);
+	}
+
+	@Override
+	public int getScore(String name) {
+		return repositoryPlayer.load(name).getScore();
+	}
+
+	@Override
+	public void getStat(String name) {
 	}
 }

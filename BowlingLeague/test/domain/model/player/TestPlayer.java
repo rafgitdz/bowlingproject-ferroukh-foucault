@@ -28,10 +28,9 @@ public class TestPlayer {
 
 	@Test
 	public void testGamePlayer() {
-
-		Game game = player.getGame();
+		player.setItsMyTurn(true);
 		for (int i = 0; i < 20; i++) {
-			game.roll(3);
+			player.roll(3);
 		}
 		int expected = 60;
 		assertEquals(expected, player.getScore());

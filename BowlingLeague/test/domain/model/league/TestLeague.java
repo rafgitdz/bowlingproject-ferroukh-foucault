@@ -37,6 +37,7 @@ public class TestLeague {
 			teams.add(t);
 		}
 		league = new League(name, teams);
+//		league.setSchedule(new Schedule(teams));
 	}
 
 	@Test

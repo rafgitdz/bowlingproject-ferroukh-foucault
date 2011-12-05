@@ -27,7 +27,7 @@ public class Player extends Observable implements Observer, Serializable {
 	private Game currentGame;
 	private boolean itsMyTurn;
 
-	protected Player() {
+	Player() {
 	}
 
 	Player(String name) {
@@ -84,5 +84,9 @@ public class Player extends Observable implements Observer, Serializable {
 	public void setGame(Game game) {
 		currentGame = game;
 		currentGame.addObserver(this);
+	}
+	
+	void setIsMyTurn(boolean value) {
+		this.itsMyTurn = value;
 	}
 }

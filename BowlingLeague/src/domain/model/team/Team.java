@@ -51,14 +51,14 @@ public class Team implements Serializable {
 
 		return playersNames;
 	}
-	
+
 	public Player getPlayer(int i) {
 		return players.get(i);
 	}
 
-	/*public void setPlayer(int i, Player p) {
-		players.set(i, p);
-	}*/
+	/*
+	 * public void setPlayer(int i, Player p) { players.set(i, p); }
+	 */
 
 	public Player getPlayer(String name) {
 
