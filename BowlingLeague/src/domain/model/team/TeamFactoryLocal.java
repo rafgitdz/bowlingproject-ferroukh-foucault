@@ -11,4 +11,6 @@ public interface TeamFactoryLocal {
 	
 	public Team newTeam(String name, List<Player> players);
 	
+	public Team rebuildTeam(Team team);
+	
 }

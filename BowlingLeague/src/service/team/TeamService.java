@@ -76,6 +76,18 @@ public class TeamService implements TeamServiceRemote {
 	public void clearAll() {
 		eTJPA.clearAll();
 	}
+
+	@Override
+	public Team loadTeamEager(String name) {
+		
+		Team team = eTJPA.load(name);
+		if (team == null)
+			throw new TeamException(Team.UNKNOWN_TEAM);
+		team = teamFactory.rebuildTeam(team);
+		
+		return team;
+		
+	}
 	
 	
 }

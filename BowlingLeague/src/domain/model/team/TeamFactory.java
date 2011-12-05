@@ -9,6 +9,8 @@ import domain.model.player.Player;
 @Stateless
 public class TeamFactory implements TeamFactoryLocal {
 
+
+	
 	private static final String ERROR_TEAM_SIZE = "The team must have "
 			+ Team.TEAM_SIZE + "players";
 
@@ -19,6 +21,14 @@ public class TeamFactory implements TeamFactoryLocal {
 
 		Team t = new Team(name, players);
 		return t;
+	}
+
+	@Override
+	public Team rebuildTeam(Team team) {
+		for (Player p : team.getPlayers())
+			p.getName();
+		
+		return team;
 	}
 
 }

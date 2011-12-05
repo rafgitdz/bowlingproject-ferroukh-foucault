@@ -18,6 +18,8 @@ public interface TeamServiceRemote {
 	public void getStat();
 
 	public Team loadTeam(String name);
+	
+	public Team loadTeamEager(String name);
 
 	public void saveTeam(Team team);
 

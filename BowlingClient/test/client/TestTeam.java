@@ -76,7 +76,7 @@ public class TestTeam {
 		buildPlayer("Alessia");
 
 		teamRemote.newTeam("Fabulous", players);
-		assertEquals(expected, teamRemote.loadTeam("Fabulous")
+		assertEquals(expected, teamRemote.loadTeamEager("Fabulous")
 				.getPlayersNames().get(2));
 	}
 

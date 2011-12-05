@@ -9,4 +9,5 @@ public interface PlayerFactoryLocal {
 
 	public Player newGame(Player player);
 	
+	
 }

@@ -23,7 +23,7 @@ public class Team implements Serializable {
 
 	@Id
 	private String teamName;
-	@OneToMany(targetEntity = Player.class, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = Player.class, fetch = FetchType.LAZY)
 	@IndexColumn(base = 0, name = "PlayerIndex")
 	private List<Player> players;
 
