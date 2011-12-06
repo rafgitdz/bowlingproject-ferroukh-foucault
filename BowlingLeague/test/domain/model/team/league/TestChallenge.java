@@ -1,4 +1,4 @@
-package domain.model.league;
+package domain.model.team.league;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,22 +13,21 @@ import domain.model.player.Player;
 import domain.model.player.PlayerFactoryForTest;
 import domain.model.team.Team;
 import domain.model.team.TeamFactoryForTest;
+import domain.model.team.league.Challenge;
 
 public class TestChallenge {
 
-	private TeamFactoryForTest teamFactory = new TeamFactoryForTest(); 
+	private TeamFactoryForTest teamFactory = new TeamFactoryForTest();
 	private PlayerFactoryForTest playerFactory = new PlayerFactoryForTest();
-	
+
 	private Challenge challenge;
 	private Player p1, p2;
-	
 
 	@Before
 	public void setUp() {
 
 		Team firstTeam = buildTeam("Cottagers");
 		Team secondTeam = buildTeam("Citizens");
-
 
 		challenge = new Challenge(firstTeam, secondTeam);
 		challenge.setDuels();
@@ -105,9 +104,13 @@ public class TestChallenge {
 		List<Player> players = new ArrayList<Player>();
 		for (int i = 0; i < 5; i++) {
 
-			players.add(playerFactory.newPlayer(name + (i + 1)));	
+			players.add(playerFactory.newPlayer(name + (i + 1)));
 		}
-		return teamFactory.newTeam(name, players);
+		Team t = teamFactory.newTeam(name);
+		for (Player p : players)
+			t.addPlayer(p);
+
+		return t;
 	}
 
 	private void play(int roll1, int roll2, int roll3, int roll4) {

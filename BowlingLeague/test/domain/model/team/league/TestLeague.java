@@ -1,4 +1,4 @@
-package domain.model.league;
+package domain.model.team.league;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,6 +13,9 @@ import domain.model.player.Player;
 import domain.model.player.PlayerFactoryForTest;
 import domain.model.team.Team;
 import domain.model.team.TeamFactoryForTest;
+import domain.model.team.league.Challenge;
+import domain.model.team.league.League;
+import domain.model.team.league.Schedule;
 
 public class TestLeague {
 
@@ -27,17 +30,22 @@ public class TestLeague {
 	public void setUp() {
 
 		teams = new ArrayList<Team>();
-		
+
 		for (int i = 0; i < 4; i++) {
-			
+
 			List<Player> players = new ArrayList<Player>();
 			for (int j = 0; j < 5; j++)
 				players.add(playerFactory.newPlayer("Player" + i + j));
-			Team t = teamFactory.newTeam("Team" + i,players);
+			Team t = teamFactory.newTeam("Team" + i);
+
+			for (Player p : players)
+				t.addPlayer(p);
+
 			teams.add(t);
 		}
 		league = new League(name, teams);
-//		league.setSchedule(new Schedule(teams));
+		league.setSchedule(new Schedule());
+		league.startLeague();
 	}
 
 	@Test
@@ -100,7 +108,7 @@ public class TestLeague {
 	public void testGetTeamScore() {
 
 		int totalScores = 0;
-		int expectedTotal = teams.size()/2;
+		int expectedTotal = teams.size() / 2;
 		for (Team t : teams)
 			assertEquals(0, league.getScore(t));
 		playRound();
@@ -112,16 +120,15 @@ public class TestLeague {
 	}
 
 	private void playRound() {
-		
+
 		for (int i = 0; i < 10; ++i) {
 			for (int teamIdx = 0; teamIdx < teams.size(); ++teamIdx) {
 				Team t = teams.get(teamIdx);
-			for (Player p : t.getPlayers())
-			{
+				for (Player p : t.getPlayers()) {
 					p.roll(teamIdx);
 					p.roll(teamIdx);
+				}
 			}
-		}
 		}
 	}
 

@@ -1,4 +1,4 @@
-package domain.model.league;
+package domain.model.team.league;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,9 +7,9 @@ import org.junit.Test;
 
 import domain.model.exception.DuelException;
 import domain.model.exception.GameException;
-import domain.model.league.Duel;
 import domain.model.player.Player;
 import domain.model.player.PlayerFactoryForTest;
+import domain.model.team.league.Duel;
 
 public class TestDuel {
 

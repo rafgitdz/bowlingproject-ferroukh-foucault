@@ -26,7 +26,7 @@ public class TestPlayer {
 	}
 
 	@Test
-	public void testSavePlayer() {
+	public void testNewPlayer() {
 
 		expected = "Mary";
 		assertEquals(expected, playerRemote.newPlayer(expected).getName());

@@ -1,4 +1,4 @@
-package domain.model.league;
+package domain.model.team.league;
 
 import java.io.Serializable;
 import java.util.Observable;

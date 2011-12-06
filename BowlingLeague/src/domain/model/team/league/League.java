@@ -1,4 +1,4 @@
-package domain.model.league;
+package domain.model.team.league;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,13 +8,10 @@ import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
-import org.hibernate.annotations.IndexColumn;
+import javax.persistence.Transient;
 
 import domain.model.exception.LeagueException;
 import domain.model.team.Team;
@@ -29,8 +26,9 @@ public class League implements Serializable {
 	@Id
 	private String name;
 
-	@OneToMany(targetEntity = Team.class, fetch = FetchType.EAGER)
-	@IndexColumn(base = 0, name = "TeamIndex")
+//	@OneToMany(targetEntity = Team.class, fetch = FetchType.EAGER)
+//	@IndexColumn(base = 0, name = "TeamIndex")
+	@Transient
 	private List<Team> teams;
 
 	@OneToOne(cascade = CascadeType.ALL)
@@ -47,9 +45,9 @@ public class League implements Serializable {
 
 		this.name = name;
 		this.teams = teams;
-		// schedule = new Schedule(teams);
+//		schedule = new Schedule();
 		currentRound = 1;
-		startRound(currentRound);
+//		startRound(currentRound);
 	}
 
 	public int getSize() {
@@ -155,7 +153,7 @@ public class League implements Serializable {
 		this.teams = teams;
 	}
 
-	protected void addTeam(Team team) {
+	public void addTeam(Team team) {
 		teams.add(team);
 	}
 

@@ -7,39 +7,31 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import domain.model.exception.LeagueException;
-import domain.model.league.League;
-import domain.model.league.LeagueFactoryLocal;
-import domain.model.league.RepositoryLeague;
 import domain.model.team.RepositoryTeam;
 import domain.model.team.Team;
+import domain.model.team.league.League;
+import domain.model.team.league.LeagueFactoryLocal;
+import domain.model.team.league.RepositoryLeague;
 
 @Stateless
 public class LeagueService implements LeagueServiceRemote {
-	
+
 	@EJB
 	private RepositoryLeague repositoryLeague;
 	@EJB
-	private RepositoryTeam eTPA;
+	private RepositoryTeam repositoryTeam;
 	@EJB
 	private LeagueFactoryLocal leagueFactory;
 
 	@Override
-	public League newLeague(String leagueName, List<String> namesTeam) {
-
-		List<Team> teamList = new ArrayList<Team>();
-		for (String t : namesTeam) {
-			teamList.add(eTPA.load(t));
-		}
-		return leagueFactory.newLeague(leagueName, teamList);
+	public void saveLeague(League league) {
+		repositoryLeague.save(league);
 	}
 
 	@Override
-	public League loadLeague(String name) {
+	public League loadLeague(String nameLeague) {
 
-		League league = repositoryLeague.find(name);
-		if (league == null)
-			throw new LeagueException(League.LEAGUE_NOT_EXIST);
-		return league;
+		return leagueFactory.buildLeague(nameLeague);
 	}
 
 	@Override
@@ -51,21 +43,11 @@ public class LeagueService implements LeagueServiceRemote {
 	}
 
 	@Override
-	public void saveLeague(League league) {
-		repositoryLeague.save(league);
-	}
-
-	@Override
-	public void addTeam(String name, String nameTeam) {
-		leagueFactory.updateLeague(name, eTPA.load(nameTeam));
-	}
-
-	@Override
 	public void startLeague(String name, List<String> namesTeam) {
 
 		List<Team> teamList = new ArrayList<Team>();
 		for (String t : namesTeam) {
-			teamList.add(eTPA.load(t));
+			teamList.add(repositoryTeam.load(t));
 		}
 		leagueFactory.StartLeague(name, teamList);
 	}
@@ -75,7 +57,7 @@ public class LeagueService implements LeagueServiceRemote {
 
 		List<Team> teamList = new ArrayList<Team>();
 		for (String t : namesTeam) {
-			teamList.add(eTPA.load(t));
+			teamList.add(repositoryTeam.load(t));
 		}
 		return teamList;
 	}

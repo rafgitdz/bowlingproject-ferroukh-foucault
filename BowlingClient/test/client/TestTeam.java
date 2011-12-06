@@ -2,9 +2,6 @@ package client;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,14 +10,12 @@ import service.player.PlayerServiceRemote;
 import service.team.TeamServiceRemote;
 import context.PlayerRemoteGeneration;
 import context.TeamRemoteGeneration;
-import domain.model.team.Team;
-import domain.model.team.TeamException;
+import domain.model.exception.TeamException;
 
 public class TestTeam {
 
 	private TeamServiceRemote teamRemote;
 	private PlayerServiceRemote playerRemote;
-	private List<String> players;
 
 	@Before
 	public void setUp() {
@@ -38,64 +33,51 @@ public class TestTeam {
 	public void testSaveOnlyTeam() {
 
 		String expected = "Jaguars";
-		players = new ArrayList<String>();
-		buildPlayer("Jack");
-		buildPlayer("Franck");
-		buildPlayer("Matthew");
-		buildPlayer("Lance");
-		buildPlayer("Fabian");
-		Team team = teamRemote.newTeam("Jaguars", players);
-		assertEquals(expected, team.getName());
+		teamRemote.newTeam("Jaguars", "Premiership");
+		assertEquals(expected, teamRemote.rebuildTeam("Jaguars").getName());
 	}
-
+	
 	@Test
-	public void testSaveAllTeam() {
-
-		String expected = "Estelle";
-		players = new ArrayList<String>();
-		buildPlayer("Chris");
-		buildPlayer("David");
-		buildPlayer("Estelle");
-		buildPlayer("Magic");
-		buildPlayer("Batman");
-
-		teamRemote.newTeam("Cotagers", players);
-		assertEquals(expected, teamRemote.getPlayersNames("Cotagers").get(2));
+	public void testSaveTeamWithPlayers() {
+		
+		String nameTeam = "Bulls";
+		teamRemote.newTeam(nameTeam, "NBA");
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Jack"));
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Franck"));
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Matthew"));
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Lance"));
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Fabian"));
+		String expected = "Franck";
+		assertEquals(expected, teamRemote.rebuildTeam(nameTeam).getPlayersNames().get(1));
 	}
 
 	@Test
 	public void testLoadTeam() {
 
-		String expected = "Leo";
-		players = new ArrayList<String>();
-		buildPlayer("Milan");
-		buildPlayer("Cyril");
-		buildPlayer("Leo");
-		buildPlayer("Rafik");
-		buildPlayer("Alessia");
+		String nameTeam = "Fabulous";
+		teamRemote.newTeam(nameTeam, "Liga");
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Milan"));
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Cyril"));
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Matthieu"));
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Rafik"));
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Alessia"));
 
-		teamRemote.newTeam("Fabulous", players);
-		assertEquals(expected, teamRemote.loadTeamEager("Fabulous")
+		String expected = "Matthieu";
+		assertEquals(expected, teamRemote.rebuildTeam(nameTeam)
 				.getPlayersNames().get(2));
 	}
 
 	@Test(expected = TeamException.class)
 	public void testDeleteTeam() {
 
-		players = new ArrayList<String>();
-		buildPlayer("Marc");
-		buildPlayer("Anthony");
-		buildPlayer("Samy");
-		buildPlayer("Alex");
-		buildPlayer("Marine");
-
-		teamRemote.newTeam("Maggpies", players);
+		String nameTeam = "Maggpies";
+		teamRemote.newTeam(nameTeam, "BundesLiga");
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Marc"));
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Anthony"));
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Samy"));
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Alex"));
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Marine"));
 		teamRemote.deleteTeam("Maggpies");
 		teamRemote.loadTeam("Maggpies");
-	}
-	
-	private void buildPlayer(String name) {
-		playerRemote.newPlayer(name);
-		players.add(name);
 	}
 }

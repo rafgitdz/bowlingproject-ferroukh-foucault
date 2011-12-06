@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import domain.model.player.Player;
 import domain.model.player.PlayerFactoryForTest;
+import domain.model.team.Team;
 
 public class TestTeam {
 
@@ -33,7 +34,9 @@ public class TestTeam {
 		for (int i = 0; i < Team.TEAM_SIZE; ++i)
 			players.add(playerFactory.newPlayer(""));
 		
-		t = teamFactory.newTeam(teamName, players);
+		t = teamFactory.newTeam(teamName);
+		for (Player p : players)
+			t.addPlayer(p);
 		
 		assertEquals(teamName, t.getName());
 		for (Player p : players)

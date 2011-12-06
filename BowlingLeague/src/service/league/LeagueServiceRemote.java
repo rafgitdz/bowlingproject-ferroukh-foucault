@@ -4,21 +4,17 @@ import java.util.List;
 
 import javax.ejb.Remote;
 
-import domain.model.league.League;
 import domain.model.team.Team;
+import domain.model.team.league.League;
 
 @Remote
 public interface LeagueServiceRemote {
-
-	public League newLeague(String leagueName, List<String> namesTeam);
-
+	
 	public League loadLeague(String name);
 
 	public void deleteLeague(String name);
 
 	public void saveLeague(League league);
-	
-	public void addTeam(String name, String nameTeam);
 	
 	public void startLeague(String name, List<String> namesTeam);
 	
