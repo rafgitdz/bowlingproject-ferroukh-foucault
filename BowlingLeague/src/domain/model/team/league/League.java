@@ -15,6 +15,7 @@ import javax.persistence.Transient;
 
 import domain.model.exception.LeagueException;
 import domain.model.team.Team;
+import domain.model.team.challenge.Challenge;
 
 @Entity
 public class League implements Serializable {

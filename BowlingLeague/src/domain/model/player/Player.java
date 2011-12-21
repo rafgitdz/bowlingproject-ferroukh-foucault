@@ -4,21 +4,30 @@ import java.io.Serializable;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.ejb.EJB;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import domain.model.exception.GameException;
+import domain.service.DuelServiceLocal;
 
 @Entity
-public class Player extends Observable implements Observer, Serializable {
+public class Player implements Observer, Serializable {
 
 	private static final long serialVersionUID = 4505445387411090683L;
 	private static final String ERROR_NOT_YOUR_TURN = " !, It is not your turn!";
 	public static final String PLAYER_NOT_EXIST = "Player doesn't exist !";
 
+	
+	@EJB
+	@Transient
+	DuelServiceLocal duelService;
+	
 	@Id
 	private String name;
 
@@ -26,7 +35,11 @@ public class Player extends Observable implements Observer, Serializable {
 	@JoinColumn(name = "Game")
 	private Game currentGame;
 	private boolean itsMyTurn;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	private Player opponent;
 
+	
 	Player() {
 	}
 
@@ -65,8 +78,7 @@ public class Player extends Observable implements Observer, Serializable {
 	@Override
 	public void update(Observable o, Object arg) {
 
-		setChanged();
-		notifyObservers();
+		duelService.finishTurn(this);
 	}
 
 	public String getName() {
@@ -86,7 +98,19 @@ public class Player extends Observable implements Observer, Serializable {
 		currentGame.addObserver(this);
 	}
 	
-	void setIsMyTurn(boolean value) {
-		this.itsMyTurn = value;
+	public void play() {
+		itsMyTurn = true;
+	}
+	
+	public void dontPlay() {
+		itsMyTurn = false;
+	}
+
+	public Player getOpponent() {
+		return opponent;
+	}
+
+	public void setOpponent(Player opponent) {
+		this.opponent = opponent;
 	}
 }

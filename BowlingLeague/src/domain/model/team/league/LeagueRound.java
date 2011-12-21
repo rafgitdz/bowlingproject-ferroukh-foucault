@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.IndexColumn;
 
+import domain.model.team.challenge.Challenge;
+
 @Entity
 public class LeagueRound implements Serializable {
 

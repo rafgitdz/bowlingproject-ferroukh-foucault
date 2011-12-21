@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,16 +12,23 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.IndexColumn;
 
 import domain.model.team.Team;
+import domain.model.team.challenge.Challenge;
+import domain.model.team.challenge.ChallengeFactoryLocal;
 
 @Entity
 public class Schedule implements Serializable {
 
 	private static final long serialVersionUID = -5883474850303639189L;
 
+	@EJB
+	@Transient
+	ChallengeFactoryLocal challengeFactory;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	int id;
@@ -45,7 +53,7 @@ public class Schedule implements Serializable {
 			List<Challenge> roundChallenges = new ArrayList<Challenge>(
 					challengesPerRound);
 			for (int j = 0; j < challengesPerRound; j++) {
-				roundChallenges.add(new Challenge(teams.get(j), teams.get(j
+				roundChallenges.add(challengeFactory.newChallenge(teams.get(j), teams.get(j
 						+ challengesPerRound)));
 			}
 			scheduleRounds.add(new LeagueRound(roundChallenges));

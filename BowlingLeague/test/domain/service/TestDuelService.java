@@ -1,4 +1,4 @@
-package domain.model.team.league;
+package domain.service;
 
 import static org.junit.Assert.assertEquals;
 
@@ -9,25 +9,25 @@ import domain.model.exception.DuelException;
 import domain.model.exception.GameException;
 import domain.model.player.Player;
 import domain.model.player.PlayerFactoryForTest;
-import domain.model.team.league.Duel;
 
-public class TestDuel {
+public class TestDuelService {
 
 	private PlayerFactoryForTest playerFactory = new PlayerFactoryForTest();
+	private DuelServiceForTest duelService = new DuelServiceForTest();
 	
-	private Duel duel;
+	
 	private Player p1, p2;
 
 	@Before
 	public void setUp() {
 		p1 = playerFactory.newPlayer("Bob");
 		p2 = playerFactory.newPlayer("Alice");
-		duel = new Duel(p1, p2);
+		duelService.startDuel(p1, p2);
 	}
 
 	@Test(expected = DuelException.class)
 	public void testSamePlayer() {
-		duel = new Duel(p1, p1);
+		duelService.startDuel(p1, p1);
 	}
 
 	@Test
@@ -40,7 +40,7 @@ public class TestDuel {
 			p2.roll(4);
 		}
 		Player expected = p1;
-		assertEquals(expected, duel.getWinner());
+		assertEquals(expected, duelService.getWinner(p1,p2));
 	}
 
 	@Test(expected = GameException.class)
@@ -59,6 +59,6 @@ public class TestDuel {
 			p2.roll(4);
 			p2.roll(4);
 		}
-		duel.getWinner();
+		duelService.getWinner(p1,p2);
 	}
 }

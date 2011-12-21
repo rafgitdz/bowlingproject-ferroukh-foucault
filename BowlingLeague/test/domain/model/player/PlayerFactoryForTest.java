@@ -1,13 +1,19 @@
 package domain.model.player;
 
+import domain.service.DuelServiceForTest;
+import domain.service.DuelServiceLocal;
+
 public class PlayerFactoryForTest implements PlayerFactoryLocal {
 	
 	@Override
 	public Player newPlayer(String name) {
-
+		DuelServiceLocal duelService = new DuelServiceForTest();
+		
 		Player p = new Player(name);
 
 		p.setGame(createGame());
+		
+		p.duelService = duelService;
 		return p;
 	}
 	

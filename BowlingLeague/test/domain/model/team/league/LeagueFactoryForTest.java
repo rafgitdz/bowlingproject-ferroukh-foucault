@@ -3,28 +3,30 @@ package domain.model.team.league;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-
 import domain.model.exception.LeagueException;
 import domain.model.exception.TeamException;
 import domain.model.team.Team;
+import domain.model.team.challenge.ChallengeFactoryForTest;
 
-@Stateless
-public class LeagueFactory implements LeagueFactoryLocal {
+public class LeagueFactoryForTest implements LeagueFactoryLocal {
 
 	private final static String ERROR_TEAM_NUMBER_ODD = "You must have an even number of teams to create a league";
 	private static final String ERROR_TEAM_NUMBER_NULL = "You have to select at least two teams to create a league";
-
-	@EJB
-	private RepositoryLeague repositoryLeague;
+	
+	RepositoryLeagueForTest repositoryLeague;
+	
+	public LeagueFactoryForTest(RepositoryLeagueForTest repositoryLeague) {
+		this.repositoryLeague = repositoryLeague;
+	}
 
 	@Override
 	public League newLeague(String name) {
 
 		League league = new League();
 		league.setName(name);
-		league.setSchedule(new Schedule());
+		Schedule sched = new Schedule();
+		sched.challengeFactory = new ChallengeFactoryForTest();
+		league.setSchedule(sched);
 		league.setTeams(new ArrayList<Team>());
 		return league;
 	}
@@ -57,4 +59,5 @@ public class LeagueFactory implements LeagueFactoryLocal {
 		league.startLeague();
 		repositoryLeague.update(league);
 	}
+
 }

@@ -1,4 +1,4 @@
-package domain.model.team.league;
+package domain.model.team.challenge;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,74 +13,45 @@ import domain.model.player.Player;
 import domain.model.player.PlayerFactoryForTest;
 import domain.model.team.Team;
 import domain.model.team.TeamFactoryForTest;
-import domain.model.team.league.Challenge;
 
 public class TestChallenge {
 
 	private TeamFactoryForTest teamFactory = new TeamFactoryForTest();
 	private PlayerFactoryForTest playerFactory = new PlayerFactoryForTest();
-
+	private ChallengeFactoryForTest challengeFactory = new ChallengeFactoryForTest();
 	private Challenge challenge;
-	private Player p1, p2;
+	private Team firstTeam;
+	private Team secondTeam;
 
 	@Before
 	public void setUp() {
 
-		Team firstTeam = buildTeam("Cottagers");
-		Team secondTeam = buildTeam("Citizens");
+		firstTeam = buildTeam("Cottagers");
+		secondTeam = buildTeam("Citizens");
 
-		challenge = new Challenge(firstTeam, secondTeam);
+		challenge = challengeFactory.newChallenge(firstTeam, secondTeam);
 		challenge.setDuels();
-	}
-
-	@Test
-	public void testFirstDuelWinner() {
-
-		p1 = challenge.getFirstTeam().getPlayer(0);
-		p2 = challenge.getSecondTeam().getPlayer(0);
-
-		play(3, 4, 2, 6);
-
-		Player expected = p2;
-		assertEquals(expected, challenge.getDuel(0).getWinner());
 	}
 
 	@Test
 	public void testChallengeTeamWinner() {
 
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 10; i++)
+			playRoll(4, 4, 5, 4);
 
-			p1 = challenge.getFirstTeam().getPlayer(i);
-			p2 = challenge.getSecondTeam().getPlayer(i);
-
-			play(4, 4, 5, 4);
-		}
-
-		Team expected = challenge.getSecondTeam();
+		Team expected = secondTeam;
 		assertEquals(expected, challenge.getWinner());
 	}
 
 	@Test
 	public void testCurrentScoreChallenge() {
 
-		p1 = challenge.getFirstTeam().getPlayer(0);
-		p2 = challenge.getSecondTeam().getPlayer(0);
+		for (int i = 0; i < 10 ; ++i)
+			playRoll(4, 5, 3, 3);
 
-		play(4, 4, 5, 4);
-
-		p1 = challenge.getFirstTeam().getPlayer(1);
-		p2 = challenge.getSecondTeam().getPlayer(1);
-
-		play(5, 4, 5, 1);
-
-		p1 = challenge.getFirstTeam().getPlayer(2);
-		p2 = challenge.getSecondTeam().getPlayer(2);
-
-		play(4, 4, 6, 3);
-
-		int expected1 = 1;
+		int expected1 = 5;
 		assertEquals(expected1, challenge.getScoreFirstTeam());
-		int expected2 = 2;
+		int expected2 = 0;
 		assertEquals(expected2, challenge.getScoreSecondTeam());
 
 	}
@@ -90,9 +61,7 @@ public class TestChallenge {
 
 		for (int i = 0; i < 4; i++) {
 
-			p1 = challenge.getFirstTeam().getPlayer(i);
-			p2 = challenge.getSecondTeam().getPlayer(i);
-			play(4, 4, 5, 4);
+			playRoll(4, 4, 5, 4);
 		}
 
 		Team expected = challenge.getSecondTeam();
@@ -113,13 +82,15 @@ public class TestChallenge {
 		return t;
 	}
 
-	private void play(int roll1, int roll2, int roll3, int roll4) {
+	private void playRoll(int roll1, int roll2, int roll3, int roll4) {
 
-		for (int i = 0; i < 10; i++) {
-			p1.roll(roll1);
-			p1.roll(roll2);
-			p2.roll(roll3);
-			p2.roll(roll4);
+		for (Player p : firstTeam.getPlayers()) {
+			p.roll(roll1);
+			p.roll(roll2);
+		}
+		for (Player p : secondTeam.getPlayers()) {
+			p.roll(roll3);
+			p.roll(roll4);
 		}
 	}
 }

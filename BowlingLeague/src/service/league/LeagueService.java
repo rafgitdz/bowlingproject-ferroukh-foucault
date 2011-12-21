@@ -49,7 +49,8 @@ public class LeagueService implements LeagueServiceRemote {
 		for (String t : namesTeam) {
 			teamList.add(repositoryTeam.load(t));
 		}
-		leagueFactory.StartLeague(name, teamList);
+		//TODO add the teams to the league here
+		leagueFactory.startLeague(name);
 	}
 
 	@Override

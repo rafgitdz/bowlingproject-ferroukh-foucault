@@ -13,17 +13,18 @@ import domain.model.player.Player;
 import domain.model.player.PlayerFactoryForTest;
 import domain.model.team.Team;
 import domain.model.team.TeamFactoryForTest;
-import domain.model.team.league.Challenge;
-import domain.model.team.league.League;
-import domain.model.team.league.Schedule;
+import domain.model.team.challenge.Challenge;
 
 public class TestLeague {
 
 	TeamFactoryForTest teamFactory = new TeamFactoryForTest();
 	PlayerFactoryForTest playerFactory = new PlayerFactoryForTest();
-
+	RepositoryLeagueForTest repositoryLeague = new RepositoryLeagueForTest();
+	LeagueFactoryForTest leagueFactory = new LeagueFactoryForTest(repositoryLeague);
+	
+	
 	List<Team> teams;
-	private League league;
+	League league;
 	String name = "Barclay's";
 
 	@Before
@@ -43,9 +44,11 @@ public class TestLeague {
 
 			teams.add(t);
 		}
-		league = new League(name, teams);
-		league.setSchedule(new Schedule());
-		league.startLeague();
+		league = leagueFactory.newLeague(name);
+		for (Team t : teams)
+			league.addTeam(t);
+		repositoryLeague.save(league);
+		leagueFactory.startLeague(name);
 	}
 
 	@Test

@@ -1,10 +1,6 @@
 package domain.model.team.league;
 
-import java.util.List;
-
 import javax.ejb.Local;
-
-import domain.model.team.Team;
 
 @Local
 public interface LeagueFactoryLocal {
@@ -13,6 +9,6 @@ public interface LeagueFactoryLocal {
 
 	public League buildLeague(String nameLeague);
 	
-	public void StartLeague(String name, List<Team> teams);
+	public void startLeague(String name);
 
 }
