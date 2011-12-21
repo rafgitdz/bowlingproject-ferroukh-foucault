@@ -46,9 +46,7 @@ public class League implements Serializable {
 
 		this.name = name;
 		this.teams = teams;
-//		schedule = new Schedule();
 		currentRound = 1;
-//		startRound(currentRound);
 	}
 
 	public int getSize() {
@@ -111,8 +109,10 @@ public class League implements Serializable {
 		int score = 0;
 		List<Challenge> challenges = getSchedule(t);
 		for (Challenge c : challenges) {
-			if (!c.isOver())
+			if (!c.isOver()) {
+				System.out.println("challenge not over");
 				break;
+			}
 			if (c.isOver() && c.getWinner().getName().equals(t.getName()))
 				score++;
 

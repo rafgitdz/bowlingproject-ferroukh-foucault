@@ -93,7 +93,7 @@ public class TestLeague {
 	}
 
 	@Test
-	public void testPlay2Rounds() {
+	public void testPlay3Rounds() {
 
 		playRound();
 		league.nextRound();
@@ -102,6 +102,17 @@ public class TestLeague {
 		playRound();
 	}
 
+	@Test(expected = LeagueException.class)
+	public void testLeagueOver() {
+
+		playRound();
+		league.nextRound();
+		playRound();
+		league.nextRound();
+		playRound();
+		league.nextRound();
+	}
+	
 	@Test(expected = LeagueException.class)
 	public void nextRound_RoundNotOver() {
 		league.nextRound();
@@ -115,7 +126,7 @@ public class TestLeague {
 		for (Team t : teams)
 			assertEquals(0, league.getScore(t));
 		playRound();
-		league.nextRound();
+		//league.nextRound();
 		for (Team t : teams) {
 			totalScores += league.getScore(t);
 		}
@@ -124,12 +135,15 @@ public class TestLeague {
 
 	private void playRound() {
 
-		for (int i = 0; i < 10; ++i) {
-			for (int teamIdx = 0; teamIdx < teams.size(); ++teamIdx) {
-				Team t = teams.get(teamIdx);
-				for (Player p : t.getPlayers()) {
-					p.roll(teamIdx);
-					p.roll(teamIdx);
+		for (Challenge c : league.getCurrentRoundChallenges()) {
+			for (int i = 0; i < 10; ++i) {
+				for (Player p : c.getFirstTeam().getPlayers()) {
+					p.roll(4);
+					p.roll(2);
+				}
+				for (Player p : c.getSecondTeam().getPlayers()) {
+					p.roll(4);
+					p.roll(4);
 				}
 			}
 		}
