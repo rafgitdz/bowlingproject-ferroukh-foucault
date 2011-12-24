@@ -30,7 +30,8 @@ public class RepositoryGenericJPA<T, TId> implements RepositoryGeneric<T, TId> {
 	public void delete(TId id) {
 
 		T entity = em.find(persistentClass, id);
-		em.remove(entity);
+		if (entity != null)
+			em.remove(entity);
 	}
 
 	@Override

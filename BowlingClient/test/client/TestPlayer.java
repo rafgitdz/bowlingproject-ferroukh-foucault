@@ -2,6 +2,7 @@ package client;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,15 +10,22 @@ import org.junit.Test;
 import application.service.player.PlayerServiceRemote;
 import context.PlayerRemoteGeneration;
 import domain.model.exception.PlayerException;
+import domain.model.player.Player;
 
 public class TestPlayer {
 
 	private PlayerServiceRemote playerRemote;
-	private String expected;
+	private String playerName = "Marvin Martin";
 
 	@Before
 	public void setUp() throws Exception {
 		playerRemote = PlayerRemoteGeneration.getInstance();
+	}
+	
+	@After
+	public void tearDown() {
+		
+		playerRemote.deletePlayer(playerName);
 	}
 	
 	@AfterClass
@@ -27,24 +35,23 @@ public class TestPlayer {
 
 	@Test
 	public void testNewPlayer() {
-
-		expected = "Mary";
-		assertEquals(expected, playerRemote.newPlayer(expected).getName());
+		Player marvin = playerRemote.newPlayer(playerName);
+		assertEquals(playerName, marvin.getName());
 	}
 
 	@Test
 	public void testLoadPlayer() {
 
-		expected = "Martin";
-		playerRemote.newPlayer(expected);
-		assertEquals(expected, playerRemote.loadPlayer(expected).getName());
+		playerRemote.newPlayer(playerName);
+		Player marvin = playerRemote.loadPlayer(playerName);
+		assertEquals(playerName, marvin.getName());
 	}
 
 	@Test(expected = PlayerException.class)
 	public void testDeletePlayer() {
-
-		expected = "Marvin";
-		playerRemote.deletePlayer(playerRemote.newPlayer(expected).getName());
-		playerRemote.loadPlayer(expected);
+		
+		playerRemote.newPlayer(playerName);
+		playerRemote.deletePlayer(playerName);
+		playerRemote.loadPlayer(playerName);
 	}
 }

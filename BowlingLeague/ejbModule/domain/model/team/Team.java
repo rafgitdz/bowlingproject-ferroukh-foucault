@@ -13,7 +13,6 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.IndexColumn;
 
-import domain.model.exception.TeamException;
 import domain.model.player.Player;
 import domain.model.team.league.League;
 
@@ -22,7 +21,6 @@ public class Team implements Serializable {
 
 	private static final long serialVersionUID = 2133149340833314015L;
 	public static final int TEAM_SIZE = 5;
-	private static final String UNKONWN_PLAYER_TEAM = "Unknown player in this team -> ";
 	public static final String UNKNOWN_TEAM = "Unknown team !";
 
 	@Id
@@ -66,21 +64,6 @@ public class Team implements Serializable {
 
 	public Player getPlayer(int i) {
 		return players.get(i);
-	}
-
-	/*
-	 * public void setPlayer(int i, Player p) { players.set(i, p); }
-	 */
-
-	public Player getPlayer(String name) {
-
-		Player p;
-		for (int i = 0; i < players.size(); i++) {
-			p = players.get(i);
-			if (p.getName().equals(name))
-				return p;
-		}
-		throw new TeamException(UNKONWN_PLAYER_TEAM + name);
 	}
 
 	public League getLeague() {
