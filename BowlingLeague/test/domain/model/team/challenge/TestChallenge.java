@@ -1,6 +1,7 @@
 package domain.model.team.challenge;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,11 @@ public class TestChallenge {
 
 		Team expected = secondTeam;
 		assertEquals(expected, challenge.getWinner());
+	}
+	
+	@Test
+	public void testChallengeNotOver() {
+		assertFalse(challenge.isOver());
 	}
 
 	@Test

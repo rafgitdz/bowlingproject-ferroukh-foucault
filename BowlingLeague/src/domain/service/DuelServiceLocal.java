@@ -13,6 +13,6 @@ public interface DuelServiceLocal {
 	
 	public Player getWinner(Player p1, Player p2);
 	
-	public DuelStatus getDuelSatus(Player p1);
+	public DuelStatus getDuelStatus(Player p1, Player p2);
 
 }

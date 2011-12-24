@@ -19,6 +19,7 @@ public class DuelServiceForTest implements DuelServiceLocal {
 
 	@Override
 	public void startDuel(Player p1, Player p2) {
+
 		if (p1.getName().equals(p2.getName()))
 			throw new DuelException(NOT_SAME_PLAYER_IN_DUEL);
 		p1.setOpponent(p2);
@@ -55,12 +56,15 @@ public class DuelServiceForTest implements DuelServiceLocal {
 	}
 
 	@Override
-	public DuelStatus getDuelSatus(Player p1) {
-		if (p1.getOpponent() == null)
+	public DuelStatus getDuelStatus(Player p1, Player p2) {
+
+		if (p1.getOpponent() == null
+				|| !p1.getOpponent().getName().equals(p2.getName()))
 			return DuelStatus.NotSet;
+
 		if (!p1.getGame().isOver() || !p1.getOpponent().getGame().isOver())
 			return DuelStatus.InProgress;
-		
+
 		return DuelStatus.Over;
 	}
 

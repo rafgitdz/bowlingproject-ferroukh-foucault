@@ -110,7 +110,6 @@ public class League implements Serializable {
 		List<Challenge> challenges = getSchedule(t);
 		for (Challenge c : challenges) {
 			if (!c.isOver()) {
-				System.out.println("challenge not over");
 				break;
 			}
 			if (c.isOver() && c.getWinner().getName().equals(t.getName()))
