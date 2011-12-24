@@ -1,4 +1,4 @@
-package service.player;
+package application.service.player;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

@@ -1,4 +1,4 @@
-package service.league;
+package application.service.league;
 
 import java.util.ArrayList;
 import java.util.List;

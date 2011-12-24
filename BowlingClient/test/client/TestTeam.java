@@ -6,8 +6,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
-import service.player.PlayerServiceRemote;
-import service.team.TeamServiceRemote;
+import application.service.player.PlayerServiceRemote;
+import application.service.team.TeamServiceRemote;
 import context.PlayerRemoteGeneration;
 import context.TeamRemoteGeneration;
 import domain.model.exception.TeamException;
@@ -34,7 +34,7 @@ public class TestTeam {
 
 		String expected = "Jaguars";
 		teamRemote.newTeam("Jaguars", "Premiership");
-		assertEquals(expected, teamRemote.rebuildTeam("Jaguars").getName());
+		assertEquals(expected, teamRemote.loadTeam("Jaguars").getName());
 	}
 	
 	@Test
@@ -42,13 +42,13 @@ public class TestTeam {
 		
 		String nameTeam = "Bulls";
 		teamRemote.newTeam(nameTeam, "NBA");
-		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Jack"));
-		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Franck"));
-		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Matthew"));
-		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Lance"));
-		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Fabian"));
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Jack").getName());
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Franck").getName());
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Matthew").getName());
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Lance").getName());
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Fabian").getName());
 		String expected = "Franck";
-		assertEquals(expected, teamRemote.rebuildTeam(nameTeam).getPlayersNames().get(1));
+		assertEquals(expected, teamRemote.loadTeam(nameTeam).getPlayersNames().get(1));
 	}
 
 	@Test
@@ -56,14 +56,14 @@ public class TestTeam {
 
 		String nameTeam = "Fabulous";
 		teamRemote.newTeam(nameTeam, "Liga");
-		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Milan"));
-		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Cyril"));
-		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Matthieu"));
-		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Rafik"));
-		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Alessia"));
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Milan").getName());
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Cyril").getName());
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Matthieu").getName());
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Rafik").getName());
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Alessia").getName());
 
 		String expected = "Matthieu";
-		assertEquals(expected, teamRemote.rebuildTeam(nameTeam)
+		assertEquals(expected, teamRemote.loadTeam(nameTeam)
 				.getPlayersNames().get(2));
 	}
 
@@ -72,11 +72,11 @@ public class TestTeam {
 
 		String nameTeam = "Maggpies";
 		teamRemote.newTeam(nameTeam, "BundesLiga");
-		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Marc"));
-		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Anthony"));
-		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Samy"));
-		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Alex"));
-		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Marine"));
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Marc").getName());
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Anthony").getName());
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Samy").getName());
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Alex").getName());
+		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Marine").getName());
 		teamRemote.deleteTeam("Maggpies");
 		teamRemote.loadTeam("Maggpies");
 	}

@@ -6,7 +6,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
-import service.player.PlayerServiceRemote;
+import application.service.player.PlayerServiceRemote;
 import context.PlayerRemoteGeneration;
 import domain.model.exception.PlayerException;
 

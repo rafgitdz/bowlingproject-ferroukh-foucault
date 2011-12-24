@@ -3,7 +3,7 @@ package context;
 import javax.naming.Context;
 import javax.naming.NamingException;
 
-import service.league.LeagueServiceRemote;
+import application.service.league.LeagueServiceRemote;
 
 public final class LeagueRemoteGeneration {
 

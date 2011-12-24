@@ -9,8 +9,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
-import service.league.LeagueServiceRemote;
-import service.team.TeamServiceRemote;
+import application.service.league.LeagueServiceRemote;
+import application.service.team.TeamServiceRemote;
 import context.LeagueRemoteGeneration;
 import context.PlayerRemoteGeneration;
 import context.TeamRemoteGeneration;

@@ -1,4 +1,4 @@
-package service.team;
+package application.service.team;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 
 import domain.model.exception.TeamException;
 import domain.model.player.Player;
+import domain.model.player.RepositoryPlayer;
 import domain.model.team.RepositoryTeam;
 import domain.model.team.Team;
 import domain.model.team.TeamFactoryLocal;
@@ -26,14 +27,15 @@ public class TeamService implements TeamServiceRemote {
 	private TeamFactoryLocal teamFactory;
 	@EJB
 	private LeagueFactoryLocal leagueFactory;
+	@EJB
+	private RepositoryPlayer repositoryPlayer;
 
 	@Override
 	public Team newTeam(String nameTeam, String nameLeague) {
 
 		League league = null;
 		Team t = teamFactory.newTeam(nameTeam);
-		saveTeam(t);
-
+		repositoryTeam.save(t);
 		if (repositoryLeague.find(nameLeague) == null) {
 
 			league = leagueFactory.newLeague(nameLeague);
@@ -46,11 +48,6 @@ public class TeamService implements TeamServiceRemote {
 		t.setLeague(league);
 		repositoryTeam.update(t);
 		return t;
-	}
-
-	@Override
-	public void saveTeam(Team team) {
-		repositoryTeam.save(team, team.getName());
 	}
 
 	@Override
@@ -73,10 +70,6 @@ public class TeamService implements TeamServiceRemote {
 	}
 
 	@Override
-	public void getStat(String nameTeam) {
-	}
-
-	@Override
 	public List<Player> getPlayers(String nameTeam) {
 		return repositoryTeam.load(nameTeam).getPlayers();
 	}
@@ -93,14 +86,10 @@ public class TeamService implements TeamServiceRemote {
 	}
 
 	@Override
-	public void addPlayer(String nameTeam, Player newPlayer) {
-		Team t = loadTeam(nameTeam);
-		t.addPlayer(newPlayer);
+	public void addPlayer(String teamName, String playerName) {
+		Team t = loadTeam(teamName);
+		Player p = repositoryPlayer.load(playerName);
+		t.addPlayer(p);
 		repositoryTeam.update(t);
-	}
-
-	@Override
-	public Team rebuildTeam(String nameTeam) {
-		return repositoryTeam.load(nameTeam);
 	}
 }

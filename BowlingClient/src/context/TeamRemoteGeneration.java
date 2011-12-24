@@ -3,7 +3,7 @@ package context;
 import javax.naming.Context;
 import javax.naming.NamingException;
 
-import service.team.TeamServiceRemote;
+import application.service.team.TeamServiceRemote;
 
 public final class TeamRemoteGeneration {
 

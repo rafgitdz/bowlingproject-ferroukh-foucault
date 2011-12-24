@@ -3,7 +3,7 @@ package context;
 import javax.naming.Context;
 import javax.naming.NamingException;
 
-import service.player.PlayerServiceRemote;
+import application.service.player.PlayerServiceRemote;
 
 public final class PlayerRemoteGeneration {
 

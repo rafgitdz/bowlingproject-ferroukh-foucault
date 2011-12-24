@@ -1,4 +1,4 @@
-package service.team;
+package application.service.team;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,20 +15,14 @@ public interface TeamServiceRemote {
 
 	public ArrayList<String> getPlayersNames(String nameTeam);
 
-	public void getStat(String nameTeam);
-
-	Team newTeam(String nameTeam, String nameLeague);
+	public Team newTeam(String nameTeam, String nameLeague);
 
 	public Team loadTeam(String name);
 
 	public Team loadTeamEager(String name);
 
-	public void saveTeam(Team team);
-
 	public void deleteTeam(String name);
 
-	public void addPlayer(String nameTeam, Player newPlayer);
-
-	public Team rebuildTeam(String nameTeam);
+	public void addPlayer(String nameTeam, String playerName);
 
 }
