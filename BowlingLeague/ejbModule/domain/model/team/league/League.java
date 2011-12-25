@@ -8,10 +8,13 @@ import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
+
+import org.hibernate.annotations.IndexColumn;
 
 import domain.model.exception.LeagueException;
 import domain.model.team.Team;
@@ -27,9 +30,9 @@ public class League implements Serializable {
 	@Id
 	private String name;
 
-//	@OneToMany(targetEntity = Team.class, fetch = FetchType.EAGER)
-//	@IndexColumn(base = 0, name = "TeamIndex")
-	@Transient
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "League_Id")
+	@IndexColumn(name="TeamIndex")
 	private List<Team> teams;
 
 	@OneToOne(cascade = CascadeType.ALL)

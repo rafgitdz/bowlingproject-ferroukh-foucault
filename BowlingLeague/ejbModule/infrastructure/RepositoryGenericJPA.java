@@ -50,11 +50,6 @@ public class RepositoryGenericJPA<T, TId> implements RepositoryGeneric<T, TId> {
 	}
 
 	@Override
-	public T find(TId id) {
-		return em.find(persistentClass, id);
-	}
-
-	@Override
 	public T update(T entity) {
 		return em.merge(entity);
 	}

@@ -1,6 +1,5 @@
 package application.service.league;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -20,46 +19,37 @@ public class LeagueService implements LeagueServiceRemote {
 	private RepositoryLeague repositoryLeague;
 	@EJB
 	private RepositoryTeam repositoryTeam;
+	
 	@EJB
 	private LeagueFactoryLocal leagueFactory;
 
-	@Override
-	public void saveLeague(League league) {
-		repositoryLeague.save(league);
-	}
-
-	@Override
-	public League loadLeague(String nameLeague) {
-
-		return leagueFactory.buildLeague(nameLeague);
-	}
 
 	@Override
 	public void deleteLeague(String name) {
 
-		if (repositoryLeague.find(name) == null)
+		League league = repositoryLeague.load(name);
+		if (league == null)
 			throw new LeagueException(League.LEAGUE_NOT_EXIST);
+		
+		for (Team t : league.getTeams()) {
+			t.setLeague(null);
+			repositoryTeam.update(t);
+		}
 		repositoryLeague.delete(name);
 	}
 
 	@Override
-	public void startLeague(String name, List<String> namesTeam) {
-
-		List<Team> teamList = new ArrayList<Team>();
-		for (String t : namesTeam) {
-			teamList.add(repositoryTeam.load(t));
-		}
-		//TODO add the teams to the league here
+	public void startLeague(String name) {
+		
 		leagueFactory.startLeague(name);
 	}
 
 	@Override
-	public List<Team> getTeams(List<String> namesTeam) {
+	public List<Team> getTeams(String leagueName) {
 
-		List<Team> teamList = new ArrayList<Team>();
-		for (String t : namesTeam) {
-			teamList.add(repositoryTeam.load(t));
-		}
-		return teamList;
+		League league = repositoryLeague.load(leagueName);
+		if (league == null)
+			 throw new LeagueException(League.LEAGUE_NOT_EXIST);
+		return league.getTeams();
 	}
 }

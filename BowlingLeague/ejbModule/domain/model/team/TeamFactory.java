@@ -9,4 +9,5 @@ public class TeamFactory implements TeamFactoryLocal {
 	public Team newTeam(String name) {
 		return new Team(name);
 	}
+
 }

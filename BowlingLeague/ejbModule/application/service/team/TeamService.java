@@ -31,22 +31,19 @@ public class TeamService implements TeamServiceRemote {
 	private RepositoryPlayer repositoryPlayer;
 
 	@Override
-	public Team newTeam(String nameTeam, String nameLeague) {
-
-		League league = null;
-		Team t = teamFactory.newTeam(nameTeam);
-		repositoryTeam.save(t);
-		if (repositoryLeague.find(nameLeague) == null) {
-
-			league = leagueFactory.newLeague(nameLeague);
-			repositoryLeague.save(league);
-			league = repositoryLeague.load(league.getName());
-		} else
-			league = leagueFactory.buildLeague(nameLeague);
-
-		t = loadTeam(t.getName());
-		t.setLeague(league);
-		repositoryTeam.update(t);
+	public Team newTeam(String teamName, String leagueName) {
+		
+		Team t = teamFactory.newTeam(teamName);
+		t = repositoryTeam.save(t);
+		
+		League league = repositoryLeague.load(leagueName);
+		if (league == null) {
+			league = leagueFactory.newLeague(leagueName);
+			league = repositoryLeague.save(league);
+		}
+		
+		league.addTeam(t);
+		repositoryLeague.update(league);
 		return t;
 	}
 
@@ -72,17 +69,6 @@ public class TeamService implements TeamServiceRemote {
 	@Override
 	public List<Player> getPlayers(String nameTeam) {
 		return repositoryTeam.load(nameTeam).getPlayers();
-	}
-
-	@Override
-	public Team loadTeamEager(String name) {
-
-		Team team = repositoryTeam.load(name);
-		if (team == null)
-			throw new TeamException(Team.UNKNOWN_TEAM);
-		// team = teamFactory.rebuildTeam(team);
-
-		return team;
 	}
 
 	@Override

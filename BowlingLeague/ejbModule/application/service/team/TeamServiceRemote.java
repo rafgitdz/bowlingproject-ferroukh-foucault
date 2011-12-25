@@ -19,8 +19,6 @@ public interface TeamServiceRemote {
 
 	public Team loadTeam(String name);
 
-	public Team loadTeamEager(String name);
-
 	public void deleteTeam(String name);
 
 	public void addPlayer(String nameTeam, String playerName);

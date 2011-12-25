@@ -4,10 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -27,10 +27,10 @@ public class Team implements Serializable {
 	private String teamName;
 	@OneToMany(targetEntity = Player.class, fetch = FetchType.EAGER)
 	@IndexColumn(base = 0, name = "PlayerIndex")
-	private List<Player> players;
+	List<Player> players;
 
-	@ManyToOne(cascade = CascadeType.ALL, targetEntity = League.class)
-	@IndexColumn(base = 0, name = "Index")
+	@ManyToOne
+	@JoinColumn(name = "League_Id")
 	League league;
 
 	protected Team() {

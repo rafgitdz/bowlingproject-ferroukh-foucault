@@ -11,7 +11,6 @@ import application.service.player.PlayerServiceRemote;
 import application.service.team.TeamServiceRemote;
 import context.PlayerRemoteGeneration;
 import context.TeamRemoteGeneration;
-import domain.model.exception.TeamException;
 import domain.model.team.Team;
 
 public class TestTeam {
@@ -77,24 +76,10 @@ public class TestTeam {
 			teamRemote.addPlayer(teamName, playersName[i]);
 		}
 		
-		Team gunners = teamRemote.loadTeamEager(teamName);
+		Team gunners = teamRemote.loadTeam(teamName);
 		for (int i = 0; i < playersName.length; i++) {
-			assertEquals(playersName[i], gunners.getPlayer(i));
+			assertEquals(playersName[i], gunners.getPlayer(i).getName());
 		}
 		
-	}
-
-	@Test(expected = TeamException.class)
-	public void testDeleteTeam() {
-
-		String nameTeam = "Maggpies";
-		teamRemote.newTeam(nameTeam, "BundesLiga");
-		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Marc").getName());
-		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Anthony").getName());
-		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Samy").getName());
-		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Alex").getName());
-		teamRemote.addPlayer(nameTeam, playerRemote.newPlayer("Marine").getName());
-		teamRemote.deleteTeam("Maggpies");
-		teamRemote.loadTeam("Maggpies");
 	}
 }

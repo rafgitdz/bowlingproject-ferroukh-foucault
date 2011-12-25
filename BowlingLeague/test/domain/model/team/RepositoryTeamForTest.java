@@ -42,11 +42,6 @@ public class RepositoryTeamForTest implements RepositoryTeam {
 	}
 
 	@Override
-	public Team find(String id) {
-		return teams.get(id);
-	}
-
-	@Override
 	public Team update(Team entity) {
 		return teams.put(entity.getName(), entity);
 	}

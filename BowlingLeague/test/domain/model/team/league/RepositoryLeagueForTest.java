@@ -37,11 +37,6 @@ public class RepositoryLeagueForTest implements RepositoryLeague {
 	}
 
 	@Override
-	public League find(String id) {
-		return entityManager.get(id);
-	}
-
-	@Override
 	public League update(League entity) {
 		return entityManager.put(entity.getName(), entity);
 	}

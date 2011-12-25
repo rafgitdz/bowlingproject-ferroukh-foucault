@@ -34,7 +34,7 @@ public class LeagueFactoryForTest implements LeagueFactoryLocal {
 	@Override
 	public League buildLeague(String nameLeague) {
 
-		League league = repositoryLeague.find(nameLeague);
+		League league = repositoryLeague.load(nameLeague);
 		if (league == null) 
 			throw new LeagueException(League.LEAGUE_NOT_EXIST);
 		

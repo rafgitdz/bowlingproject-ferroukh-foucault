@@ -14,7 +14,5 @@ public interface RepositoryGeneric<T, TId> {
 
 	public List<T> loadAll();
 
-	public T find(TId id);
-
 	public T update(T entity);
 }
