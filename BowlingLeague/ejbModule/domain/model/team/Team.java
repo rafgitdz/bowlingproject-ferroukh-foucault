@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.IndexColumn;
 
+import domain.model.exception.TeamException;
 import domain.model.player.Player;
 import domain.model.team.league.League;
 
@@ -21,7 +22,9 @@ public class Team implements Serializable {
 
 	private static final long serialVersionUID = 2133149340833314015L;
 	public static final int TEAM_SIZE = 5;
+	public static final String FULL_TEAM_ERROR = "The team is full !";
 	public static final String UNKNOWN_TEAM = "Unknown team !";
+	public static final String PLAYER_NOT_IN_THIS_TEAM = "The player {0} is not in this team";
 
 	@Id
 	private String teamName;
@@ -50,6 +53,8 @@ public class Team implements Serializable {
 	}
 
 	public void addPlayer(Player p) {
+		if (players.size() == TEAM_SIZE)
+			throw new TeamException(FULL_TEAM_ERROR);
 		players.add(p);
 	}
 
@@ -60,6 +65,19 @@ public class Team implements Serializable {
 			playersNames.add(p.getName());
 
 		return playersNames;
+	}
+
+	public void removePlayer(String playerName) {
+		
+		int playerIndex = -1;
+		for (int i = 0 ; i < players.size(); i++)
+			if (players.get(i).getName().equals(playerName)) {
+				playerIndex = i;
+				break;
+			}
+		if (playerIndex == -1)
+			throw new TeamException(PLAYER_NOT_IN_THIS_TEAM);
+		players.remove(playerIndex);
 	}
 
 	public Player getPlayer(int i) {
