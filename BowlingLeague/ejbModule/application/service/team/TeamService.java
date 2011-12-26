@@ -32,16 +32,16 @@ public class TeamService implements TeamServiceRemote {
 
 	@Override
 	public Team newTeam(String teamName, String leagueName) {
-		
+
 		Team t = teamFactory.newTeam(teamName);
 		t = repositoryTeam.save(t);
-		
+
 		League league = repositoryLeague.load(leagueName);
 		if (league == null) {
 			league = leagueFactory.newLeague(leagueName);
 			league = repositoryLeague.save(league);
 		}
-		
+
 		league.addTeam(t);
 		repositoryLeague.update(league);
 		return t;
@@ -57,8 +57,19 @@ public class TeamService implements TeamServiceRemote {
 	}
 
 	@Override
-	public void deleteTeam(String name) {
-		repositoryTeam.delete(name);
+	public void deleteTeam(String teamName) {
+		Team team = repositoryTeam.load(teamName);
+		if (team == null)
+			throw new TeamException(Team.UNKNOWN_TEAM);
+		League league = team.getLeague();
+		if (league != null) {
+			league.removeTeam(team.getName());
+			if (league.getTeams().size() == 0)
+				repositoryLeague.delete(league.getName());
+			else
+				repositoryLeague.update(league);
+		}
+		repositoryTeam.delete(teamName);
 	}
 
 	@Override

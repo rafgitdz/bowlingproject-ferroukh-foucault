@@ -14,6 +14,7 @@ import context.LeagueRemoteGeneration;
 import context.PlayerRemoteGeneration;
 import context.TeamRemoteGeneration;
 import domain.model.exception.LeagueException;
+import domain.model.exception.TeamException;
 
 public class TestLeague {
 
@@ -49,11 +50,10 @@ public class TestLeague {
 			playerRemote.deletePlayer(team4Players[i]);
 
 		for (int i = 0; i < teamNames.length; i++)
-			teamRemote.deleteTeam(teamNames[i]);
-		try {
-			leagueRemote.deleteLeague(leagueName);
-		} catch (LeagueException e) {
-		}
+			try {
+				teamRemote.deleteTeam(teamNames[i]);
+			} catch (TeamException e) {
+			}
 
 	}
 
@@ -82,5 +82,24 @@ public class TestLeague {
 		teamRemote.newTeam(teamNames[0], leagueName);
 		leagueRemote.deleteLeague(leagueName);
 		leagueRemote.getTeams(leagueName);
+	}
+
+	@Test
+	public void testPlayEntireLeague() {
+		for (int i = 0; i < teamNames.length; i++) {
+			teamRemote.newTeam(teamNames[i], leagueName);
+		}
+		for (int i = 0; i < team1Players.length; i++) {
+			playerRemote.newPlayer(team1Players[i]);
+			playerRemote.newPlayer(team2Players[i]);
+			playerRemote.newPlayer(team3Players[i]);
+			playerRemote.newPlayer(team4Players[i]);
+			teamRemote.addPlayer(teamNames[0], team1Players[i]);
+			teamRemote.addPlayer(teamNames[1], team2Players[i]);
+			teamRemote.addPlayer(teamNames[2], team3Players[i]);
+			teamRemote.addPlayer(teamNames[3], team4Players[i]);
+		}
+
+		leagueRemote.startLeague(leagueName);
 	}
 }

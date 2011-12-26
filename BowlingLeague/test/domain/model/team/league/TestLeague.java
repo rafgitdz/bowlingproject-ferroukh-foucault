@@ -48,7 +48,7 @@ public class TestLeague {
 		for (Team t : teams)
 			league.addTeam(t);
 		repositoryLeague.save(league);
-		leagueFactory.startLeague(name);
+		league.startLeague();
 	}
 
 	@Test

@@ -14,4 +14,5 @@ public interface LeagueServiceRemote {
 	public void startLeague(String leagueName);
 	
 	public List<Team> getTeams(String leagueName);
+
 }

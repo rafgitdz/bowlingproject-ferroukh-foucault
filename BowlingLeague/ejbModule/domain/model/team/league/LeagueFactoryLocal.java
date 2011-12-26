@@ -7,8 +7,4 @@ public interface LeagueFactoryLocal {
 
 	public League newLeague(String name);
 
-	public League buildLeague(String nameLeague);
-	
-	public void startLeague(String name);
-
 }

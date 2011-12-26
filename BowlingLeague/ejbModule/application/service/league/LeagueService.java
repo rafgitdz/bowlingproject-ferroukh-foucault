@@ -9,19 +9,18 @@ import domain.model.exception.LeagueException;
 import domain.model.team.RepositoryTeam;
 import domain.model.team.Team;
 import domain.model.team.league.League;
-import domain.model.team.league.LeagueFactoryLocal;
 import domain.model.team.league.RepositoryLeague;
 
 @Stateless
 public class LeagueService implements LeagueServiceRemote {
 
+	private static final String UNKNOWN_LEAGUE = "The league {0} doesn't exist !";
+	
+	
 	@EJB
 	private RepositoryLeague repositoryLeague;
 	@EJB
 	private RepositoryTeam repositoryTeam;
-	
-	@EJB
-	private LeagueFactoryLocal leagueFactory;
 
 
 	@Override
@@ -29,7 +28,7 @@ public class LeagueService implements LeagueServiceRemote {
 
 		League league = repositoryLeague.load(name);
 		if (league == null)
-			throw new LeagueException(League.LEAGUE_NOT_EXIST);
+			throw new LeagueException(String.format(UNKNOWN_LEAGUE, name));
 		
 		for (Team t : league.getTeams()) {
 			t.setLeague(null);
@@ -39,9 +38,13 @@ public class LeagueService implements LeagueServiceRemote {
 	}
 
 	@Override
-	public void startLeague(String name) {
+	public void startLeague(String leagueName) {
 		
-		leagueFactory.startLeague(name);
+		League league = repositoryLeague.load(leagueName);
+		if (league == null)
+			 throw new LeagueException(String.format(UNKNOWN_LEAGUE, leagueName));
+		league.startLeague();
+		repositoryLeague.update(league);
 	}
 
 	@Override
@@ -49,7 +52,7 @@ public class LeagueService implements LeagueServiceRemote {
 
 		League league = repositoryLeague.load(leagueName);
 		if (league == null)
-			 throw new LeagueException(League.LEAGUE_NOT_EXIST);
+			 throw new LeagueException(String.format(UNKNOWN_LEAGUE, leagueName));
 		return league.getTeams();
 	}
 }

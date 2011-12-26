@@ -17,6 +17,7 @@ import javax.persistence.OneToOne;
 import org.hibernate.annotations.IndexColumn;
 
 import domain.model.exception.LeagueException;
+import domain.model.exception.TeamException;
 import domain.model.team.Team;
 import domain.model.team.challenge.Challenge;
 
@@ -25,14 +26,18 @@ public class League implements Serializable {
 
 	private static final long serialVersionUID = 5625666263840044089L;
 
-	public static final String LEAGUE_NOT_EXIST = "Unknown league !";
+	private static final String ERROR_TEAM_NUMBER_ODD = "You must have an even number of teams to start a league";
+	private static final String ERROR_TEAM_NUMBER_NULL = "You must have at least two teams to start a league";
+	private static final String ERROR_TEAM_NOT_FULL = "The team {0} is not full, you cannot start the league";
+	private static final String ERROR_LEAGUE_IN_PROGRESS = "The league is in progress, you cannot remove the team";
+	private static final String ERROR_TEAM_NOT_IN_LEAGUE = "The team {0} doesn't belong to this league";
 
 	@Id
 	private String name;
 
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "League_Id")
-	@IndexColumn(name="TeamIndex")
+	@IndexColumn(name = "TeamIndex")
 	private List<Team> teams;
 
 	@OneToOne(cascade = CascadeType.ALL)
@@ -41,12 +46,15 @@ public class League implements Serializable {
 
 	private int currentRound;
 
+	private LeagueStatus leagueStatus;
+
 	League() {
+		leagueStatus = LeagueStatus.Building;
 		currentRound = 1;
 	}
 
 	League(String name, List<Team> teams) {
-
+		leagueStatus = LeagueStatus.Building;
 		this.name = name;
 		this.teams = teams;
 		currentRound = 1;
@@ -166,7 +174,30 @@ public class League implements Serializable {
 	}
 
 	public void startLeague() {
+		if (teams.size() < 2)
+			throw new LeagueException(ERROR_TEAM_NUMBER_NULL);
+		if (teams.size() % 2 == 1)
+			throw new LeagueException(ERROR_TEAM_NUMBER_ODD);
+		for (Team t : teams) {
+			if (t.getPlayers().size() < Team.TEAM_SIZE)
+				throw new LeagueException(String.format(ERROR_TEAM_NOT_FULL,
+						t.getName()));
+		}
+
 		schedule.buildSchedule(teams);
 		startRound(currentRound);
+	}
+
+	public void removeTeam(String teamName) {
+		if (leagueStatus == LeagueStatus.InProgress)
+			throw new TeamException(ERROR_LEAGUE_IN_PROGRESS);
+		int teamIndex = -1;
+		for (int i = 0; i < teams.size(); i++)
+			if (teams.get(i).getName().equals(teamName))
+				teamIndex = i;
+		if (teamIndex == -1)
+			throw new LeagueException(String.format(ERROR_TEAM_NOT_IN_LEAGUE, teamName));
+		
+		teams.remove(teamIndex);
 	}
 }
