@@ -7,6 +7,8 @@ import domain.model.exception.PlayerException;
 import domain.model.player.Player;
 import domain.model.player.PlayerFactoryLocal;
 import domain.model.player.RepositoryPlayer;
+import domain.model.team.RepositoryTeam;
+import domain.model.team.Team;
 
 @Stateless
 public class PlayerService implements PlayerServiceRemote {
@@ -14,6 +16,9 @@ public class PlayerService implements PlayerServiceRemote {
 	@EJB
 	private RepositoryPlayer repositoryPlayer;
 
+	@EJB
+	private RepositoryTeam repositoryTeam;
+	
 	@EJB
 	private PlayerFactoryLocal playerFactory;
 
@@ -38,6 +43,14 @@ public class PlayerService implements PlayerServiceRemote {
 
 	@Override
 	public void deletePlayer(String name) {
+		Player player = repositoryPlayer.load(name);
+		if (player == null)
+			throw new PlayerException(Player.PLAYER_NOT_EXIST);
+		Team team = player.getTeam();
+		if (team != null) {
+			team.removePlayer(name);
+			repositoryTeam.update(team);
+		}
 		repositoryPlayer.delete(name);
 	}
 

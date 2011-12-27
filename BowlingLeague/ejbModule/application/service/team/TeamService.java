@@ -19,6 +19,7 @@ import domain.model.team.league.RepositoryLeague;
 @Stateless
 public class TeamService implements TeamServiceRemote {
 
+	private static final String ERROR_TEAM_IN_LEAGUE = "Your team is in a league, you cannot delete it";
 	@EJB
 	private RepositoryLeague repositoryLeague;
 	@EJB
@@ -61,14 +62,10 @@ public class TeamService implements TeamServiceRemote {
 		Team team = repositoryTeam.load(teamName);
 		if (team == null)
 			throw new TeamException(Team.UNKNOWN_TEAM);
-		League league = team.getLeague();
-		if (league != null) {
-			league.removeTeam(team.getName());
-			if (league.getTeams().size() == 0)
-				repositoryLeague.delete(league.getName());
-			else
-				repositoryLeague.update(league);
+		if (team.getLeague() != null) {
+			throw new TeamException(ERROR_TEAM_IN_LEAGUE);
 		}
+		
 		repositoryTeam.delete(teamName);
 	}
 

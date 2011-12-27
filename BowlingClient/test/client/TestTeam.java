@@ -7,16 +7,20 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
+import application.service.league.LeagueServiceRemote;
 import application.service.player.PlayerServiceRemote;
 import application.service.team.TeamServiceRemote;
+import context.LeagueRemoteGeneration;
 import context.PlayerRemoteGeneration;
 import context.TeamRemoteGeneration;
+import domain.model.exception.PlayerException;
 import domain.model.team.Team;
 
 public class TestTeam {
 
 	private TeamServiceRemote teamRemote;
 	private PlayerServiceRemote playerRemote;
+	private LeagueServiceRemote leagueRemote;
 
 	
 	private String[] playersName = {"Freddie", "Patrick", "Dennis", "Titi", "Sol"};
@@ -27,15 +31,22 @@ public class TestTeam {
 	public void setUp() {
 		teamRemote = TeamRemoteGeneration.getInstance();
 		playerRemote = PlayerRemoteGeneration.getInstance();
+		leagueRemote = LeagueRemoteGeneration.getInstance();
 	}
 
 	@After
 	public void tearDown() {
 		
 		for (int i = 0; i < playersName.length; i++) {
+			try {
 			playerRemote.deletePlayer(playersName[i]);
+			} catch (PlayerException e) {
+				
+			}
 		}
+		leagueRemote.deleteLeague(leagueName);
 		teamRemote.deleteTeam(teamName);
+		
 	}
 	
 	@AfterClass

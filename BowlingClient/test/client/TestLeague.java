@@ -14,6 +14,7 @@ import context.LeagueRemoteGeneration;
 import context.PlayerRemoteGeneration;
 import context.TeamRemoteGeneration;
 import domain.model.exception.LeagueException;
+import domain.model.exception.PlayerException;
 import domain.model.exception.TeamException;
 
 public class TestLeague {
@@ -40,21 +41,36 @@ public class TestLeague {
 
 	@After
 	public void tearDown() {
-		for (int i = 0; i < team1Players.length; i++)
-			playerRemote.deletePlayer(team1Players[i]);
-		for (int i = 0; i < team2Players.length; i++)
-			playerRemote.deletePlayer(team2Players[i]);
-		for (int i = 0; i < team3Players.length; i++)
-			playerRemote.deletePlayer(team3Players[i]);
-		for (int i = 0; i < team4Players.length; i++)
-			playerRemote.deletePlayer(team4Players[i]);
-
+		try {
+		leagueRemote.deleteLeague(leagueName);
+		} catch (LeagueException e) {
+		}
 		for (int i = 0; i < teamNames.length; i++)
 			try {
 				teamRemote.deleteTeam(teamNames[i]);
 			} catch (TeamException e) {
 			}
 
+		for (int i = 0; i < team1Players.length; i++)
+			try {
+				playerRemote.deletePlayer(team1Players[i]);
+			} catch (PlayerException e) {
+			}
+		for (int i = 0; i < team2Players.length; i++)
+			try {
+				playerRemote.deletePlayer(team2Players[i]);
+			} catch (PlayerException e) {
+			}
+		for (int i = 0; i < team3Players.length; i++)
+			try {
+				playerRemote.deletePlayer(team3Players[i]);
+			} catch (PlayerException e) {
+			}
+		for (int i = 0; i < team4Players.length; i++)
+			try {
+				playerRemote.deletePlayer(team4Players[i]);
+			} catch (PlayerException e) {
+			}
 	}
 
 	@AfterClass
@@ -101,5 +117,6 @@ public class TestLeague {
 		}
 
 		leagueRemote.startLeague(leagueName);
+		//playerRemote.roll(team1Players[0], 5);
 	}
 }

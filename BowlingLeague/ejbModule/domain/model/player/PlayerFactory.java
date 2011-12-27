@@ -8,15 +8,16 @@ public class PlayerFactory implements PlayerFactoryLocal {
 	@Override
 	public Player newPlayer(String name) {
 
-		Player p = new Player(name);
-
-		p.setGame(createGame());
-		return p;
+		Player player = new Player(name);
+		player = newGame(player);
+		return player;
 	}
 
 	@Override
 	public Player newGame(Player player) {
-		player.setGame(createGame());
+		Game game = createGame();
+		player.currentGame = game;
+		game.addObserver(player);
 		return player;
 	}
 

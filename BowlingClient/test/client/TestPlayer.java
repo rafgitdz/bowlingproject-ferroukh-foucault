@@ -21,13 +21,15 @@ public class TestPlayer {
 	public void setUp() throws Exception {
 		playerRemote = PlayerRemoteGeneration.getInstance();
 	}
-	
+
 	@After
 	public void tearDown() {
-		
-		playerRemote.deletePlayer(playerName);
+		try {
+			playerRemote.deletePlayer(playerName);
+		} catch (PlayerException e) {
+		}
 	}
-	
+
 	@AfterClass
 	public static void cleanServices() {
 		PlayerRemoteGeneration.cleanInstance();
@@ -49,7 +51,7 @@ public class TestPlayer {
 
 	@Test(expected = PlayerException.class)
 	public void testDeletePlayer() {
-		
+
 		playerRemote.newPlayer(playerName);
 		playerRemote.deletePlayer(playerName);
 		playerRemote.loadPlayer(playerName);

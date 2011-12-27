@@ -63,7 +63,7 @@ public class Schedule implements Serializable {
 	}
 
 	public List<Challenge> getTeamSchedule(String teamName) {
-
+		
 		List<Challenge> challenges = new ArrayList<Challenge>(rounds);
 		for (LeagueRound round : scheduleRounds)
 			for (Challenge c : round.getChallenges()) {

@@ -200,4 +200,8 @@ public class League implements Serializable {
 		
 		teams.remove(teamIndex);
 	}
+
+	public LeagueStatus getStatus() {
+		return this.leagueStatus;
+	}
 }

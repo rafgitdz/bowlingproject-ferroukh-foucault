@@ -10,10 +10,12 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import domain.model.exception.GameException;
+import domain.model.team.Team;
 import domain.service.DuelServiceLocal;
 
 @Entity
@@ -33,12 +35,16 @@ public class Player implements Observer, Serializable {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "Game")
-	private Game currentGame;
+	Game currentGame;
+	
 	private boolean itsMyTurn;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	private Player opponent;
+	@OneToOne(fetch = FetchType.EAGER)
+	Player opponent;
 
+	@ManyToOne
+	@JoinColumn(name = "Team_Id")
+	Team team;
 	
 	Player() {
 	}
@@ -92,11 +98,6 @@ public class Player implements Observer, Serializable {
 	public Game getGame() {
 		return currentGame;
 	}
-
-	public void setGame(Game game) {
-		currentGame = game;
-		currentGame.addObserver(this);
-	}
 	
 	public void play() {
 		itsMyTurn = true;
@@ -112,5 +113,9 @@ public class Player implements Observer, Serializable {
 
 	public void setOpponent(Player opponent) {
 		this.opponent = opponent;
+	}
+
+	public Team getTeam() {
+		return this.team;
 	}
 }

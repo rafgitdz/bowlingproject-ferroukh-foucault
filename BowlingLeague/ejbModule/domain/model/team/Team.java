@@ -28,8 +28,10 @@ public class Team implements Serializable {
 
 	@Id
 	private String teamName;
-	@OneToMany(targetEntity = Player.class, fetch = FetchType.EAGER)
-	@IndexColumn(base = 0, name = "PlayerIndex")
+	
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "Team_Id")
+	@IndexColumn(name = "PlayerIndex")
 	List<Player> players;
 
 	@ManyToOne
@@ -68,9 +70,9 @@ public class Team implements Serializable {
 	}
 
 	public void removePlayer(String playerName) {
-		
+
 		int playerIndex = -1;
-		for (int i = 0 ; i < players.size(); i++)
+		for (int i = 0; i < players.size(); i++)
 			if (players.get(i).getName().equals(playerName)) {
 				playerIndex = i;
 				break;

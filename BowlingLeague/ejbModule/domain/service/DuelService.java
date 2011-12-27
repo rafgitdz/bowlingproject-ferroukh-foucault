@@ -10,7 +10,7 @@ import domain.model.player.PlayerFactoryLocal;
 @Stateless
 public class DuelService implements DuelServiceLocal{
 
-	private static final String GAME_NOT_OVER = "Game doesn't over for ";
+	private static final String GAME_NOT_OVER = "Game isn't over for ";
 	private static final String NO_DRAW_DUEL = "No Draw Match !";
 	private static final String NOT_SAME_PLAYER_IN_DUEL = "The two players have to be different";
 
@@ -23,6 +23,7 @@ public class DuelService implements DuelServiceLocal{
 
 		if (p1.getName().equals(p2.getName()))
 			throw new DuelException(NOT_SAME_PLAYER_IN_DUEL);
+		
 		p1.setOpponent(p2);
 		playerFactory.newGame(p1);
 		p2.setOpponent(p1);
