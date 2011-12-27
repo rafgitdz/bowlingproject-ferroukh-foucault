@@ -126,7 +126,7 @@ public class TestLeague {
 		for (Team t : teams)
 			assertEquals(0, league.getScore(t));
 		playRound();
-		//league.nextRound();
+		league.nextRound();
 		for (Team t : teams) {
 			totalScores += league.getScore(t);
 		}

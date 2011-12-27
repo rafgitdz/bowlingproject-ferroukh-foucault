@@ -6,6 +6,8 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import domain.model.exception.LeagueException;
+import domain.model.player.Player;
+import domain.model.player.RepositoryPlayer;
 import domain.model.team.RepositoryTeam;
 import domain.model.team.Team;
 import domain.model.team.league.League;
@@ -23,6 +25,8 @@ public class LeagueService implements LeagueServiceRemote {
 	private RepositoryLeague repositoryLeague;
 	@EJB
 	private RepositoryTeam repositoryTeam;
+	@EJB
+	private RepositoryPlayer repositoryPlayer;
 
 
 	@Override
@@ -48,6 +52,13 @@ public class LeagueService implements LeagueServiceRemote {
 			 throw new LeagueException(UNKNOWN_LEAGUE);
 		league.startLeague();
 		repositoryLeague.update(league);
+		
+		// We update the players to persist the duels
+		for (Team t : league.getTeams()) {
+			for (Player p : t.getPlayers()) {
+				repositoryPlayer.update(p);
+			}
+		}
 	}
 
 	@Override

@@ -55,10 +55,7 @@ public class TestChallenge {
 		for (int i = 0; i < 10 ; ++i)
 			playRoll(4, 5, 3, 3);
 
-		int expected1 = 5;
-		assertEquals(expected1, challenge.getScoreFirstTeam());
-		int expected2 = 0;
-		assertEquals(expected2, challenge.getScoreSecondTeam());
+		assertEquals(firstTeam.getName(), challenge.getWinner().getName());
 
 	}
 

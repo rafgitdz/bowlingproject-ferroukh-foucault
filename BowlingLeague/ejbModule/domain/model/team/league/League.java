@@ -87,9 +87,11 @@ public class League implements Serializable {
 		List<Challenge> challenges = schedule
 				.getRoundSchedule(getCurrentRound());
 		for (Challenge c : challenges)
-			if (!c.isOver())
+			if (c.isOver())
+				c.setWinner();
+			else
 				throw new LeagueException(
-						"Cannot go to next round, current round's challenge are not over");
+						"Cannot go to next round, current round's challenges are not over");
 
 		startRound(++currentRound);
 

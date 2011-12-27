@@ -39,6 +39,10 @@ public class Challenge implements Serializable {
 	@JoinColumn(name = "secondTeam")
 	Team secondTeam;
 
+	@OneToOne
+	@JoinColumn(name = "winner")
+	Team winner;
+
 	Challenge() {
 	}
 
@@ -49,7 +53,15 @@ public class Challenge implements Serializable {
 	}
 
 	public Team getWinner() {
-		return getScoreFirstTeam() > getScoreSecondTeam() ? firstTeam
+		if (winner == null)
+			setWinner();
+		return winner;
+	}
+
+	public void setWinner() {
+		if (!isOver())
+			throw new ChallengeException(CHALLENGE_NOT_OVER);
+		winner = getScoreFirstTeam() > getScoreSecondTeam() ? firstTeam
 				: secondTeam;
 	}
 
@@ -71,29 +83,22 @@ public class Challenge implements Serializable {
 		}
 	}
 
-	public int getScoreFirstTeam() {
-		
+	private int getScoreFirstTeam() {
+
 		int score = 0;
-		for (int i = 0 ; i < Team.TEAM_SIZE; ++i) {
+		for (int i = 0; i < Team.TEAM_SIZE; ++i) {
 			Player p = firstTeam.getPlayer(i);
-			Player p2 = secondTeam.getPlayer(i);
-			if (duelService.getDuelStatus(p,p2) != DuelStatus.Over)
-				throw new ChallengeException(CHALLENGE_NOT_OVER);
 			if (p.getScore() > p.getOpponent().getScore())
 				score++;
 		}
 		return score;
 	}
 
-	public int getScoreSecondTeam() {
-		
+	private int getScoreSecondTeam() {
+
 		int score = 0;
-		for (int i = 0 ; i < Team.TEAM_SIZE; ++i) {
+		for (int i = 0; i < Team.TEAM_SIZE; ++i) {
 			Player p = secondTeam.getPlayer(i);
-			Player p2 = firstTeam.getPlayer(i);
-			
-			if (duelService.getDuelStatus(p, p2) != DuelStatus.Over)
-				throw new ChallengeException(CHALLENGE_NOT_OVER);
 			if (p.getScore() > p.getOpponent().getScore())
 				score++;
 		}
@@ -109,10 +114,12 @@ public class Challenge implements Serializable {
 	}
 
 	public boolean isOver() {
-		for (int i = 0 ; i < Team.TEAM_SIZE; ++i)
-			if (duelService.getDuelStatus(firstTeam.getPlayer(i), secondTeam.getPlayer(i)) != DuelStatus.Over)
-				return false;
-		
+		if (winner == null) {
+			for (int i = 0; i < Team.TEAM_SIZE; ++i)
+				if (duelService.getDuelStatus(firstTeam.getPlayer(i),
+						secondTeam.getPlayer(i)) != DuelStatus.Over)
+					return false;
+		}
 		return true;
 	}
 }

@@ -117,6 +117,6 @@ public class TestLeague {
 		}
 
 		leagueRemote.startLeague(leagueName);
-		//playerRemote.roll(team1Players[0], 5);
+		playerRemote.roll(team1Players[0], 5);
 	}
 }
