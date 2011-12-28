@@ -20,15 +20,16 @@ public class Game extends Observable implements Serializable {
 	private static final long serialVersionUID = 4684393781042750793L;
 	private static final int MAX_FRAMES = 10;
 	private static final String ERROR_GAME_ENDED = "GAME OVER FOR YOU !";
-	public static final String UNKNOWN_GAME = "Unknown game !";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	int id;
+	
 	@OneToMany(cascade = CascadeType.ALL, targetEntity = AbstractFrame.class)
 	@IndexColumn(base = 0, name = "FrameNumber")
-	private Frame[] frames;
-	private int currentFrame;
+	Frame[] frames;
+	
+	int currentFrame;
 
 	Game() {}
 	

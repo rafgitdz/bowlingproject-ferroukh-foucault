@@ -74,4 +74,14 @@ public class AbstractFrame implements Frame {
 	public int getId() {
 		return id;
 	}
+
+	@Override
+	public void resetFrame() {
+		this.roll1 = 0;
+		this.roll2 = 0;
+		this.roll3 = 0;
+		this.roll1Played = false;
+		this.roll2Played = false;
+		this.roll3Played = false;
+	}
 }

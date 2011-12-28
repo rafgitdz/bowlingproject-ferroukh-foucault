@@ -31,6 +31,7 @@ public class League implements Serializable {
 	private static final String ERROR_TEAM_NOT_FULL = "The team {0} is not full, you cannot start the league";
 	private static final String ERROR_LEAGUE_IN_PROGRESS = "The league is in progress, you cannot remove the team";
 	private static final String ERROR_TEAM_NOT_IN_LEAGUE = "The team {0} doesn't belong to this league";
+	private static final String ERROR_LEAGUE_OVER = "The league is over!";
 
 	@Id
 	private String name;
@@ -81,20 +82,22 @@ public class League implements Serializable {
 	}
 
 	public void nextRound() {
+		if (getStatus() == LeagueStatus.Over)
+			throw new LeagueException(ERROR_LEAGUE_OVER);
 		if (currentRound == teams.size() - 1)
-			throw new LeagueException("The league is over");
+			this.leagueStatus = LeagueStatus.Over;
+		else {
+			List<Challenge> challenges = schedule
+					.getRoundSchedule(getCurrentRound());
+			for (Challenge c : challenges)
+				if (c.isOver())
+					c.setWinner();
+				else
+					throw new LeagueException(
+							"Cannot go to next round, current round's challenges are not over");
 
-		List<Challenge> challenges = schedule
-				.getRoundSchedule(getCurrentRound());
-		for (Challenge c : challenges)
-			if (c.isOver())
-				c.setWinner();
-			else
-				throw new LeagueException(
-						"Cannot go to next round, current round's challenges are not over");
-
-		startRound(++currentRound);
-
+			startRound(++currentRound);
+		}
 	}
 
 	private void startRound(int round) {
@@ -198,8 +201,9 @@ public class League implements Serializable {
 			if (teams.get(i).getName().equals(teamName))
 				teamIndex = i;
 		if (teamIndex == -1)
-			throw new LeagueException(String.format(ERROR_TEAM_NOT_IN_LEAGUE, teamName));
-		
+			throw new LeagueException(String.format(ERROR_TEAM_NOT_IN_LEAGUE,
+					teamName));
+
 		teams.remove(teamIndex);
 	}
 

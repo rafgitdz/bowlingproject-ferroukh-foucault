@@ -9,15 +9,14 @@ public class PlayerFactory implements PlayerFactoryLocal {
 	public Player newPlayer(String name) {
 
 		Player player = new Player(name);
-		player = newGame(player);
+		player.currentGame = createGame();
+		player.currentGame.addObserver(player);
 		return player;
 	}
 
 	@Override
 	public Player newGame(Player player) {
-		Game game = createGame();
-		player.currentGame = game;
-		game.addObserver(player);
+		player.currentGame = resetGame(player.currentGame);
 		return player;
 	}
 
@@ -29,5 +28,14 @@ public class PlayerFactory implements PlayerFactoryLocal {
 		frames[9] = new LastFrame();
 
 		return new Game(frames);
+	}
+
+	private Game resetGame(Game game) {
+		
+		game.currentFrame = 0;
+		for (Frame frame : game.frames)
+			frame.resetFrame();
+
+		return game;
 	}
 }

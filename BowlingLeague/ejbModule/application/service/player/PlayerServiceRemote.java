@@ -15,9 +15,7 @@ public interface PlayerServiceRemote {
 
 	public Player newPlayer(String name);
 
-	public void savePlayer(Player player);
-
-	Player loadPlayer(String name);
+	public Player loadPlayer(String name);
 
 	public void deletePlayer(String name);
 

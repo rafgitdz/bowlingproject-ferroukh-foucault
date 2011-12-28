@@ -22,5 +22,7 @@ public interface Frame extends Serializable {
 	public int getRoll2();
 
 	public int getRoll3();
+	
+	public void resetFrame();
 
 }

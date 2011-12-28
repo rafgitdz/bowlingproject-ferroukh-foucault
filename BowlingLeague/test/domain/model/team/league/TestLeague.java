@@ -1,6 +1,6 @@
 package domain.model.team.league;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,15 +102,13 @@ public class TestLeague {
 		playRound();
 	}
 
-	@Test(expected = LeagueException.class)
 	public void testLeagueOver() {
 
-		playRound();
-		league.nextRound();
-		playRound();
-		league.nextRound();
-		playRound();
-		league.nextRound();
+		while (league.getStatus() != LeagueStatus.Over) {
+			playRound();
+			league.nextRound();	
+		}
+		assertEquals(LeagueStatus.Over, league.getStatus());
 	}
 	
 	@Test(expected = LeagueException.class)
@@ -131,6 +129,20 @@ public class TestLeague {
 			totalScores += league.getScore(t);
 		}
 		assertEquals(expectedTotal, totalScores);
+	}
+	
+	@Test
+	public void testGetFinalRanking() {
+		
+		while (league.getStatus() != LeagueStatus.Over) {
+			playRound();
+			league.nextRound();
+		}
+		List<Team> ranking = league.getRanking();
+		assertEquals(league.getTeams().size(), ranking.size());
+		for (int i = 0; i < ranking.size() -1 ; i++) {
+			assertTrue(league.getScore(ranking.get(i)) >= league.getScore(ranking.get(i+1)));
+		}
 	}
 
 	private void playRound() {

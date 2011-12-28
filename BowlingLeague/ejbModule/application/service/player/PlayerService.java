@@ -13,6 +13,8 @@ import domain.model.team.Team;
 @Stateless
 public class PlayerService implements PlayerServiceRemote {
 
+	private static final String UNKNOWN_PLAYER = "Unknown player: ";
+
 	@EJB
 	private RepositoryPlayer repositoryPlayer;
 
@@ -27,10 +29,6 @@ public class PlayerService implements PlayerServiceRemote {
 		return repositoryPlayer.save(playerFactory.newPlayer(name));
 	}
 
-	@Override
-	public void savePlayer(Player player) {
-		repositoryPlayer.save(player);
-	}
 
 	@Override
 	public Player loadPlayer(String name) {
@@ -43,20 +41,35 @@ public class PlayerService implements PlayerServiceRemote {
 
 	@Override
 	public void deletePlayer(String name) {
+		
 		Player player = repositoryPlayer.load(name);
 		if (player == null)
 			throw new PlayerException(Player.PLAYER_NOT_EXIST);
+		
 		Team team = player.getTeam();
 		if (team != null) {
 			team.removePlayer(name);
 			repositoryTeam.update(team);
 		}
+		
+		Player opponent = player.getOpponent();
+		if (opponent != null) {
+			opponent.setOpponent(null);
+			repositoryPlayer.update(opponent);
+		}
+		
 		repositoryPlayer.delete(name);
 	}
 
 	@Override
 	public void roll(String name, int roll) {
-		repositoryPlayer.load(name).roll(roll);
+		
+		Player player = repositoryPlayer.load(name);
+		if (player == null)
+			throw new PlayerException(UNKNOWN_PLAYER + name);
+		player.roll(roll);
+		
+		repositoryPlayer.update(player);
 	}
 
 	@Override
