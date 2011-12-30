@@ -22,11 +22,11 @@ public class TestTeam {
 	private PlayerServiceRemote playerRemote;
 	private LeagueServiceRemote leagueRemote;
 
-	
-	private String[] playersName = {"Freddie", "Patrick", "Dennis", "Titi", "Sol"};
+	private String[] playersName = { "Freddie", "Patrick", "Dennis", "Titi",
+			"Sol" };
 	private String teamName = "Gunners";
 	private String leagueName = "Premiership";
-	
+
 	@Before
 	public void setUp() {
 		teamRemote = TeamRemoteGeneration.getInstance();
@@ -36,46 +36,45 @@ public class TestTeam {
 
 	@After
 	public void tearDown() {
-		
+
 		for (int i = 0; i < playersName.length; i++) {
 			try {
-			playerRemote.deletePlayer(playersName[i]);
+				playerRemote.deletePlayer(playersName[i]);
 			} catch (PlayerException e) {
-				
+
 			}
 		}
 		leagueRemote.deleteLeague(leagueName);
 		teamRemote.deleteTeam(teamName);
-		
+
 	}
-	
+
 	@AfterClass
 	public static void cleanService() {
 		TeamRemoteGeneration.cleanInstance();
 		PlayerRemoteGeneration.cleanInstance();
 	}
-	
+
 	@Test
 	public void testSaveOnlyTeam() {
-		
+
 		teamRemote.newTeam(teamName, leagueName);
 		assertEquals(teamName, teamRemote.loadTeam(teamName).getName());
 	}
-	
+
 	@Test
 	public void testSaveTeamWithPlayers() {
-		
+
 		teamRemote.newTeam(teamName, leagueName);
 		for (int i = 0; i < playersName.length; i++) {
 			playerRemote.newPlayer(playersName[i]);
 			teamRemote.addPlayer(teamName, playersName[i]);
 		}
-		
+
 		for (int i = 0; i < playersName.length; i++) {
-			assertEquals(playersName[i], teamRemote.getPlayersNames(teamName).get(i));
+			assertEquals(playersName[i], teamRemote.getPlayersNames(teamName)
+					.get(i));
 		}
-		
-		
 	}
 
 	@Test
@@ -86,11 +85,11 @@ public class TestTeam {
 			playerRemote.newPlayer(playersName[i]);
 			teamRemote.addPlayer(teamName, playersName[i]);
 		}
-		
+
 		Team gunners = teamRemote.loadTeam(teamName);
 		for (int i = 0; i < playersName.length; i++) {
 			assertEquals(playersName[i], gunners.getPlayer(i).getName());
 		}
-		
+
 	}
 }

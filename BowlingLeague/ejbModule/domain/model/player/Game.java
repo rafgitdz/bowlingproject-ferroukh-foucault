@@ -5,6 +5,7 @@ import java.util.Observable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,8 +25,8 @@ public class Game extends Observable implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	int id;
-	
-	@OneToMany(cascade = CascadeType.ALL, targetEntity = AbstractFrame.class)
+
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = AbstractFrame.class, fetch = FetchType.EAGER)
 	@IndexColumn(base = 0, name = "FrameNumber")
 	Frame[] frames;
 	

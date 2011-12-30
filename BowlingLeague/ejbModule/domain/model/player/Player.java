@@ -32,7 +32,7 @@ public class Player implements Observer, Serializable {
 	@Id
 	private String name;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "Game")
 	Game currentGame;
 	
@@ -60,7 +60,6 @@ public class Player implements Observer, Serializable {
 			currentGame.roll(pinsDown);
 		else
 			displayError(this.getName() + ERROR_NOT_YOUR_TURN);
-
 	}
 
 	public int getScore() {

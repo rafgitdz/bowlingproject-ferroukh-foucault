@@ -79,10 +79,20 @@ public class PlayerService implements PlayerServiceRemote {
 		repositoryPlayer.update(player);
 			
 	}
+	
+	@Override
+	public void rollAlonePlayer(String name, int roll) {
+		
+		Player p = repositoryPlayer.load(name);
+		p.play();
+		p.roll(roll);
+		repositoryPlayer.update(p);
+	}
 
 	@Override
 	public int getScore(String name) {
-		return repositoryPlayer.load(name).getScore();
+		Player p = repositoryPlayer.load(name);
+		return p.getScore();
 	}
 
 	@Override
