@@ -18,7 +18,7 @@ public class PlayerService implements PlayerServiceRemote {
 
 	@EJB
 	private RepositoryTeam repositoryTeam;
-	
+
 	@EJB
 	private PlayerFactoryLocal playerFactory;
 
@@ -56,12 +56,25 @@ public class PlayerService implements PlayerServiceRemote {
 
 	@Override
 	public void roll(String name, int roll) {
-		repositoryPlayer.load(name).roll(roll);
+		
+		Player p = repositoryPlayer.load(name);
+		p.roll(roll);
+		repositoryPlayer.update(p);
+	}
+	
+	@Override
+	public void rollAlonePlayer(String name, int roll) {
+		
+		Player p = repositoryPlayer.load(name);
+		p.setItsMyTurn(true);
+		p.roll(roll);
+		repositoryPlayer.update(p);
 	}
 
 	@Override
 	public int getScore(String name) {
-		return repositoryPlayer.load(name).getScore();
+		Player p = repositoryPlayer.load(name);
+		return p.getScore();
 	}
 
 	@Override

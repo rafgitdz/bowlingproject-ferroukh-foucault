@@ -56,4 +56,16 @@ public class TestPlayer {
 		playerRemote.deletePlayer(playerName);
 		playerRemote.loadPlayer(playerName);
 	}
+
+	@Test
+	public void testRollPlayer() {
+
+		playerRemote.newPlayer(playerName);
+		for (int i = 0; i < 10; i++) {
+			playerRemote.rollAlonePlayer(playerName, 4);
+			playerRemote.rollAlonePlayer(playerName, 3);
+		}
+		int scorePlayer = 70;
+		assertEquals(scorePlayer, playerRemote.getScore(playerName));
+	}
 }

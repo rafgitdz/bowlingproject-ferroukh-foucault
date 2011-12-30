@@ -21,4 +21,6 @@ public interface PlayerServiceRemote {
 
 	public void deletePlayer(String name);
 
+	void rollAlonePlayer(String name, int roll);
+
 }
