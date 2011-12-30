@@ -1,6 +1,7 @@
 package domain.model.player;
 
 import domain.service.DuelServiceForTest;
+import domain.service.DuelServiceLocal;
 
 public class PlayerFactoryForTest implements PlayerFactoryLocal {
 	
@@ -30,5 +31,13 @@ public class PlayerFactoryForTest implements PlayerFactoryLocal {
 		frames[9] = new LastFrame();
 
 		return new Game(frames);
+	}
+	
+	@Override
+	public Player rebuildPlayer(Player player, DuelServiceLocal duelService) {
+		
+		player.currentGame.addObserver(player);
+
+		return player;
 	}
 }

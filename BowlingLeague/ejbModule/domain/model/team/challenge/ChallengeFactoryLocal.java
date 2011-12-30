@@ -8,4 +8,6 @@ import domain.model.team.Team;
 public interface ChallengeFactoryLocal {
 
 	public Challenge newChallenge(Team t1, Team t2);
+
+	public Challenge rebuildChallenge(Challenge challenge);
 }

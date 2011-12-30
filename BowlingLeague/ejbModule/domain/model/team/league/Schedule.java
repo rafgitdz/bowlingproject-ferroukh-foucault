@@ -35,7 +35,7 @@ public class Schedule implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL, targetEntity = LeagueRound.class, fetch = FetchType.EAGER)
 	@IndexColumn(base = 0, name = "leagueRoundIndex")
-	private List<LeagueRound> scheduleRounds;
+	List<LeagueRound> scheduleRounds;
 
 	private int rounds;
 	private int challengesPerRound;
@@ -93,9 +93,6 @@ public class Schedule implements Serializable {
 		return scheduleRounds;
 	}
 
-	public void setSchedule(List<LeagueRound> schedule) {
-		this.scheduleRounds = schedule;
-	}
 
 	public void build() {
 		rounds = 0;

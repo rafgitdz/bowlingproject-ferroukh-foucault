@@ -2,6 +2,8 @@ package client;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -16,6 +18,9 @@ import context.TeamRemoteGeneration;
 import domain.model.exception.LeagueException;
 import domain.model.exception.PlayerException;
 import domain.model.exception.TeamException;
+import domain.model.player.PlayerStatus;
+import domain.model.team.Team;
+import domain.model.team.league.LeagueStatus;
 
 public class TestLeague {
 
@@ -42,7 +47,7 @@ public class TestLeague {
 	@After
 	public void tearDown() {
 		try {
-		leagueRemote.deleteLeague(leagueName);
+			leagueRemote.deleteLeague(leagueName);
 		} catch (LeagueException e) {
 		}
 		for (int i = 0; i < teamNames.length; i++)
@@ -117,7 +122,48 @@ public class TestLeague {
 		}
 
 		leagueRemote.startLeague(leagueName);
-		playerRemote.roll(team1Players[0], 5);
-		playerRemote.roll(team1Players[0], 5);
+		playLeague();
+		
+		List<Team> ranking = leagueRemote.getRanking(leagueName);
+		assertEquals(teamNames[3], ranking.get(0).getName());
+		assertEquals(teamNames[2], ranking.get(1).getName());
+		assertEquals(teamNames[1], ranking.get(2).getName());
+		assertEquals(teamNames[0], ranking.get(3).getName());
+		
+	}
+
+	private void playLeague() {
+
+		while (leagueRemote.getLeagueStatus(leagueName) != LeagueStatus.Over) {
+			while (!leagueRemote.isCurrentRoundOver(leagueName)) {
+
+				if (playerRemote.getPlayerStatus(team1Players[0]) == PlayerStatus.Playing)
+					for (String player : team1Players) {
+						playerRemote.roll(player, 1);
+						playerRemote.roll(player, 1);
+					}
+
+				if (playerRemote.getPlayerStatus(team2Players[0]) == PlayerStatus.Playing)
+					for (String player : team2Players) {
+						playerRemote.roll(player, 2);
+						playerRemote.roll(player, 2);
+					}
+
+				if (playerRemote.getPlayerStatus(team3Players[0]) == PlayerStatus.Playing)
+					for (String player : team3Players) {
+						playerRemote.roll(player, 3);
+						playerRemote.roll(player, 3);
+
+					}
+
+				if (playerRemote.getPlayerStatus(team4Players[0]) == PlayerStatus.Playing)
+					for (String player : team4Players) {
+						playerRemote.roll(player, 4);
+						playerRemote.roll(player, 4);
+
+					}
+			}
+			leagueRemote.goNextRound(leagueName);
+		}
 	}
 }

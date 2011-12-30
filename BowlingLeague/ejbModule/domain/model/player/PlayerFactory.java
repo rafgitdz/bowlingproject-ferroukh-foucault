@@ -2,9 +2,11 @@ package domain.model.player;
 
 import javax.ejb.Stateless;
 
+import domain.service.DuelServiceLocal;
+
 @Stateless
 public class PlayerFactory implements PlayerFactoryLocal {
-
+	
 	@Override
 	public Player newPlayer(String name) {
 
@@ -37,5 +39,14 @@ public class PlayerFactory implements PlayerFactoryLocal {
 			frame.resetFrame();
 
 		return game;
+	}
+
+	@Override
+	public Player rebuildPlayer(Player player, DuelServiceLocal duelService) {
+		
+		player.currentGame.addObserver(player);
+		player.duelService = duelService;
+		
+		return player;
 	}
 }

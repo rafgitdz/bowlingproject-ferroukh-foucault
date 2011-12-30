@@ -34,8 +34,9 @@ public class DuelService implements DuelServiceLocal{
 	@Override
 	public void finishTurn(Player player) {
 		if (player.getOpponent() != null) {
-			player.dontPlay();
-			player.getOpponent().play();
+			player.waitForOpponent();
+			if (!player.getOpponent().getGame().isOver())
+				player.getOpponent().play();
 		}
 
 	}

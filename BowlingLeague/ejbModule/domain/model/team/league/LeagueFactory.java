@@ -6,14 +6,15 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import domain.model.team.Team;
+import domain.model.team.challenge.Challenge;
 import domain.model.team.challenge.ChallengeFactoryLocal;
 
 @Stateless
 public class LeagueFactory implements LeagueFactoryLocal {
-	
+
 	@EJB
 	ChallengeFactoryLocal challengeFactory;
-	
+
 	@Override
 	public League newLeague(String name) {
 
@@ -26,9 +27,18 @@ public class LeagueFactory implements LeagueFactoryLocal {
 
 	@Override
 	public League rebuildLeague(League league) {
+
 		Schedule sched = league.getSchedule();
-		if (sched != null)
+		if (sched != null) {
 			sched.challengeFactory = this.challengeFactory;
+
+			// We rebuild the challenges of the league, to set their
+			// duelServices
+			// This part may be optimized
+			for (LeagueRound lr : sched.getSchedule())
+				for (Challenge c : lr.getChallenges())
+					challengeFactory.rebuildChallenge(c);
+		}
 		return league;
 	}
 }

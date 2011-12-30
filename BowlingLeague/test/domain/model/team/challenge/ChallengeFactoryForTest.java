@@ -14,4 +14,9 @@ public class ChallengeFactoryForTest implements ChallengeFactoryLocal {
 		return c;
 	}
 
+	@Override
+	public Challenge rebuildChallenge(Challenge challenge) {
+		return null;
+	}
+
 }

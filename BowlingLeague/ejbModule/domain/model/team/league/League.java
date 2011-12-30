@@ -81,7 +81,7 @@ public class League implements Serializable {
 		return currentRound;
 	}
 
-	public void nextRound() {
+	public void goNextRound() {
 		if (getStatus() == LeagueStatus.Over)
 			throw new LeagueException(ERROR_LEAGUE_OVER);
 		if (currentRound == teams.size() - 1)
@@ -209,5 +209,16 @@ public class League implements Serializable {
 
 	public LeagueStatus getStatus() {
 		return this.leagueStatus;
+	}
+
+	public boolean isCurrentRoundOver() {
+		List<Challenge> challenges = schedule
+				.getRoundSchedule(getCurrentRound());
+		
+		for (Challenge c : challenges)
+			if (!c.isOver())
+				return false;
+
+		return true;
 	}
 }

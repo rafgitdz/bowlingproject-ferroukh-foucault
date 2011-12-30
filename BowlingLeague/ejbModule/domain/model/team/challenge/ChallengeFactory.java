@@ -21,4 +21,10 @@ public class ChallengeFactory implements ChallengeFactoryLocal {
 		return c;
 	}
 
+	@Override
+	public Challenge rebuildChallenge(Challenge challenge) {
+		challenge.duelService = this.duelService;
+		return challenge;
+	}
+
 }

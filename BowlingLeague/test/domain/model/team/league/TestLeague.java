@@ -96,9 +96,9 @@ public class TestLeague {
 	public void testPlay3Rounds() {
 
 		playRound();
-		league.nextRound();
+		league.goNextRound();
 		playRound();
-		league.nextRound();
+		league.goNextRound();
 		playRound();
 	}
 
@@ -106,14 +106,14 @@ public class TestLeague {
 
 		while (league.getStatus() != LeagueStatus.Over) {
 			playRound();
-			league.nextRound();	
+			league.goNextRound();	
 		}
 		assertEquals(LeagueStatus.Over, league.getStatus());
 	}
 	
 	@Test(expected = LeagueException.class)
 	public void nextRound_RoundNotOver() {
-		league.nextRound();
+		league.goNextRound();
 	}
 
 	@Test
@@ -124,7 +124,7 @@ public class TestLeague {
 		for (Team t : teams)
 			assertEquals(0, league.getScore(t));
 		playRound();
-		league.nextRound();
+		league.goNextRound();
 		for (Team t : teams) {
 			totalScores += league.getScore(t);
 		}
@@ -136,7 +136,7 @@ public class TestLeague {
 		
 		while (league.getStatus() != LeagueStatus.Over) {
 			playRound();
-			league.nextRound();
+			league.goNextRound();
 		}
 		List<Team> ranking = league.getRanking();
 		assertEquals(league.getTeams().size(), ranking.size());

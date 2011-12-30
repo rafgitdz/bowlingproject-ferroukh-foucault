@@ -22,8 +22,7 @@ import domain.service.DuelServiceLocal;
 public class Player implements Observer, Serializable {
 
 	private static final long serialVersionUID = 4505445387411090683L;
-	private static final String ERROR_NOT_YOUR_TURN = " !, It is not your turn!";
-	public static final String PLAYER_NOT_EXIST = "Player doesn't exist !";
+	private static final String ERROR_NOT_YOUR_TURN = ", it's not your turn!";
 
 	
 	@EJB
@@ -37,9 +36,9 @@ public class Player implements Observer, Serializable {
 	@JoinColumn(name = "Game")
 	Game currentGame;
 	
-	private boolean itsMyTurn;
+	PlayerStatus status;
 	
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	Player opponent;
 
 	@ManyToOne
@@ -52,20 +51,16 @@ public class Player implements Observer, Serializable {
 	Player(String name) {
 
 		this.name = name;
-		itsMyTurn = false;
+		status = PlayerStatus.Waiting;
 	}
 
 	public void roll(int pinsDown) {
 
-		if (itsMyTurn)
+		if (status == PlayerStatus.Playing)
 			currentGame.roll(pinsDown);
 		else
 			displayError(this.getName() + ERROR_NOT_YOUR_TURN);
 
-	}
-
-	public void setItsMyTurn(boolean b) {
-		itsMyTurn = b;
 	}
 
 	public int getScore() {
@@ -100,11 +95,11 @@ public class Player implements Observer, Serializable {
 	}
 	
 	public void play() {
-		itsMyTurn = true;
+		status = PlayerStatus.Playing;
 	}
 	
-	public void dontPlay() {
-		itsMyTurn = false;
+	public void waitForOpponent() {
+		status = PlayerStatus.Waiting;
 	}
 
 	public Player getOpponent() {
@@ -117,5 +112,9 @@ public class Player implements Observer, Serializable {
 
 	public Team getTeam() {
 		return this.team;
+	}
+
+	public PlayerStatus getStatus() {
+		return status;
 	}
 }

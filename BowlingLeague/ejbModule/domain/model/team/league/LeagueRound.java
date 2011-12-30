@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +24,7 @@ public class LeagueRound implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	int id;
 
-	@OneToMany(cascade = CascadeType.ALL, targetEntity = Challenge.class)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@IndexColumn(base = 0, name = "ChallengeIndex")
 	private List<Challenge> challenges;
 

@@ -32,7 +32,7 @@ public class DuelServiceForTest implements DuelServiceLocal {
 	@Override
 	public void finishTurn(Player player) {
 		if (player.getOpponent() != null) {
-			player.dontPlay();
+			player.waitForOpponent();
 			player.getOpponent().play();
 		}
 
