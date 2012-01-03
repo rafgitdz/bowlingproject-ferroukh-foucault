@@ -2,6 +2,7 @@ package application.service.player;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.jws.WebService;
 
 import domain.model.exception.PlayerException;
 import domain.model.player.Player;
@@ -13,6 +14,8 @@ import domain.model.team.Team;
 import domain.service.DuelServiceLocal;
 
 @Stateless
+@WebService(endpointInterface="application.service.player.PlayerServiceRemote", serviceName="playerService")
+
 public class PlayerService implements PlayerServiceRemote {
 
 	private static final String UNKNOWN_PLAYER = "Unknown player: ";

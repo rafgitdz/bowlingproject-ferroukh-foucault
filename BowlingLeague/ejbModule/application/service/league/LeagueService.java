@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.jws.WebService;
 
 import domain.model.exception.LeagueException;
 import domain.model.player.Player;
@@ -16,6 +17,7 @@ import domain.model.team.league.LeagueStatus;
 import domain.model.team.league.RepositoryLeague;
 
 @Stateless
+@WebService(endpointInterface = "application.service.league.LeagueServiceRemote", serviceName = "leagueService")
 public class LeagueService implements LeagueServiceRemote {
 
 	private static final String UNKNOWN_LEAGUE = "Unknown league: ";
@@ -73,12 +75,12 @@ public class LeagueService implements LeagueServiceRemote {
 	@Override
 	public void goNextRound(String leagueName) {
 		League league = loadLeague(leagueName);
-		
+
 		league = leagueFactory.rebuildLeague(league);
 		league.goNextRound();
-		
+
 		repositoryLeague.update(league);
-		
+
 		for (Team team : league.getTeams())
 			for (Player player : team.getPlayers())
 				repositoryPlayer.update(player);
@@ -95,19 +97,16 @@ public class LeagueService implements LeagueServiceRemote {
 	public List<Team> getRanking(String leagueName) {
 		League league = loadLeague(leagueName);
 		league = leagueFactory.rebuildLeague(league);
-		
+
 		return league.getRanking();
 	}
-	
+
 	private League loadLeague(String leagueName) {
-		
+
 		League league = repositoryLeague.load(leagueName);
 		if (league == null)
 			throw new LeagueException(UNKNOWN_LEAGUE + leagueName);
-		
+
 		return league;
 	}
-
-
-
 }

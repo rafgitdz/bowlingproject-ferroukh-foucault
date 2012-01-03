@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.jws.WebService;
 
 import domain.model.exception.TeamException;
 import domain.model.player.Player;
@@ -17,6 +18,7 @@ import domain.model.team.league.LeagueFactoryLocal;
 import domain.model.team.league.RepositoryLeague;
 
 @Stateless
+@WebService(endpointInterface = "application.service.team.TeamServiceRemote", serviceName = "teamService")
 public class TeamService implements TeamServiceRemote {
 
 	private static final String ERROR_TEAM_IN_LEAGUE = "Your team is in a league, you cannot delete it";
@@ -65,7 +67,7 @@ public class TeamService implements TeamServiceRemote {
 		if (team.getLeague() != null) {
 			throw new TeamException(ERROR_TEAM_IN_LEAGUE);
 		}
-		
+
 		repositoryTeam.delete(teamName);
 	}
 
