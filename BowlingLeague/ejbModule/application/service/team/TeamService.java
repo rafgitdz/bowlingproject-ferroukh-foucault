@@ -1,6 +1,5 @@
 package application.service.team;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -22,6 +21,7 @@ import domain.model.team.league.RepositoryLeague;
 public class TeamService implements TeamServiceRemote {
 
 	private static final String ERROR_TEAM_IN_LEAGUE = "Your team is in a league, you cannot delete it";
+	private static final String ERROR_UNKNOWN_TEAM = "Unknown team: ";
 	@EJB
 	private RepositoryLeague repositoryLeague;
 	@EJB
@@ -50,20 +50,11 @@ public class TeamService implements TeamServiceRemote {
 		return t;
 	}
 
-	@Override
-	public Team loadTeam(String name) {
-
-		Team team = repositoryTeam.load(name);
-		if (team == null)
-			throw new TeamException(Team.UNKNOWN_TEAM);
-		return team;
-	}
-
+	
+	
 	@Override
 	public void deleteTeam(String teamName) {
-		Team team = repositoryTeam.load(teamName);
-		if (team == null)
-			throw new TeamException(Team.UNKNOWN_TEAM);
+		Team team = loadTeam(teamName);
 		if (team.getLeague() != null) {
 			throw new TeamException(ERROR_TEAM_IN_LEAGUE);
 		}
@@ -72,20 +63,41 @@ public class TeamService implements TeamServiceRemote {
 	}
 
 	@Override
-	public ArrayList<String> getPlayersNames(String nameTeam) {
-		return repositoryTeam.load(nameTeam).getPlayersNames();
+	public List<String> getPlayersNames(String teamName) {
+		Team team = loadTeam(teamName);
+		team = teamFactory.rebuildTeam(team);
+		
+		return team.getPlayersNames();
 	}
 
 	@Override
 	public List<Player> getPlayers(String nameTeam) {
-		return repositoryTeam.load(nameTeam).getPlayers();
+		Team team = loadTeam(nameTeam);
+		team = teamFactory.rebuildTeam(team);
+		return team.getPlayers();
 	}
 
 	@Override
 	public void addPlayer(String teamName, String playerName) {
 		Team t = loadTeam(teamName);
+		t = teamFactory.rebuildTeam(t);
+		
 		Player p = repositoryPlayer.load(playerName);
 		t.addPlayer(p);
 		repositoryTeam.update(t);
 	}
+	
+	@Override
+	public List<Team> getAllTeams() {
+		return repositoryTeam.loadAll();
+	}
+	
+	private Team loadTeam(String name) {
+
+		Team team = repositoryTeam.load(name);
+		if (team == null)
+			throw new TeamException(ERROR_UNKNOWN_TEAM + name);
+		return team;
+	}
+
 }

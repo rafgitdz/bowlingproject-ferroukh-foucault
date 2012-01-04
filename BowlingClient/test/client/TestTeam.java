@@ -1,6 +1,8 @@
 package client;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+
+import java.util.List;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -14,6 +16,7 @@ import context.LeagueRemoteGeneration;
 import context.PlayerRemoteGeneration;
 import context.TeamRemoteGeneration;
 import domain.model.exception.PlayerException;
+import domain.model.player.Player;
 import domain.model.team.Team;
 
 public class TestTeam {
@@ -59,7 +62,14 @@ public class TestTeam {
 	public void testSaveOnlyTeam() {
 
 		teamRemote.newTeam(teamName, leagueName);
-		assertEquals(teamName, teamRemote.loadTeam(teamName).getName());
+		List<Team> teams = teamRemote.getAllTeams();
+		boolean containsTeam = false;
+		for (Team t : teams)
+			if (t.getName().equals(teamName)) {
+				containsTeam = true;
+				break;
+			}
+		assertTrue(containsTeam);
 	}
 
 	@Test
@@ -86,9 +96,9 @@ public class TestTeam {
 			teamRemote.addPlayer(teamName, playersName[i]);
 		}
 
-		Team gunners = teamRemote.loadTeam(teamName);
+		List<Player> gunners = teamRemote.getPlayers(teamName);
 		for (int i = 0; i < playersName.length; i++) {
-			assertEquals(playersName[i], gunners.getPlayer(i).getName());
+			assertEquals(playersName[i], gunners.get(i).getName());
 		}
 
 	}

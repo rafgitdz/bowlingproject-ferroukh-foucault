@@ -6,6 +6,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import domain.model.team.Team;
+import domain.model.team.TeamFactoryLocal;
 import domain.model.team.challenge.Challenge;
 import domain.model.team.challenge.ChallengeFactoryLocal;
 
@@ -14,6 +15,8 @@ public class LeagueFactory implements LeagueFactoryLocal {
 
 	@EJB
 	ChallengeFactoryLocal challengeFactory;
+	@EJB
+	TeamFactoryLocal teamFactory;
 
 	@Override
 	public League newLeague(String name) {
@@ -38,6 +41,10 @@ public class LeagueFactory implements LeagueFactoryLocal {
 			for (LeagueRound lr : sched.getSchedule())
 				for (Challenge c : lr.getChallenges())
 					challengeFactory.rebuildChallenge(c);
+		}
+		
+		for (Team team : league.teams) {
+			teamFactory.rebuildTeam(team);
 		}
 		return league;
 	}

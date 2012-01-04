@@ -1,6 +1,5 @@
 package application.service.team;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Remote;
@@ -18,21 +17,21 @@ import domain.model.team.Team;
 public interface TeamServiceRemote {
 
 	@WebMethod
-	public List<Player> getPlayers(String nameTeam);
+	public List<Player> getPlayers(String teamName);
 
 	@WebMethod
-	public ArrayList<String> getPlayersNames(String nameTeam);
+	public List<String> getPlayersNames(String teamName);
 
 	@WebMethod
-	public Team newTeam(String nameTeam, String nameLeague);
-
-	@WebMethod
-	public Team loadTeam(String name);
+	public Team newTeam(String teamName, String leagueName);
 
 	@WebMethod
 	public void deleteTeam(String name);
 
 	@WebMethod
 	public void addPlayer(String nameTeam, String playerName);
+
+	@WebMethod
+	public List<Team> getAllTeams();
 
 }

@@ -38,8 +38,8 @@ public class League implements Serializable {
 
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "League_Id")
-	@IndexColumn(name = "TeamIndex")
-	private List<Team> teams;
+	@IndexColumn(name = "TeamIndex") 
+	List<Team> teams;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "schedule_Id")

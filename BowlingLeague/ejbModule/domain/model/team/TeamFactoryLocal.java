@@ -6,4 +6,5 @@ import javax.ejb.Local;
 public interface TeamFactoryLocal {
 	
 	public Team newTeam(String nameTeam);
+	public Team rebuildTeam(Team team);
 }

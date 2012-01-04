@@ -11,6 +11,7 @@ import domain.model.player.PlayerStatus;
 import domain.model.player.RepositoryPlayer;
 import domain.model.team.RepositoryTeam;
 import domain.model.team.Team;
+import domain.model.team.TeamFactoryLocal;
 import domain.service.DuelServiceLocal;
 
 @Stateless
@@ -18,7 +19,8 @@ import domain.service.DuelServiceLocal;
 
 public class PlayerService implements PlayerServiceRemote {
 
-	private static final String UNKNOWN_PLAYER = "Unknown player: ";
+	private static final String ERROR_UNKNOWN_PLAYER = "Unknown player: ";
+	private static final String ERROR_PLAYER_ALREADY_EXISTS = "The player already exists: ";
 
 	@EJB
 	private RepositoryPlayer repositoryPlayer;
@@ -28,6 +30,9 @@ public class PlayerService implements PlayerServiceRemote {
 
 	@EJB
 	private PlayerFactoryLocal playerFactory;
+	
+	@EJB
+	private TeamFactoryLocal teamFactory;
 
 	@EJB
 	private DuelServiceLocal duelService;
@@ -35,28 +40,23 @@ public class PlayerService implements PlayerServiceRemote {
 
 	@Override
 	public Player newPlayer(String name) {
+		
+		if (repositoryPlayer.load(name) != null) {
+			throw new PlayerException(ERROR_PLAYER_ALREADY_EXISTS + name);
+		}
+		
 		return repositoryPlayer.save(playerFactory.newPlayer(name));
 	}
 
 	@Override
-	public Player loadPlayer(String name) {
+	public void deletePlayer(String playerName) {
 
-		Player player = repositoryPlayer.load(name);
-		if (player == null)
-			throw new PlayerException(UNKNOWN_PLAYER + name);
-		return player;
-	}
-
-	@Override
-	public void deletePlayer(String name) {
-
-		Player player = repositoryPlayer.load(name);
-		if (player == null)
-			throw new PlayerException(UNKNOWN_PLAYER + name);
+		Player player = loadPlayer(playerName);
 
 		Team team = player.getTeam();
 		if (team != null) {
-			team.removePlayer(name);
+			team = teamFactory.rebuildTeam(team);
+			team.removePlayer(playerName);
 			repositoryTeam.update(team);
 		}
 
@@ -65,17 +65,14 @@ public class PlayerService implements PlayerServiceRemote {
 			opponent.setOpponent(null);
 			repositoryPlayer.update(opponent);
 		}
-
-		repositoryPlayer.delete(name);
+		
+		repositoryPlayer.delete(playerName);
 	}
 
 	@Override
 	public void roll(String name, int roll) {
 
-		Player player = repositoryPlayer.load(name);
-		if (player == null)
-			throw new PlayerException(UNKNOWN_PLAYER + name);
-
+		Player player = loadPlayer(name);
 		player = playerFactory.rebuildPlayer(player, duelService);
 		player.roll(roll);
 
@@ -86,7 +83,7 @@ public class PlayerService implements PlayerServiceRemote {
 	@Override
 	public void rollAlonePlayer(String name, int roll) {
 		
-		Player p = repositoryPlayer.load(name);
+		Player p = loadPlayer(name);
 		p.play();
 		p.roll(roll);
 		repositoryPlayer.update(p);
@@ -94,16 +91,23 @@ public class PlayerService implements PlayerServiceRemote {
 
 	@Override
 	public int getScore(String name) {
-		Player p = repositoryPlayer.load(name);
-		return p.getScore();
+		Player player = loadPlayer(name);
+
+		return player.getScore();
 	}
 
 	@Override
 	public PlayerStatus getPlayerStatus(String playerName) {
-		Player player = repositoryPlayer.load(playerName);
-		if (player == null)
-			throw new PlayerException(UNKNOWN_PLAYER + playerName);
+		Player player = loadPlayer(playerName);
 
 		return player.getStatus();
+	}
+	
+	private Player loadPlayer(String name) {
+
+		Player player = repositoryPlayer.load(name);
+		if (player == null)
+			throw new PlayerException(ERROR_UNKNOWN_PLAYER + name);
+		return player;
 	}
 }
