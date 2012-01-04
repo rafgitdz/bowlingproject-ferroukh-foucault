@@ -1,7 +1,5 @@
 package application.service.team;
 
-import java.util.List;
-
 import javax.ejb.Remote;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -32,6 +30,6 @@ public interface TeamServiceRemote {
 	public void addPlayer(String nameTeam, String playerName);
 
 	@WebMethod
-	public List<Team> getAllTeams();
+	public Team[] getAllTeams();
 
 }
