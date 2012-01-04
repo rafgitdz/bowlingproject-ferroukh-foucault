@@ -24,9 +24,6 @@ public interface PlayerServiceRemote {
 	public Player newPlayer(String name);
 
 	@WebMethod
-	public Player loadPlayer(String name);
-
-	@WebMethod
 	public void deletePlayer(String name);
 
 	@WebMethod

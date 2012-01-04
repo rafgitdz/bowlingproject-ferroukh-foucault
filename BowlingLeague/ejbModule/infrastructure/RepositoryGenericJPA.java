@@ -28,17 +28,15 @@ public class RepositoryGenericJPA<T, TId> implements RepositoryGeneric<T, TId> {
 
 	@Override
 	public void delete(TId id) {
-
 		T entity = em.find(persistentClass, id);
-		if (entity != null)
-			em.remove(entity);
+		em.remove(entity);
 	}
 
 	@Override
 	public List<T> loadAll() {		
 		@SuppressWarnings("unchecked")
 		List<T> entities = em.createQuery(
-				"SELECT FROM" + persistentClass.getName()).getResultList();
+				"from " + persistentClass.getName()).getResultList();
 		return entities;
 	}
 

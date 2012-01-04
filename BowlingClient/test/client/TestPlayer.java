@@ -40,21 +40,14 @@ public class TestPlayer {
 		Player marvin = playerRemote.newPlayer(playerName);
 		assertEquals(playerName, marvin.getName());
 	}
-
-	@Test
-	public void testLoadPlayer() {
-
-		playerRemote.newPlayer(playerName);
-		Player marvin = playerRemote.loadPlayer(playerName);
-		assertEquals(playerName, marvin.getName());
-	}
+	
 
 	@Test(expected = PlayerException.class)
 	public void testDeletePlayer() {
 
 		playerRemote.newPlayer(playerName);
 		playerRemote.deletePlayer(playerName);
-		playerRemote.loadPlayer(playerName);
+		playerRemote.rollAlonePlayer(playerName, 2);
 	}
 
 	@Test

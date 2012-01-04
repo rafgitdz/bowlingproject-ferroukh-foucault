@@ -6,4 +6,10 @@ public class TeamFactoryForTest implements TeamFactoryLocal {
 		Team t = new Team(name);
 		return t;
 	}
+
+	@Override
+	public Team rebuildTeam(Team team) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
