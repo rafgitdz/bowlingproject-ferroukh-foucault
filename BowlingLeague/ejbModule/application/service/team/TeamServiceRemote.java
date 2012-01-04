@@ -12,9 +12,9 @@ import javax.jws.soap.SOAPBinding.Style;
 import domain.model.player.Player;
 import domain.model.team.Team;
 
-@Remote
 @WebService (name = "teamService")
 @SOAPBinding(style = Style.DOCUMENT)
+@Remote
 public interface TeamServiceRemote {
 
 	@WebMethod
