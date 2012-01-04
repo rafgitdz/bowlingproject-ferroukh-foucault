@@ -42,7 +42,7 @@ public class RepositoryLeagueForTest implements RepositoryLeague {
 	}
 
 	@Override
-	public List<Team> query(String leagueName) {
+	public List<Team> getTeams(String leagueName) {
 		return entityManager.get(leagueName).getTeams();
 	}
 

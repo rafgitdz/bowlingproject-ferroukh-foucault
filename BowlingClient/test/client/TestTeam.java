@@ -1,8 +1,7 @@
 package client;
 
-import static org.junit.Assert.*;
-
-import java.util.List;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -62,7 +61,7 @@ public class TestTeam {
 	public void testSaveOnlyTeam() {
 
 		teamRemote.newTeam(teamName, leagueName);
-		List<Team> teams = teamRemote.getAllTeams();
+		Team[] teams = teamRemote.getAllTeams();
 		boolean containsTeam = false;
 		for (Team t : teams)
 			if (t.getName().equals(teamName)) {
@@ -82,8 +81,8 @@ public class TestTeam {
 		}
 
 		for (int i = 0; i < playersName.length; i++) {
-			assertEquals(playersName[i], teamRemote.getPlayersNames(teamName)
-					.get(i));
+			assertEquals(playersName[i],
+					teamRemote.getPlayersNames(teamName)[i]);
 		}
 	}
 
@@ -96,9 +95,9 @@ public class TestTeam {
 			teamRemote.addPlayer(teamName, playersName[i]);
 		}
 
-		List<Player> gunners = teamRemote.getPlayers(teamName);
+		Player[] gunners = teamRemote.getPlayers(teamName);
 		for (int i = 0; i < playersName.length; i++) {
-			assertEquals(playersName[i], gunners.get(i).getName());
+			assertEquals(playersName[i], gunners[i].getName());
 		}
 
 	}

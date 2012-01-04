@@ -5,6 +5,7 @@ import javax.ejb.Stateless;
 import javax.jws.WebService;
 
 import domain.model.exception.LeagueException;
+import domain.model.exception.TeamException;
 import domain.model.player.Player;
 import domain.model.player.RepositoryPlayer;
 import domain.model.team.RepositoryTeam;
@@ -99,6 +100,16 @@ public class LeagueService implements LeagueServiceRemote {
 		return (Team[]) league.getRanking().toArray();
 	}
 
+	@Override
+	public int getScore(String teamName) {
+		Team team = repositoryTeam.load(teamName);
+		if (team == null)
+			throw new TeamException("Unknown Team : " + teamName);
+		
+		League league = team.getLeague();
+		return league.getScore(team);
+	}
+	
 	private League loadLeague(String leagueName) {
 
 		League league = repositoryLeague.load(leagueName);

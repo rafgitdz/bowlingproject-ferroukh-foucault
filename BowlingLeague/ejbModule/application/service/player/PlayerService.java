@@ -5,6 +5,7 @@ import javax.ejb.Stateless;
 import javax.jws.WebService;
 
 import domain.model.exception.PlayerException;
+import domain.model.player.Game;
 import domain.model.player.Player;
 import domain.model.player.PlayerFactoryLocal;
 import domain.model.player.PlayerStatus;
@@ -109,5 +110,12 @@ public class PlayerService implements PlayerServiceRemote {
 		if (player == null)
 			throw new PlayerException(ERROR_UNKNOWN_PLAYER + name);
 		return player;
+	}
+
+	@Override
+	public Game getGame(String playerName) {
+		Player player = loadPlayer(playerName);
+		
+		return player.getGame();
 	}
 }

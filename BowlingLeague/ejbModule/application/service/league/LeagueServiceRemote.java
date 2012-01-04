@@ -34,5 +34,8 @@ public interface LeagueServiceRemote {
 
 	@WebMethod
 	public Team[] getRanking(String leagueName);
+	
+	@WebMethod
+	public int getScore(String teamName);
 
 }

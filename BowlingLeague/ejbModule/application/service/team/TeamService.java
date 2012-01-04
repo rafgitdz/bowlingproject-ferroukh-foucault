@@ -1,5 +1,7 @@
 package application.service.team;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.jws.WebService;
@@ -72,7 +74,7 @@ public class TeamService implements TeamServiceRemote {
 	public Player[] getPlayers(String nameTeam) {
 		Team team = loadTeam(nameTeam);
 		team = teamFactory.rebuildTeam(team);
-		return (Player[]) team.getPlayers().toArray();
+		return (Player[]) team.getPlayers().toArray(new Player[team.getPlayers().size()]);
 	}
 
 	@Override
@@ -87,7 +89,8 @@ public class TeamService implements TeamServiceRemote {
 	
 	@Override
 	public Team[] getAllTeams() {
-		return (Team[]) repositoryTeam.loadAll().toArray();
+		List<Team> teams = repositoryTeam.loadAll();
+		return (Team[]) teams.toArray(new Team[teams.size()]);
 	}
 	
 	private Team loadTeam(String name) {

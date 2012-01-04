@@ -43,6 +43,8 @@ public class LeagueFactory implements LeagueFactoryLocal {
 					challengeFactory.rebuildChallenge(c);
 		}
 		
+		
+		
 		for (Team team : league.teams) {
 			teamFactory.rebuildTeam(team);
 		}

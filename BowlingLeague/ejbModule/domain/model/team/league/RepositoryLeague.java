@@ -10,5 +10,5 @@ import domain.model.team.Team;
 @Remote
 public interface RepositoryLeague extends RepositoryGeneric<League, String> {
 
-	List<Team> query(String leagueName);
+	List<Team> getTeams(String leagueName);
 }
