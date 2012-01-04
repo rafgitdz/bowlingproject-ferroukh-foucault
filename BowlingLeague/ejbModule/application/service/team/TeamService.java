@@ -63,18 +63,18 @@ public class TeamService implements TeamServiceRemote {
 	}
 
 	@Override
-	public List<String> getPlayersNames(String teamName) {
+	public String[] getPlayersNames(String teamName) {
 		Team team = loadTeam(teamName);
 		team = teamFactory.rebuildTeam(team);
 		
-		return team.getPlayersNames();
+		return (String[]) team.getPlayersNames().toArray();
 	}
 
 	@Override
-	public List<Player> getPlayers(String nameTeam) {
+	public Player[] getPlayers(String nameTeam) {
 		Team team = loadTeam(nameTeam);
 		team = teamFactory.rebuildTeam(team);
-		return team.getPlayers();
+		return (Player[]) team.getPlayers().toArray();
 	}
 
 	@Override

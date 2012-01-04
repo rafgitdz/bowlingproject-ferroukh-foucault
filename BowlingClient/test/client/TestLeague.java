@@ -2,8 +2,6 @@ package client;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.List;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -92,7 +90,7 @@ public class TestLeague {
 			teamRemote.newTeam(teamNames[i], leagueName);
 		}
 		for (int i = 0; i < teamNames.length; i++)
-			assertEquals(leagueRemote.getTeams(leagueName).get(i).getName(),
+			assertEquals(leagueRemote.getTeams(leagueName)[i].getName(),
 					teamNames[i]);
 
 	}
@@ -124,11 +122,11 @@ public class TestLeague {
 		leagueRemote.startLeague(leagueName);
 		playLeague();
 		
-		List<Team> ranking = leagueRemote.getRanking(leagueName);
-		assertEquals(teamNames[3], ranking.get(0).getName());
-		assertEquals(teamNames[2], ranking.get(1).getName());
-		assertEquals(teamNames[1], ranking.get(2).getName());
-		assertEquals(teamNames[0], ranking.get(3).getName());
+		Team[] ranking = leagueRemote.getRanking(leagueName);
+		assertEquals(teamNames[3], ranking[0].getName());
+		assertEquals(teamNames[2], ranking[1].getName());
+		assertEquals(teamNames[1], ranking[2].getName());
+		assertEquals(teamNames[0], ranking[3].getName());
 		
 	}
 

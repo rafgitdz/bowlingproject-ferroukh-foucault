@@ -12,15 +12,15 @@ import domain.model.player.Player;
 import domain.model.team.Team;
 
 @WebService (name = "teamService")
-@SOAPBinding(style = Style.DOCUMENT)
+@SOAPBinding(style = Style.RPC)
 @Remote
 public interface TeamServiceRemote {
 
 	@WebMethod
-	public List<Player> getPlayers(String teamName);
+	public Player[] getPlayers(String teamName);
 
 	@WebMethod
-	public List<String> getPlayersNames(String teamName);
+	public String[] getPlayersNames(String teamName);
 
 	@WebMethod
 	public Team newTeam(String teamName, String leagueName);

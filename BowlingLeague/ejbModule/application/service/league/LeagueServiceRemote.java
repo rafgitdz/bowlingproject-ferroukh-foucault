@@ -1,7 +1,5 @@
 package application.service.league;
 
-import java.util.List;
-
 import javax.ejb.Remote;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -12,7 +10,7 @@ import domain.model.team.Team;
 import domain.model.team.league.LeagueStatus;
 
 @WebService(name = "leagueService")
-@SOAPBinding(style = Style.DOCUMENT)
+@SOAPBinding(style = Style.RPC)
 @Remote
 public interface LeagueServiceRemote {
 
@@ -23,7 +21,7 @@ public interface LeagueServiceRemote {
 	public void startLeague(String leagueName);
 
 	@WebMethod
-	public List<Team> getTeams(String leagueName);
+	public Team[] getTeams(String leagueName);
 
 	@WebMethod
 	public LeagueStatus getLeagueStatus(String leagueName);
@@ -35,6 +33,6 @@ public interface LeagueServiceRemote {
 	public boolean isCurrentRoundOver(String leagueName);
 
 	@WebMethod
-	public List<Team> getRanking(String leagueName);
+	public Team[] getRanking(String leagueName);
 
 }

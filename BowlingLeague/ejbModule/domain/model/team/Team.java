@@ -23,12 +23,13 @@ public class Team implements Serializable {
 	private static final long serialVersionUID = 2133149340833314015L;
 	public static final int TEAM_SIZE = 5;
 	public static final String FULL_TEAM_ERROR = "The team is full !";
+	public static final String UNKNOWN_TEAM = "Unknown team !";
 	public static final String PLAYER_NOT_IN_THIS_TEAM = "The player {0} is not in this team";
 
 	@Id
 	private String teamName;
 	
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Team_Id")
 	@IndexColumn(name = "PlayerIndex")
 	List<Player> players;
