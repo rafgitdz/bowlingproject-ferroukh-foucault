@@ -39,8 +39,7 @@ public class LeagueService implements LeagueServiceRemote {
 	public void deleteLeague(String leagueName) {
 
 		League league = loadLeague(leagueName);
-		leagueFactory.rebuildLeagueWithTeams(league);
-		
+
 		for (Team t : league.getTeams()) {
 			t.setLeague(null);
 			repositoryTeam.update(t);
@@ -68,7 +67,6 @@ public class LeagueService implements LeagueServiceRemote {
 	public String[] getTeams(String leagueName) {
 
 		League league = loadLeague(leagueName);
-		leagueFactory.rebuildLeagueWithTeams(league);
 		List<Team> teamsList = league.getTeams();
 		String[] teams = new String[teamsList.size()];
 
@@ -90,13 +88,12 @@ public class LeagueService implements LeagueServiceRemote {
 
 		league = leagueFactory.rebuildLeague(league);
 		league.goNextRound();
+
+		repositoryLeague.update(league);
+
 		for (Team team : league.getTeams())
 			for (Player player : team.getPlayers())
 				repositoryPlayer.update(player);
-		
-		repositoryLeague.update(league);
-
-
 	}
 
 	@Override
@@ -128,7 +125,7 @@ public class LeagueService implements LeagueServiceRemote {
 		if (team == null)
 			throw new TeamException("Unknown Team : " + teamName);
 
-		League league = repositoryTeam.getLeague(teamName);
+		League league = team.getLeague();
 		leagueFactory.rebuildLeague(league);
 		return league.getScore(team);
 	}

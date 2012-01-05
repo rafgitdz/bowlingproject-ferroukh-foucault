@@ -27,12 +27,8 @@ public class LeagueFactoryForTest implements LeagueFactoryLocal {
 
 	@Override
 	public League rebuildLeague(League league) {
-		return league;
-	}
-
-	@Override
-	public League rebuildLeagueWithTeams(League league) {
-		return league;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

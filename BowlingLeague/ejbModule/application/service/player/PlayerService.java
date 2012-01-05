@@ -56,7 +56,7 @@ public class PlayerService implements PlayerServiceRemote {
 
 		Player player = loadPlayer(playerName);
 
-		Team team = repositoryPlayer.getTeam(playerName);
+		Team team = player.getTeam();
 		if (team != null) {
 			team = teamFactory.rebuildTeam(team);
 			team.removePlayer(playerName);

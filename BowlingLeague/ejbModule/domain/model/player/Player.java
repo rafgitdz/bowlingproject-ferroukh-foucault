@@ -42,7 +42,7 @@ public class Player implements Observer, Serializable {
 	@OneToOne(cascade = CascadeType.MERGE)
 	Player opponent;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "Team_Id")
 	Team team;
 

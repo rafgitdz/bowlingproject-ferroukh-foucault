@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import domain.model.player.Player;
-import domain.model.team.league.League;
 
 public class RepositoryTeamForTest implements RepositoryTeam {
 
@@ -51,12 +50,6 @@ public class RepositoryTeamForTest implements RepositoryTeam {
 
 	@Override
 	public List<Player> getPlayers(String teamName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public League getLeague(String teamName) {
 		// TODO Auto-generated method stub
 		return null;
 	}

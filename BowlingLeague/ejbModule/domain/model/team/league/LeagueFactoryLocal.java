@@ -8,7 +8,5 @@ public interface LeagueFactoryLocal {
 	public League newLeague(String name);
 	
 	public League rebuildLeague(League league);
-	
-	public League rebuildLeagueWithTeams(League league);
 
 }
