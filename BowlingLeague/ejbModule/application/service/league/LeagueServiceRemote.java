@@ -33,7 +33,7 @@ public interface LeagueServiceRemote {
 	public boolean isCurrentRoundOver(String leagueName);
 
 	@WebMethod
-	public Team[] getRanking(String leagueName);
+	public String[] getRanking(String leagueName);
 	
 	@WebMethod
 	public int getScore(String teamName);

@@ -29,17 +29,18 @@ public class Game extends Observable implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, targetEntity = AbstractFrame.class, fetch = FetchType.EAGER)
 	@IndexColumn(base = 0, name = "FrameNumber")
 	Frame[] frames;
-	
+
 	int currentFrame;
 
-	Game() {}
-	
+	Game() {
+	}
+
 	Game(Frame[] frames) {
 
 		this.frames = frames;
 		this.currentFrame = 0;
 	}
-	
+
 	public int getScore() {
 
 		return getScore(currentFrame);
@@ -77,7 +78,7 @@ public class Game extends Observable implements Serializable {
 		if (frames[currentFrame].isPlayed() && (currentFrame < MAX_FRAMES - 1)) {
 			currentFrame++;
 			setChanged();
-			
+
 		} else if (isOver()) {
 			setChanged();
 		}
@@ -145,5 +146,9 @@ public class Game extends Observable implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public Frame[] getFrames() {
+		return this.frames;
 	}
 }

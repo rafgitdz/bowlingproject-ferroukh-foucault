@@ -6,7 +6,7 @@ import domain.service.DuelServiceLocal;
 
 @Stateless
 public class PlayerFactory implements PlayerFactoryLocal {
-	
+
 	@Override
 	public Player newPlayer(String name) {
 
@@ -33,7 +33,7 @@ public class PlayerFactory implements PlayerFactoryLocal {
 	}
 
 	private Game resetGame(Game game) {
-		
+
 		game.currentFrame = 0;
 		for (Frame frame : game.frames)
 			frame.resetFrame();
@@ -43,10 +43,10 @@ public class PlayerFactory implements PlayerFactoryLocal {
 
 	@Override
 	public Player rebuildPlayer(Player player, DuelServiceLocal duelService) {
-		
+
 		player.currentGame.addObserver(player);
 		player.duelService = duelService;
-		
+
 		return player;
 	}
 }

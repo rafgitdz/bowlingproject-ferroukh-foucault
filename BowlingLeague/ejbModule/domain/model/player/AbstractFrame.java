@@ -84,4 +84,19 @@ public class AbstractFrame implements Frame {
 		this.roll2Played = false;
 		this.roll3Played = false;
 	}
+
+	@Override
+	public boolean isRoll1Played() {
+		return roll1Played;
+	}
+
+	@Override
+	public boolean isRoll2Played() {
+		return roll2Played;
+	}
+
+	@Override
+	public boolean isRoll3Played() {
+		return roll3Played;
+	}
 }

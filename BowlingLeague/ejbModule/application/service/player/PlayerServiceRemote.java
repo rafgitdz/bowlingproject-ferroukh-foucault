@@ -19,21 +19,30 @@ public interface PlayerServiceRemote {
 	public void roll(String name, int roll);
 
 	@WebMethod
-	public Game getGame(String playerName);
-	
-	@WebMethod
 	public int getScore(String name);
 
 	@WebMethod
-	public Player newPlayer(String name);
+	public Player newPlayer(String playerName);
 
 	@WebMethod
-	public void deletePlayer(String name);
+	public void deletePlayer(String playerName);
 
 	@WebMethod
 	public PlayerStatus getPlayerStatus(String playerName);
 
 	@WebMethod
-	void rollAlonePlayer(String name, int roll);
+	public Game rollAlonePlayer(String name, int roll);
+
+	@WebMethod
+	public String getOpponentName(String playerName);
+
+	@WebMethod
+	public int[] getFrames(String playeName);
+
+	@WebMethod
+	public int[] getTotalsScores(String playerName);
+	
+	@WebMethod
+	public void newGame(String playerName);
 
 }

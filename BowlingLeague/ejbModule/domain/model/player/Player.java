@@ -24,27 +24,26 @@ public class Player implements Observer, Serializable {
 	private static final long serialVersionUID = 4505445387411090683L;
 	private static final String ERROR_NOT_YOUR_TURN = ", it's not your turn!";
 
-	
 	@EJB
 	@Transient
 	DuelServiceLocal duelService;
-	
+
 	@Id
 	private String name;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "Game")
 	Game currentGame;
-	
+
 	PlayerStatus status;
-	
+
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	Player opponent;
 
 	@ManyToOne
 	@JoinColumn(name = "Team_Id")
 	Team team;
-	
+
 	Player() {
 	}
 
@@ -56,9 +55,9 @@ public class Player implements Observer, Serializable {
 
 	public void roll(int pinsDown) {
 
-		if (status == PlayerStatus.Playing)
+		if (status == PlayerStatus.Playing) {
 			currentGame.roll(pinsDown);
-		else
+		} else
 			displayError(this.getName() + ERROR_NOT_YOUR_TURN);
 	}
 
@@ -92,11 +91,11 @@ public class Player implements Observer, Serializable {
 	public Game getGame() {
 		return currentGame;
 	}
-	
+
 	public void play() {
 		status = PlayerStatus.Playing;
 	}
-	
+
 	public void waitForOpponent() {
 		status = PlayerStatus.Waiting;
 	}

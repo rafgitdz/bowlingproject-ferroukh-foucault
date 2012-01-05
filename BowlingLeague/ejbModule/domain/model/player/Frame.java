@@ -22,7 +22,13 @@ public interface Frame extends Serializable {
 	public int getRoll2();
 
 	public int getRoll3();
-	
+
 	public void resetFrame();
+
+	public boolean isRoll1Played();
+
+	public boolean isRoll2Played();
+
+	public boolean isRoll3Played();
 
 }

@@ -1,5 +1,7 @@
 package application.service.league;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.jws.WebService;
@@ -93,11 +95,17 @@ public class LeagueService implements LeagueServiceRemote {
 	}
 
 	@Override
-	public Team[] getRanking(String leagueName) {
+	public String[] getRanking(String leagueName) {
+
 		League league = loadLeague(leagueName);
 		league = leagueFactory.rebuildLeague(league);
+		List<Team> teamsRank = league.getRanking();
 
-		return (Team[]) league.getRanking().toArray();
+		String[] teams = new String[teamsRank.size()];
+		for (int i = 0; i < teams.length; i++) {
+			teams[i] = teamsRank.get(i).getName();
+		}
+		return teams;
 	}
 
 	@Override
@@ -105,11 +113,11 @@ public class LeagueService implements LeagueServiceRemote {
 		Team team = repositoryTeam.load(teamName);
 		if (team == null)
 			throw new TeamException("Unknown Team : " + teamName);
-		
+
 		League league = team.getLeague();
 		return league.getScore(team);
 	}
-	
+
 	private League loadLeague(String leagueName) {
 
 		League league = repositoryLeague.load(leagueName);
