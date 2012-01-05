@@ -1,9 +1,9 @@
 package client;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import org.hibernate.validator.AssertFalse;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -57,8 +57,10 @@ public class TestPlayer {
 		playerRemote.newPlayer(playerName);
 		for (int i = 0; i < 10; i++) {
 			playerRemote.rollTraining(playerName, 4);
+			assertFalse(playerRemote.isTrainingGameOver(playerName));
 			playerRemote.rollTraining(playerName, 3);
 		}
+		assertTrue(playerRemote.isTrainingGameOver(playerName));
 		int scorePlayer = 70;
 		assertEquals(scorePlayer, playerRemote.getTrainingScore(playerName));
 	}

@@ -22,6 +22,9 @@ public class TeamService implements TeamServiceRemote {
 
 	private static final String ERROR_TEAM_IN_LEAGUE = "Your team is in a league, you cannot delete it";
 	private static final String ERROR_UNKNOWN_TEAM = "Unknown team: ";
+	private static final String ERROR_PLAYER_IN_A_TEAM = "The player is alredy in a team";
+	private static final String ERROR_DUPLICATE_TEAM = "The team already exists";
+	
 	@EJB
 	private RepositoryLeague repositoryLeague;
 	@EJB
@@ -37,6 +40,9 @@ public class TeamService implements TeamServiceRemote {
 	@Override
 	public Team newTeam(String teamName, String leagueName) {
 
+		if (repositoryTeam.load(teamName) != null)
+			throw new TeamException(ERROR_DUPLICATE_TEAM); 
+		
 		Team t = teamFactory.newTeam(teamName);
 		t = repositoryTeam.save(t);
 
@@ -84,6 +90,9 @@ public class TeamService implements TeamServiceRemote {
 		t = teamFactory.rebuildTeam(t);
 		
 		Player p = playerService.loadPlayer(playerName);
+		
+		if (p.getTeam() != null)
+			throw new TeamException(ERROR_PLAYER_IN_A_TEAM);
 		t.addPlayer(p);
 		repositoryTeam.update(t);
 	}

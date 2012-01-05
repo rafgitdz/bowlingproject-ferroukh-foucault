@@ -1,6 +1,7 @@
 package client;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -130,6 +131,9 @@ public class TestLeague {
 		for (int i = 0; i < teamNames.length; i++)
 			assertEquals(i, leagueRemote.getScore(teamNames[i]));
 
+		for(int i = 0; i < team1Players.length; i++)
+			assertTrue(playerRemote.isGameOver(team1Players[i]));
+		
 	}
 
 	private void playLeague() {

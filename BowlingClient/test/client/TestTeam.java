@@ -1,7 +1,7 @@
 package client;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
@@ -16,6 +16,7 @@ import context.LeagueRemoteGeneration;
 import context.PlayerRemoteGeneration;
 import context.TeamRemoteGeneration;
 import domain.model.exception.PlayerException;
+import domain.model.exception.TeamException;
 import domain.model.player.Player;
 import domain.model.team.Team;
 
@@ -109,5 +110,22 @@ public class TestTeam {
 	public void testAddUnknownPlayer() {
 		teamRemote.newTeam(teamName, leagueName);
 		teamRemote.addPlayer(teamName, "toto");
+	}
+	
+	@Test(expected= TeamException.class)
+	public void testAddPlayerAlreadyInTeam() {
+		teamRemote.newTeam(teamName, leagueName);
+		
+		playerRemote.newPlayer(playersName[0]);
+		teamRemote.addPlayer(teamName, playersName[0]);
+		
+		teamRemote.addPlayer(teamName, playersName[0]);
+	}
+	
+	@Test(expected = TeamException.class)
+	public void testCreateTeamTwice() {
+		teamRemote.newTeam(teamName, leagueName);
+		teamRemote.newTeam(teamName, leagueName);
+		
 	}
 }
