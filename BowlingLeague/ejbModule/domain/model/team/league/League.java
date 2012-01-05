@@ -84,20 +84,20 @@ public class League implements Serializable {
 	public void goNextRound() {
 		if (getStatus() == LeagueStatus.Over)
 			throw new LeagueException(ERROR_LEAGUE_OVER);
+		
+		List<Challenge> challenges = schedule
+				.getRoundSchedule(getCurrentRound());
+		for (Challenge c : challenges)
+			if (c.isOver())
+				c.setWinner();
+			else
+				throw new LeagueException(
+						"Cannot go to next round, current round's challenges are not over");
+		
 		if (currentRound == teams.size() - 1)
 			this.leagueStatus = LeagueStatus.Over;
-		else {
-			List<Challenge> challenges = schedule
-					.getRoundSchedule(getCurrentRound());
-			for (Challenge c : challenges)
-				if (c.isOver())
-					c.setWinner();
-				else
-					throw new LeagueException(
-							"Cannot go to next round, current round's challenges are not over");
-
+		else
 			startRound(++currentRound);
-		}
 	}
 
 	private void startRound(int round) {
@@ -190,6 +190,7 @@ public class League implements Serializable {
 		}
 
 		schedule.buildSchedule(teams);
+		leagueStatus = LeagueStatus.InProgress;
 		startRound(currentRound);
 	}
 
