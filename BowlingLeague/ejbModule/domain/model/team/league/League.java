@@ -36,7 +36,7 @@ public class League implements Serializable {
 	@Id
 	private String name;
 
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "League_Id")
 	@IndexColumn(name = "TeamIndex") 
 	List<Team> teams;

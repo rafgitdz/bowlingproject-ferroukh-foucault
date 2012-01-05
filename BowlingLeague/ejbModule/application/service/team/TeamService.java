@@ -45,6 +45,7 @@ public class TeamService implements TeamServiceRemote {
 			league = repositoryLeague.save(league);
 		}
 
+		leagueFactory.rebuildLeagueWithTeams(league);
 		league.addTeam(t);
 		repositoryLeague.update(league);
 		return t;
@@ -54,8 +55,8 @@ public class TeamService implements TeamServiceRemote {
 	
 	@Override
 	public void deleteTeam(String teamName) {
-		Team team = loadTeam(teamName);
-		if (team.getLeague() != null) {
+		loadTeam(teamName);
+		if (repositoryTeam.getLeague(teamName) != null) {
 			throw new TeamException(ERROR_TEAM_IN_LEAGUE);
 		}
 

@@ -17,6 +17,8 @@ public class LeagueFactory implements LeagueFactoryLocal {
 	ChallengeFactoryLocal challengeFactory;
 	@EJB
 	TeamFactoryLocal teamFactory;
+	@EJB
+	RepositoryLeague repositoryLeague;
 
 	@Override
 	public League newLeague(String name) {
@@ -42,10 +44,20 @@ public class LeagueFactory implements LeagueFactoryLocal {
 				for (Challenge c : lr.getChallenges())
 					challengeFactory.rebuildChallenge(c);
 		}
-		
+		league.teams = repositoryLeague.getTeams(league.getName());
 		for (Team team : league.teams) {
 			teamFactory.rebuildTeam(team);
 		}
 		return league;
 	}
+
+	@Override
+	public League rebuildLeagueWithTeams(League league) {
+		league.teams = repositoryLeague.getTeams(league.getName());
+		for (Team team : league.teams) {
+			teamFactory.rebuildTeam(team);
+		}
+		return league;
+	}
+	
 }

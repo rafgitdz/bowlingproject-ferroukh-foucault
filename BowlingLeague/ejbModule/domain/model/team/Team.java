@@ -29,12 +29,12 @@ public class Team implements Serializable {
 	@Id
 	private String teamName;
 	
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "Team_Id")
 	@IndexColumn(name = "PlayerIndex")
 	List<Player> players;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "League_Id")
 	League league;
 
