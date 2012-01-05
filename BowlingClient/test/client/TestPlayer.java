@@ -46,7 +46,7 @@ public class TestPlayer {
 
 		playerRemote.newPlayer(playerName);
 		playerRemote.deletePlayer(playerName);
-		playerRemote.rollAlonePlayer(playerName, 2);
+		playerRemote.rollTraining(playerName, 2);
 	}
 
 	@Test
@@ -54,11 +54,11 @@ public class TestPlayer {
 
 		playerRemote.newPlayer(playerName);
 		for (int i = 0; i < 10; i++) {
-			playerRemote.rollAlonePlayer(playerName, 4);
-			playerRemote.rollAlonePlayer(playerName, 3);
+			playerRemote.rollTraining(playerName, 4);
+			playerRemote.rollTraining(playerName, 3);
 		}
 		int scorePlayer = 70;
-		assertEquals(scorePlayer, playerRemote.getScore(playerName));
+		assertEquals(scorePlayer, playerRemote.getTrainingScore(playerName));
 	}
 
 	@Test
@@ -66,22 +66,22 @@ public class TestPlayer {
 
 		playerRemote.newPlayer(playerName);
 		for (int i = 0; i < 5; i++) {
-			playerRemote.rollAlonePlayer(playerName, 3);
-			playerRemote.rollAlonePlayer(playerName, 4);
+			playerRemote.rollTraining(playerName, 3);
+			playerRemote.rollTraining(playerName, 4);
 		}
-		playerRemote.rollAlonePlayer(playerName, 10);
+		playerRemote.rollTraining(playerName, 10);
 		for (int i = 0; i < 4; i++) {
-			playerRemote.rollAlonePlayer(playerName, 6);
-			playerRemote.rollAlonePlayer(playerName, 4);
+			playerRemote.rollTraining(playerName, 6);
+			playerRemote.rollTraining(playerName, 4);
 		}
-		playerRemote.rollAlonePlayer(playerName, 7);
+		playerRemote.rollTraining(playerName, 7);
 
-		int[] rolls = playerRemote.getFrames(playerName);
+		int[] rolls = playerRemote.getTrainingFrames(playerName);
 		int[] expected = { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 10, -1, 6, 4, 6, 4, 6,
 				4, 6, 4, 7 };
 
-		int i = 0, j = 0;
-		for (; j < expected.length; ++i, ++j)
+		int i = 0;
+		for (int j = 0; j < expected.length; ++i, ++j)
 			assertEquals(rolls[i], expected[j]);
 	}
 
@@ -90,15 +90,18 @@ public class TestPlayer {
 
 		playerRemote.newPlayer(playerName);
 		for (int i = 0; i < 10; i++) {
-			playerRemote.rollAlonePlayer(playerName, 3);
-			playerRemote.rollAlonePlayer(playerName, 4);
+			playerRemote.rollTraining(playerName, 3);
+			playerRemote.rollTraining(playerName, 4);
 		}
 
-		int[] rolls = playerRemote.getTotalsScores(playerName);
+		int[] rolls = playerRemote.getDetailedTrainingScore(playerName);
 		int[] expected = { 7, 14, 21, 28, 35, 42, 49, 56, 63, 70 };
 
 		int i = 0, j = 0;
 		for (; j < expected.length; ++i, ++j)
 			assertEquals(rolls[i], expected[j]);
+		
+		playerRemote.newTrainingGame(playerName);
+		assertEquals(0, playerRemote.getTrainingScore(playerName));
 	}
 }

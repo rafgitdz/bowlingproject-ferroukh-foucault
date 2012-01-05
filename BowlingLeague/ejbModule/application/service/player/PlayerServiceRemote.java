@@ -6,7 +6,6 @@ import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
 
-import domain.model.player.Game;
 import domain.model.player.Player;
 import domain.model.player.PlayerStatus;
 
@@ -20,6 +19,9 @@ public interface PlayerServiceRemote {
 
 	@WebMethod
 	public int getScore(String name);
+	
+	@WebMethod
+	public int getTrainingScore(String name);
 
 	@WebMethod
 	public Player newPlayer(String playerName);
@@ -31,18 +33,24 @@ public interface PlayerServiceRemote {
 	public PlayerStatus getPlayerStatus(String playerName);
 
 	@WebMethod
-	public Game rollAlonePlayer(String name, int roll);
+	public void rollTraining(String name, int roll);
 
 	@WebMethod
 	public String getOpponentName(String playerName);
 
 	@WebMethod
-	public int[] getFrames(String playeName);
+	public int[] getFrames(String playerName);
 
 	@WebMethod
-	public int[] getTotalsScores(String playerName);
+	public int[] getDetailedScore(String playerName);
 	
 	@WebMethod
-	public void newGame(String playerName);
+	public int[] getTrainingFrames(String playerName);
+	
+	@WebMethod
+	public int[] getDetailedTrainingScore(String playerName);
+	
+	@WebMethod
+	public void newTrainingGame(String playerName);
 
 }

@@ -9,18 +9,17 @@ public class PlayerFactoryForTest implements PlayerFactoryLocal {
 	public Player newPlayer(String name) {
 
 		Player player = new Player(name);
-		player = newGame(player);
+		newGame(player);
 		player.duelService = new DuelServiceForTest();
 		
 		return player;
 	}
 
 	@Override
-	public Player newGame(Player player) {
+	public void newGame(Player player) {
 		Game game = createGame();
 		player.currentGame = game;
 		game.addObserver(player);
-		return player;
 	}
 	
 	private Game createGame() {
@@ -39,5 +38,17 @@ public class PlayerFactoryForTest implements PlayerFactoryLocal {
 		player.currentGame.addObserver(player);
 
 		return player;
+	}
+
+	@Override
+	public Player rebuildPlayerForTraining(Player player) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void newTrainingGame(Player player) {
+		// TODO Auto-generated method stub
+		
 	}
 }

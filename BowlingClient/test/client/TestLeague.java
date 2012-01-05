@@ -104,17 +104,6 @@ public class TestLeague {
 	@Test
 	public void testPlayEntireLeague() {
 
-		String[] team1Players = { "Thomas", "Mikel", "Robin", "Jack", "Andrei" };
-		String[] team2Players = { "Kevin", "Salvatore", "Mamadou", "Javier",
-				"Clement" };
-		String[] team3Players = { "Andres", "Lionel", "David", "Carles",
-				"Gerard" };
-		String[] team4Players = { "Iker", "Sergio", "Cristiano", "Mesut",
-				"Karim" };
-
-		String[] teamNames = { "Gunners", "PSG", "Blaugrana", "Merengues" };
-		String leagueName = "International";
-
 		for (int i = 0; i < teamNames.length; i++) {
 			teamRemote.newTeam(teamNames[i], leagueName);
 		}
@@ -144,16 +133,6 @@ public class TestLeague {
 	}
 
 	private void playLeague() {
-
-		String[] team1Players = { "Thomas", "Mikel", "Robin", "Jack", "Andrei" };
-		String[] team2Players = { "Kevin", "Salvatore", "Mamadou", "Javier",
-				"Clement" };
-		String[] team3Players = { "Andres", "Lionel", "David", "Carles",
-				"Gerard" };
-		String[] team4Players = { "Iker", "Sergio", "Cristiano", "Mesut",
-				"Karim" };
-
-		String leagueName = "International";
 
 		while (leagueRemote.getLeagueStatus(leagueName) != LeagueStatus.Over) {
 			while (!leagueRemote.isCurrentRoundOver(leagueName)) {
