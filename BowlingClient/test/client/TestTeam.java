@@ -1,5 +1,6 @@
 package client;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -77,7 +78,9 @@ public class TestTeam {
 		teamRemote.newTeam(teamName, leagueName);
 		for (int i = 0; i < playersName.length; i++) {
 			playerRemote.newPlayer(playersName[i]);
+			assertFalse(playerRemote.isInATeam(playersName[i]));
 			teamRemote.addPlayer(teamName, playersName[i]);
+			assertTrue(playerRemote.isInATeam(playersName[i]));
 		}
 
 		for (int i = 0; i < playersName.length; i++) {
@@ -100,5 +103,11 @@ public class TestTeam {
 			assertEquals(playersName[i], gunners[i].getName());
 		}
 
+	}
+	
+	@Test(expected= PlayerException.class)
+	public void testAddUnknownPlayer() {
+		teamRemote.newTeam(teamName, leagueName);
+		teamRemote.addPlayer(teamName, "toto");
 	}
 }

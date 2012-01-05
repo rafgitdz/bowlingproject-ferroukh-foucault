@@ -215,7 +215,7 @@ public class PlayerService implements PlayerServiceRemote {
 		repositoryPlayer.update(player);
 	}
 
-	private Player loadPlayer(String name) {
+	public Player loadPlayer(String name) {
 
 		Player player = repositoryPlayer.load(name);
 		if (player == null)
@@ -284,6 +284,12 @@ public class PlayerService implements PlayerServiceRemote {
 		playerFactory.rebuildPlayerForTraining(player);
 		
 		return player.getTrainingGame().isOver();
+	}
+
+	@Override
+	public boolean isInATeam(String playerName) {
+		Player player = loadPlayer(playerName);
+		return player.getTeam() != null;
 	}
 
 

@@ -1,7 +1,9 @@
 package client;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
+import org.hibernate.validator.AssertFalse;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

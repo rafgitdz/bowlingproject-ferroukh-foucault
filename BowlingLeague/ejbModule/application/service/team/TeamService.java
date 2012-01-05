@@ -6,9 +6,9 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.jws.WebService;
 
+import application.service.player.PlayerServiceRemote;
 import domain.model.exception.TeamException;
 import domain.model.player.Player;
-import domain.model.player.RepositoryPlayer;
 import domain.model.team.RepositoryTeam;
 import domain.model.team.Team;
 import domain.model.team.TeamFactoryLocal;
@@ -30,8 +30,9 @@ public class TeamService implements TeamServiceRemote {
 	private TeamFactoryLocal teamFactory;
 	@EJB
 	private LeagueFactoryLocal leagueFactory;
+	
 	@EJB
-	private RepositoryPlayer repositoryPlayer;
+	private PlayerServiceRemote playerService;
 
 	@Override
 	public Team newTeam(String teamName, String leagueName) {
@@ -82,7 +83,7 @@ public class TeamService implements TeamServiceRemote {
 		Team t = loadTeam(teamName);
 		t = teamFactory.rebuildTeam(t);
 		
-		Player p = repositoryPlayer.load(playerName);
+		Player p = playerService.loadPlayer(playerName);
 		t.addPlayer(p);
 		repositoryTeam.update(t);
 	}
