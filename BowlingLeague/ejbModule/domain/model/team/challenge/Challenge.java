@@ -43,13 +43,20 @@ public class Challenge implements Serializable {
 	@JoinColumn(name = "winner")
 	Team winner;
 
+	int scoreTeam1;
+	int scoreTeam2;
+
 	Challenge() {
+		scoreTeam1 = -1;
+		scoreTeam2 = -2;
 	}
 
 	Challenge(Team firstT, Team secondT) {
 
 		firstTeam = firstT;
 		secondTeam = secondT;
+		scoreTeam1 = -1;
+		scoreTeam2 = -2;
 	}
 
 	public Team getWinner() {
@@ -59,10 +66,12 @@ public class Challenge implements Serializable {
 	}
 
 	public void setWinner() {
+
 		if (!isOver())
 			throw new ChallengeException(CHALLENGE_NOT_OVER);
-		winner = getScoreFirstTeam() > getScoreSecondTeam() ? firstTeam
-				: secondTeam;
+		scoreTeam1 = getScoreFirstTeam();
+		scoreTeam2 = getScoreSecondTeam();
+		winner = scoreTeam1 > scoreTeam2 ? firstTeam : secondTeam;
 	}
 
 	public Team getFirstTeam() {
@@ -121,5 +130,13 @@ public class Challenge implements Serializable {
 					return false;
 		}
 		return true;
+	}
+
+	public int getScoreTeam1() {
+		return scoreTeam1;
+	}
+
+	public int getScoreTeam2() {
+		return scoreTeam2;
 	}
 }

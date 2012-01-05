@@ -37,5 +37,19 @@ public interface LeagueServiceRemote {
 	
 	@WebMethod
 	public int getScore(String teamName);
-
+	
+	@WebMethod
+	public String[] getLeagues();
+	
+	@WebMethod
+	public String[] getTeamsLeftSideSchedule(String leagueName, int round);
+	
+	@WebMethod
+	public String[] getTeamsRightSideSchedule(String leagueName, int round);
+	
+	@WebMethod
+	public String getScoreChallenge(String leagueName, int round, String team1, String team2);
+	
+	@WebMethod
+	public int getNumberRounds(String leagueName);
 }

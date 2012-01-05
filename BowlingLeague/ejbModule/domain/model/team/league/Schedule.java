@@ -99,4 +99,8 @@ public class Schedule implements Serializable {
 		challengesPerRound = 0;
 		scheduleRounds = new ArrayList<LeagueRound>();
 	}
+	
+	public int getNumberRounds() {
+		return rounds;
+	}
 }

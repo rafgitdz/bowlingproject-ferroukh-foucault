@@ -17,7 +17,6 @@ import domain.model.exception.LeagueException;
 import domain.model.exception.PlayerException;
 import domain.model.exception.TeamException;
 import domain.model.player.PlayerStatus;
-import domain.model.team.Team;
 import domain.model.team.league.LeagueStatus;
 
 public class TestLeague {
@@ -92,7 +91,6 @@ public class TestLeague {
 		for (int i = 0; i < teamNames.length; i++)
 			assertEquals(leagueRemote.getTeams(leagueName)[i].getName(),
 					teamNames[i]);
-
 	}
 
 	@Test(expected = LeagueException.class)
@@ -105,6 +103,18 @@ public class TestLeague {
 
 	@Test
 	public void testPlayEntireLeague() {
+
+		String[] team1Players = { "Thomas", "Mikel", "Robin", "Jack", "Andrei" };
+		String[] team2Players = { "Kevin", "Salvatore", "Mamadou", "Javier",
+				"Clement" };
+		String[] team3Players = { "Andres", "Lionel", "David", "Carles",
+				"Gerard" };
+		String[] team4Players = { "Iker", "Sergio", "Cristiano", "Mesut",
+				"Karim" };
+
+		String[] teamNames = { "Gunners", "PSG", "Blaugrana", "Merengues" };
+		String leagueName = "International";
+
 		for (int i = 0; i < teamNames.length; i++) {
 			teamRemote.newTeam(teamNames[i], leagueName);
 		}
@@ -121,16 +131,29 @@ public class TestLeague {
 
 		leagueRemote.startLeague(leagueName);
 		playLeague();
-		
-		Team[] ranking = leagueRemote.getRanking(leagueName);
-		assertEquals(teamNames[3], ranking[0].getName());
-		assertEquals(teamNames[2], ranking[1].getName());
-		assertEquals(teamNames[1], ranking[2].getName());
-		assertEquals(teamNames[0], ranking[3].getName());
-		
+
+		String[] ranking = leagueRemote.getRanking(leagueName);
+		assertEquals(teamNames[3], ranking[0]);
+		assertEquals(teamNames[2], ranking[1]);
+		assertEquals(teamNames[1], ranking[2]);
+		assertEquals(teamNames[0], ranking[3]);
+
+		for (int i = 0; i < teamNames.length; i++)
+			assertEquals(i, leagueRemote.getScore(teamNames[i]));
+
 	}
 
 	private void playLeague() {
+
+		String[] team1Players = { "Thomas", "Mikel", "Robin", "Jack", "Andrei" };
+		String[] team2Players = { "Kevin", "Salvatore", "Mamadou", "Javier",
+				"Clement" };
+		String[] team3Players = { "Andres", "Lionel", "David", "Carles",
+				"Gerard" };
+		String[] team4Players = { "Iker", "Sergio", "Cristiano", "Mesut",
+				"Karim" };
+
+		String leagueName = "International";
 
 		while (leagueRemote.getLeagueStatus(leagueName) != LeagueStatus.Over) {
 			while (!leagueRemote.isCurrentRoundOver(leagueName)) {
