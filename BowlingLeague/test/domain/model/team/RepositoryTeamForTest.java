@@ -50,8 +50,7 @@ public class RepositoryTeamForTest implements RepositoryTeam {
 
 	@Override
 	public List<Player> getPlayers(String teamName) {
-		// TODO Auto-generated method stub
-		return null;
+		return teams.get(teamName).getPlayers();
 	}
 
 }

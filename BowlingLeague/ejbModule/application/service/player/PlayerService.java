@@ -121,47 +121,8 @@ public class PlayerService implements PlayerServiceRemote {
 	public int[] getFrames(String playerName) {
 
 		Player player = loadPlayer(playerName);
-		int[] rolls = new int[MAX_ROLLS_SIZE];
-		Frame[] frames = player.getGame().getFrames();
-		int j = 0;
-		for (int i = 0; i < frames.length; ++i) {
-
-			if (frames[i] instanceof LastFrame) {
-
-				if (frames[i].isRoll1Played()) {
-					rolls[j] = frames[i].getRoll1();
-					++j;
-				}
-				if (frames[i].isRoll2Played()) {
-					rolls[j] = frames[i].getRoll2();
-					++j;
-				}
-				if (frames[i].isRoll3Played()) {
-					rolls[j] = frames[i].getRoll3();
-					++j;
-				}
-
-			} else if (frames[i].isStrike()) {
-
-				rolls[j] = TEN;
-				++j;
-				rolls[j] = -1;
-				++j;
-
-			} else {
-
-				if (frames[i].isRoll1Played()) {
-					rolls[j] = frames[i].getRoll1();
-					++j;
-				}
-				if (frames[i].isRoll2Played()) {
-					rolls[j] = frames[i].getRoll2();
-					++j;
-				}
-			}
-		}
-
-		return rolls;
+		
+		return getRolls(player.getGame().getFrames());
 	}
 
 	@Override
@@ -227,9 +188,35 @@ public class PlayerService implements PlayerServiceRemote {
 	public int[] getTrainingFrames(String playerName) {
 		Player player = loadPlayer(playerName);
 		playerFactory.rebuildPlayerForTraining(player);
+
+		return getRolls(player.getTrainingGame().getFrames());
+	}
+
+	@Override
+	public boolean isGameOver(String playerName) {
+		Player player = loadPlayer(playerName);
+		
+		return player.getGame().isOver();
+	}
+
+	@Override
+	public boolean isTrainingGameOver(String playerName) {
+		Player player = loadPlayer(playerName);
+		playerFactory.rebuildPlayerForTraining(player);
+		
+		return player.getTrainingGame().isOver();
+	}
+
+	@Override
+	public boolean isInATeam(String playerName) {
+		Player player = loadPlayer(playerName);
+		return player.getTeam() != null;
+	}
+
+	
+	private int[] getRolls(Frame frames[]) {
 		
 		int[] rolls = new int[MAX_ROLLS_SIZE];
-		Frame[] frames = player.getTrainingGame().getFrames();
 		int j = 0;
 		for (int i = 0; i < frames.length; ++i) {
 
@@ -267,31 +254,8 @@ public class PlayerService implements PlayerServiceRemote {
 				}
 			}
 		}
-
 		return rolls;
 	}
-
-	@Override
-	public boolean isGameOver(String playerName) {
-		Player player = loadPlayer(playerName);
-		
-		return player.getGame().isOver();
-	}
-
-	@Override
-	public boolean isTrainingGameOver(String playerName) {
-		Player player = loadPlayer(playerName);
-		playerFactory.rebuildPlayerForTraining(player);
-		
-		return player.getTrainingGame().isOver();
-	}
-
-	@Override
-	public boolean isInATeam(String playerName) {
-		Player player = loadPlayer(playerName);
-		return player.getTeam() != null;
-	}
-
 
 
 

@@ -42,13 +42,11 @@ public class PlayerFactoryForTest implements PlayerFactoryLocal {
 
 	@Override
 	public Player rebuildPlayerForTraining(Player player) {
-		// TODO Auto-generated method stub
-		return null;
+		return player;
 	}
 
 	@Override
 	public void newTrainingGame(Player player) {
-		// TODO Auto-generated method stub
 		
 	}
 }

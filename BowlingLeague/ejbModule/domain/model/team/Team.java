@@ -24,7 +24,7 @@ public class Team implements Serializable {
 	public static final int TEAM_SIZE = 5;
 	public static final String FULL_TEAM_ERROR = "The team is full !";
 	public static final String UNKNOWN_TEAM = "Unknown team !";
-	public static final String PLAYER_NOT_IN_THIS_TEAM = "The player {0} is not in this team";
+	public static final String PLAYER_NOT_IN_THIS_TEAM = "The player is not in this team";
 
 	@Id
 	private String teamName;
