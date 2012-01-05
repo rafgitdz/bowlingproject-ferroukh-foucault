@@ -28,9 +28,9 @@ public class League implements Serializable {
 
 	private static final String ERROR_TEAM_NUMBER_ODD = "You must have an even number of teams to start a league";
 	private static final String ERROR_TEAM_NUMBER_NULL = "You must have at least two teams to start a league";
-	private static final String ERROR_TEAM_NOT_FULL = "The team {0} is not full, you cannot start the league";
+	private static final String ERROR_TEAM_NOT_FULL = "The team is not full, you cannot start the league";
 	private static final String ERROR_LEAGUE_IN_PROGRESS = "The league is in progress, you cannot remove the team";
-	private static final String ERROR_TEAM_NOT_IN_LEAGUE = "The team {0} doesn't belong to this league";
+	private static final String ERROR_TEAM_NOT_IN_LEAGUE = "The team doesn't belong to this league";
 	private static final String ERROR_LEAGUE_OVER = "The league is over!";
 
 	@Id

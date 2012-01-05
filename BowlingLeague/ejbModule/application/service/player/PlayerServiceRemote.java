@@ -52,5 +52,11 @@ public interface PlayerServiceRemote {
 	
 	@WebMethod
 	public void newTrainingGame(String playerName);
+	
+	@WebMethod
+	public boolean isGameOver(String playerName);
+	
+	@WebMethod
+	public boolean isTrainingGameOver(String playerName);
 
 }

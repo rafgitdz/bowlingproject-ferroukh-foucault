@@ -271,6 +271,21 @@ public class PlayerService implements PlayerServiceRemote {
 		return rolls;
 	}
 
+	@Override
+	public boolean isGameOver(String playerName) {
+		Player player = loadPlayer(playerName);
+		
+		return player.getGame().isOver();
+	}
+
+	@Override
+	public boolean isTrainingGameOver(String playerName) {
+		Player player = loadPlayer(playerName);
+		playerFactory.rebuildPlayerForTraining(player);
+		
+		return player.getTrainingGame().isOver();
+	}
+
 
 
 
