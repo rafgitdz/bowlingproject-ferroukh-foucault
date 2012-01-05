@@ -187,4 +187,9 @@ public class TestLeague {
 			leagueRemote.goNextRound(leagueName);
 		}
 	}
+
+	@Test(expected = LeagueException.class)
+	public void loadUnknownLeague() {
+		leagueRemote.getNumberRounds("Liga");
+	}
 }

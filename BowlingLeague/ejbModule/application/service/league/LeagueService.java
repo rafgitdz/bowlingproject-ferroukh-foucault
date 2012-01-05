@@ -125,15 +125,6 @@ public class LeagueService implements LeagueServiceRemote {
 		return league.getScore(team);
 	}
 
-	private League loadLeague(String leagueName) {
-
-		League league = repositoryLeague.load(leagueName);
-		if (league == null)
-			throw new LeagueException(UNKNOWN_LEAGUE + leagueName);
-
-		return league;
-	}
-
 	@Override
 	public String[] getLeagues() {
 
@@ -180,30 +171,37 @@ public class LeagueService implements LeagueServiceRemote {
 		League league = loadAndControlLeague(leagueName);
 		List<Challenge> challenges = league.getSchedule().getRoundSchedule(
 				round);
-		
+
 		for (Challenge c : challenges) {
 
-			if (c.getFirstTeam().equals(team1)
-					&& c.getSecondTeam().equals(team2))
+			if (c.getFirstTeam().getName().equals(team1)
+					&& c.getSecondTeam().getName().equals(team2))
 
 				return c.getScoreTeam1() + " - " + c.getScoreTeam2();
 		}
-		throw new LeagueException(ROUND_DONT_EXIST + team1 + "AND" + team2);
+		throw new LeagueException(ROUND_DONT_EXIST + team1 + " and " + team2);
 	}
 
 	@Override
 	public int getNumberRounds(String leagueName) {
-		
+
 		League league = loadAndControlLeague(leagueName);
 		return league.getSchedule().getNumberRounds();
 	}
-	
-	private League loadAndControlLeague(String leagueName) {
-		
-		League league = loadLeague(leagueName);
-		leagueFactory.rebuildLeague(league);
+
+	private League loadLeague(String leagueName) {
+
+		League league = repositoryLeague.load(leagueName);
 		if (league == null)
 			throw new LeagueException(UNKNOWN_LEAGUE + leagueName);
+
+		return league;
+	}
+
+	private League loadAndControlLeague(String leagueName) {
+
+		League league = loadLeague(leagueName);
+		leagueFactory.rebuildLeague(league);
 		return league;
 	}
 }
