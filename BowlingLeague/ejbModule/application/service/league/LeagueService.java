@@ -64,11 +64,16 @@ public class LeagueService implements LeagueServiceRemote {
 	}
 
 	@Override
-	public Team[] getTeams(String leagueName) {
+	public String[] getTeams(String leagueName) {
 
 		League league = loadLeague(leagueName);
-		return (Team[]) league.getTeams().toArray(
-				new Team[league.getTeams().size()]);
+		List<Team> teamsList = league.getTeams();
+		String[] teams = new String[teamsList.size()];
+
+		for (int i = 0; i < teams.length; i++)
+			teams[i] = teamsList.get(i).getName();
+
+		return teams;
 	}
 
 	@Override

@@ -89,7 +89,7 @@ public class TestLeague {
 			teamRemote.newTeam(teamNames[i], leagueName);
 		}
 		for (int i = 0; i < teamNames.length; i++)
-			assertEquals(leagueRemote.getTeams(leagueName)[i].getName(),
+			assertEquals(leagueRemote.getTeams(leagueName)[i],
 					teamNames[i]);
 	}
 

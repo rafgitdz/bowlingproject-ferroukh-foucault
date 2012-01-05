@@ -6,7 +6,6 @@ import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
 
-import domain.model.team.Team;
 import domain.model.team.league.LeagueStatus;
 
 @WebService(name = "leagueService")
@@ -21,7 +20,7 @@ public interface LeagueServiceRemote {
 	public void startLeague(String leagueName);
 
 	@WebMethod
-	public Team[] getTeams(String leagueName);
+	public String[] getTeams(String leagueName);
 
 	@WebMethod
 	public LeagueStatus getLeagueStatus(String leagueName);
