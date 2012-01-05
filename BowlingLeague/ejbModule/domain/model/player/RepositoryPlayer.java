@@ -7,6 +7,6 @@ import domain.model.RepositoryGeneric;
 @Remote
 public interface RepositoryPlayer extends RepositoryGeneric<Player, String> {
 
-	void loadTrainingGame(Player player);
+	Game loadTrainingGame(String playerName);
 
 }

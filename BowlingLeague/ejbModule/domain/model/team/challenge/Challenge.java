@@ -2,7 +2,6 @@ package domain.model.team.challenge;
 
 import java.io.Serializable;
 
-import javax.ejb.EJB;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,7 +23,6 @@ public class Challenge implements Serializable {
 	private static final String CHALLENGE_NOT_OVER = "The challenge is not over !";
 	public static final String UNKNWON_CHALLENGE = "Unknown challenge !";
 
-	@EJB
 	@Transient
 	DuelServiceLocal duelService;
 
@@ -48,7 +46,7 @@ public class Challenge implements Serializable {
 
 	Challenge() {
 		scoreTeam1 = -1;
-		scoreTeam2 = -2;
+		scoreTeam2 = -1;
 	}
 
 	Challenge(Team firstT, Team secondT) {
@@ -56,7 +54,7 @@ public class Challenge implements Serializable {
 		firstTeam = firstT;
 		secondTeam = secondT;
 		scoreTeam1 = -1;
-		scoreTeam2 = -2;
+		scoreTeam2 = -1;
 	}
 
 	public Team getWinner() {

@@ -139,7 +139,7 @@ public class LeagueService implements LeagueServiceRemote {
 	@Override
 	public String[] getTeamsLeftSideSchedule(String leagueName, int round) {
 
-		League league = loadAndControlLeague(leagueName);
+		League league = loadLeague(leagueName);
 		List<Challenge> challenges = league.getSchedule().getRoundSchedule(
 				round);
 		String[] teamsLeftSide = new String[challenges.size()];
@@ -153,7 +153,7 @@ public class LeagueService implements LeagueServiceRemote {
 	@Override
 	public String[] getTeamsRightSideSchedule(String leagueName, int round) {
 
-		League league = loadAndControlLeague(leagueName);
+		League league = loadLeague(leagueName);
 		List<Challenge> challenges = league.getSchedule().getRoundSchedule(
 				round);
 		String[] teamsRightSide = new String[challenges.size()];
@@ -168,7 +168,7 @@ public class LeagueService implements LeagueServiceRemote {
 	public String getScoreChallenge(String leagueName, int round, String team1,
 			String team2) {
 
-		League league = loadAndControlLeague(leagueName);
+		League league = loadLeague(leagueName);
 		List<Challenge> challenges = league.getSchedule().getRoundSchedule(
 				round);
 
@@ -185,7 +185,8 @@ public class LeagueService implements LeagueServiceRemote {
 	@Override
 	public int getNumberRounds(String leagueName) {
 
-		League league = loadAndControlLeague(leagueName);
+		League league = loadLeague(leagueName);
+		leagueFactory.rebuildLeague(league);
 		return league.getSchedule().getNumberRounds();
 	}
 
@@ -198,10 +199,4 @@ public class LeagueService implements LeagueServiceRemote {
 		return league;
 	}
 
-	private League loadAndControlLeague(String leagueName) {
-
-		League league = loadLeague(leagueName);
-		leagueFactory.rebuildLeague(league);
-		return league;
-	}
 }

@@ -102,6 +102,7 @@ public class TestPlayer {
 			assertEquals(rolls[i], expected[j]);
 		
 		playerRemote.newTrainingGame(playerName);
-		assertEquals(0, playerRemote.getTrainingScore(playerName));
+		playerRemote.rollTraining(playerName, 4);
+		assertEquals(4, playerRemote.getTrainingScore(playerName));
 	}
 }

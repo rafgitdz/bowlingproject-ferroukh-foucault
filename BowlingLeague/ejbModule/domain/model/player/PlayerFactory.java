@@ -57,7 +57,7 @@ public class PlayerFactory implements PlayerFactoryLocal {
 	@Override
 	public Player rebuildPlayerForTraining(Player player) {
 		
-		repositoryPlayer.loadTrainingGame(player);
+		player.trainingGame = repositoryPlayer.loadTrainingGame(player.getName());
 		return player;
 	}
 

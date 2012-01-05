@@ -29,17 +29,17 @@ public class Player implements Observer, Serializable {
 	@Id
 	private String name;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "Game")
 	Game currentGame;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "Training_Game")
 	Game trainingGame;
 	
 	PlayerStatus status;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@OneToOne(cascade = CascadeType.MERGE)
 	Player opponent;
 
 	@ManyToOne
