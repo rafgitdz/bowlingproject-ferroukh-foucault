@@ -67,7 +67,7 @@ public class TeamService implements TeamServiceRemote {
 		Team team = loadTeam(teamName);
 		team = teamFactory.rebuildTeam(team);
 		
-		return (String[]) team.getPlayersNames().toArray();
+		return (String[]) team.getPlayersNames().toArray(new String[team.getPlayersNames().size()]);
 	}
 
 	@Override

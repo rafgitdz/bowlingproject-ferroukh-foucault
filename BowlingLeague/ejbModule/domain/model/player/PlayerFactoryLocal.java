@@ -9,8 +9,12 @@ public interface PlayerFactoryLocal {
 
 	public Player newPlayer(String name);
 
-	public Player newGame(Player player);
+	public void newGame(Player player);
 	
-	public Player rebuildPlayer(Player playe, DuelServiceLocal duelService);
+	public Player rebuildPlayer(Player player, DuelServiceLocal duelService);
+	
+	public Player rebuildPlayerForTraining(Player player);
+
+	public void newTrainingGame(Player player);
 	
 }

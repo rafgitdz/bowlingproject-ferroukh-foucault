@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.ejb.EJB;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,7 +23,6 @@ public class Player implements Observer, Serializable {
 	private static final long serialVersionUID = 4505445387411090683L;
 	private static final String ERROR_NOT_YOUR_TURN = ", it's not your turn!";
 
-	@EJB
 	@Transient
 	DuelServiceLocal duelService;
 
@@ -35,6 +33,10 @@ public class Player implements Observer, Serializable {
 	@JoinColumn(name = "Game")
 	Game currentGame;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "Training_Game")
+	Game trainingGame;
+	
 	PlayerStatus status;
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
@@ -60,10 +62,18 @@ public class Player implements Observer, Serializable {
 		} else
 			displayError(this.getName() + ERROR_NOT_YOUR_TURN);
 	}
+	
+	public void rollTraining(int pinsDown) {
+		trainingGame.roll(pinsDown);
+	}
 
 	public int getScore() {
 
 		return currentGame.getScore();
+	}
+	
+	public int getTrainingScore() {
+		return trainingGame.getScore();
 	}
 
 	private void displayError(String message) {
@@ -114,5 +124,9 @@ public class Player implements Observer, Serializable {
 
 	public PlayerStatus getStatus() {
 		return status;
+	}
+
+	public Game getTrainingGame() {
+		return trainingGame;
 	}
 }

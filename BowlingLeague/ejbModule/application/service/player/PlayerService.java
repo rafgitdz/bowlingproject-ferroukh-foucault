@@ -54,7 +54,7 @@ public class PlayerService implements PlayerServiceRemote {
 	@Override
 	public void deletePlayer(String playerName) {
 
-		Player player = loadAndControlPlayer(playerName);
+		Player player = loadPlayer(playerName);
 
 		Team team = player.getTeam();
 		if (team != null) {
@@ -75,7 +75,7 @@ public class PlayerService implements PlayerServiceRemote {
 	@Override
 	public void roll(String playerName, int roll) {
 
-		Player player = loadAndControlPlayer(playerName);
+		Player player = loadPlayer(playerName);
 		player = playerFactory.rebuildPlayer(player, duelService);
 		player.roll(roll);
 
@@ -83,25 +83,31 @@ public class PlayerService implements PlayerServiceRemote {
 	}
 
 	@Override
-	public Game rollAlonePlayer(String playerName, int roll) {
+	public void rollTraining(String playerName, int roll) {
 
-		Player p = loadAndControlPlayer(playerName);
-		p.play();
-		p.roll(roll);
-		repositoryPlayer.update(p);
-		return p.getGame();
+		Player player = loadPlayer(playerName);
+		playerFactory.rebuildPlayerForTraining(player);
+		player.rollTraining(roll);
+		repositoryPlayer.update(player);
 	}
 
 	@Override
 	public int getScore(String playerName) {
-		Player player = loadAndControlPlayer(playerName);
+		Player player = loadPlayer(playerName);
 		return player.getScore();
+	}
+	
+	@Override
+	public int getTrainingScore(String name) {
+		Player player = loadPlayer(name);
+		playerFactory.rebuildPlayerForTraining(player);
+		return player.getTrainingScore();
 	}
 
 	@Override
 	public PlayerStatus getPlayerStatus(String playerName) {
 
-		Player player = loadAndControlPlayer(playerName);
+		Player player = loadPlayer(playerName);
 		return player.getStatus();
 	}
 
@@ -114,7 +120,7 @@ public class PlayerService implements PlayerServiceRemote {
 	@Override
 	public int[] getFrames(String playerName) {
 
-		Player player = loadAndControlPlayer(playerName);
+		Player player = loadPlayer(playerName);
 		int[] rolls = new int[MAX_ROLLS_SIZE];
 		Frame[] frames = player.getGame().getFrames();
 		int j = 0;
@@ -159,14 +165,36 @@ public class PlayerService implements PlayerServiceRemote {
 	}
 
 	@Override
-	public int[] getTotalsScores(String namePlayer) {
+	public int[] getDetailedScore(String playerName) {
 
-		Player player = loadAndControlPlayer(namePlayer);
+		Player player = loadPlayer(playerName);
 
 		int[] totalScores = new int[10];
 
-		Frame[] frames = player.getGame().getFrames();
 		Game game = player.getGame();
+		Frame[] frames = game.getFrames();
+		
+
+		for (int i = 0; i < frames.length; ++i) {
+
+			if (frames[i].isPlayed())
+				totalScores[i] = game.getScore(i);
+			else
+				totalScores[i] = -1;
+		}
+		return totalScores;
+	}
+	
+	@Override
+	public int[] getDetailedTrainingScore(String playerName) {
+		Player player = loadPlayer(playerName);
+		playerFactory.rebuildPlayerForTraining(player);
+		
+		int[] totalScores = new int[10];
+
+		Game game = player.getTrainingGame();
+		Frame[] frames = game.getFrames();
+		
 
 		for (int i = 0; i < frames.length; ++i) {
 
@@ -179,10 +207,11 @@ public class PlayerService implements PlayerServiceRemote {
 	}
 
 	@Override
-	public void newGame(String playerName) {
+	public void newTrainingGame(String playerName) {
 		
-		Player player = loadAndControlPlayer(playerName);
-		playerFactory.newGame(player);
+		Player player = loadPlayer(playerName);
+		playerFactory.rebuildPlayerForTraining(player);
+		playerFactory.newTrainingGame(player);
 		repositoryPlayer.update(player);
 	}
 
@@ -194,11 +223,55 @@ public class PlayerService implements PlayerServiceRemote {
 		return player;
 	}
 
-	private Player loadAndControlPlayer(String playerName) {
+	@Override
+	public int[] getTrainingFrames(String playerName) {
+		Player player = loadPlayer(playerName);
+		playerFactory.rebuildPlayerForTraining(player);
+		
+		int[] rolls = new int[MAX_ROLLS_SIZE];
+		Frame[] frames = player.getTrainingGame().getFrames();
+		int j = 0;
+		for (int i = 0; i < frames.length; ++i) {
 
-		Player player = repositoryPlayer.load(playerName);
-		if (player == null)
-			throw new PlayerException(ERROR_UNKNOWN_PLAYER + playerName);
-		return player;
+			if (frames[i] instanceof LastFrame) {
+
+				if (frames[i].isRoll1Played()) {
+					rolls[j] = frames[i].getRoll1();
+					++j;
+				}
+				if (frames[i].isRoll2Played()) {
+					rolls[j] = frames[i].getRoll2();
+					++j;
+				}
+				if (frames[i].isRoll3Played()) {
+					rolls[j] = frames[i].getRoll3();
+					++j;
+				}
+
+			} else if (frames[i].isStrike()) {
+
+				rolls[j] = TEN;
+				++j;
+				rolls[j] = -1;
+				++j;
+
+			} else {
+
+				if (frames[i].isRoll1Played()) {
+					rolls[j] = frames[i].getRoll1();
+					++j;
+				}
+				if (frames[i].isRoll2Played()) {
+					rolls[j] = frames[i].getRoll2();
+					++j;
+				}
+			}
+		}
+
+		return rolls;
 	}
+
+
+
+
 }

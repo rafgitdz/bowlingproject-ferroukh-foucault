@@ -1,5 +1,6 @@
 package domain.model.player;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import domain.service.DuelServiceLocal;
@@ -7,19 +8,22 @@ import domain.service.DuelServiceLocal;
 @Stateless
 public class PlayerFactory implements PlayerFactoryLocal {
 
+	@EJB
+	private RepositoryPlayer repositoryPlayer;
+	
 	@Override
 	public Player newPlayer(String name) {
 
 		Player player = new Player(name);
 		player.currentGame = createGame();
 		player.currentGame.addObserver(player);
+		player.trainingGame = createGame();
 		return player;
 	}
 
 	@Override
-	public Player newGame(Player player) {
+	public void newGame(Player player) {
 		player.currentGame = resetGame(player.currentGame);
-		return player;
 	}
 
 	private Game createGame() {
@@ -48,5 +52,18 @@ public class PlayerFactory implements PlayerFactoryLocal {
 		player.duelService = duelService;
 
 		return player;
+	}
+	
+	@Override
+	public Player rebuildPlayerForTraining(Player player) {
+		
+		repositoryPlayer.loadTrainingGame(player);
+		return player;
+	}
+
+	@Override
+	public void newTrainingGame(Player player) {
+		resetGame(player.trainingGame);
+		
 	}
 }
