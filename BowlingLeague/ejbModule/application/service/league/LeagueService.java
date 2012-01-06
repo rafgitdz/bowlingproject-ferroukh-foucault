@@ -174,6 +174,7 @@ public class LeagueService implements LeagueServiceRemote {
 			String team2) {
 
 		League league = loadLeague(leagueName);
+		league = leagueFactory.rebuildLeague(league);
 		List<Challenge> challenges = league.getSchedule().getRoundSchedule(
 				round);
 

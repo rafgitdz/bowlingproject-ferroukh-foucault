@@ -50,7 +50,6 @@ public class PlayerFactory implements PlayerFactoryLocal {
 
 		player.currentGame.addObserver(player);
 		player.duelService = duelService;
-
 		return player;
 	}
 	

@@ -90,8 +90,7 @@ public class TestLeague {
 			teamRemote.newTeam(teamNames[i], leagueName);
 		}
 		for (int i = 0; i < teamNames.length; i++)
-			assertEquals(leagueRemote.getTeams(leagueName)[i],
-					teamNames[i]);
+			assertEquals(leagueRemote.getTeams(leagueName)[i], teamNames[i]);
 	}
 
 	@Test(expected = LeagueException.class)
@@ -131,9 +130,27 @@ public class TestLeague {
 		for (int i = 0; i < teamNames.length; i++)
 			assertEquals(i, leagueRemote.getScore(teamNames[i]));
 
-		for(int i = 0; i < team1Players.length; i++)
+		for (int i = 0; i < team1Players.length; i++)
 			assertTrue(playerRemote.isGameOver(team1Players[i]));
-		
+
+		String expected = "0 - 5";
+		assertEquals(leagueRemote.getScoreChallenge(leagueName, 1, "t2", "t4"),
+				expected);
+		assertEquals(leagueRemote.getScoreChallenge(leagueName, 2, "t1", "t4"),
+				expected);
+
+		int expectedRoundNumber = 3;
+		assertEquals(leagueRemote.getNumberRounds(leagueName),
+				expectedRoundNumber);
+	}
+
+	@Test
+	public void testExistingLeagues() {
+
+		for (int i = 0; i < teamNames.length; i++)
+			teamRemote.newTeam(teamNames[i], leagueName);
+
+		assertEquals(leagueRemote.getLeagues()[0], leagueName);
 	}
 
 	private void playLeague() {

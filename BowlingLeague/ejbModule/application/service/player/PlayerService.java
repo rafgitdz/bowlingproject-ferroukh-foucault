@@ -86,7 +86,7 @@ public class PlayerService implements PlayerServiceRemote {
 	public void rollTraining(String playerName, int roll) {
 
 		Player player = loadPlayer(playerName);
-		playerFactory.rebuildPlayerForTraining(player);
+		player = playerFactory.rebuildPlayerForTraining(player);
 		player.rollTraining(roll);
 		repositoryPlayer.update(player);
 	}
@@ -96,11 +96,11 @@ public class PlayerService implements PlayerServiceRemote {
 		Player player = loadPlayer(playerName);
 		return player.getScore();
 	}
-	
+
 	@Override
 	public int getTrainingScore(String name) {
 		Player player = loadPlayer(name);
-		playerFactory.rebuildPlayerForTraining(player);
+		player = playerFactory.rebuildPlayerForTraining(player);
 		return player.getTrainingScore();
 	}
 
@@ -121,7 +121,7 @@ public class PlayerService implements PlayerServiceRemote {
 	public int[] getFrames(String playerName) {
 
 		Player player = loadPlayer(playerName);
-		
+
 		return getRolls(player.getGame().getFrames());
 	}
 
@@ -134,7 +134,6 @@ public class PlayerService implements PlayerServiceRemote {
 
 		Game game = player.getGame();
 		Frame[] frames = game.getFrames();
-		
 
 		for (int i = 0; i < frames.length; ++i) {
 
@@ -145,17 +144,17 @@ public class PlayerService implements PlayerServiceRemote {
 		}
 		return totalScores;
 	}
-	
+
 	@Override
 	public int[] getDetailedTrainingScore(String playerName) {
+		
 		Player player = loadPlayer(playerName);
 		playerFactory.rebuildPlayerForTraining(player);
-		
+
 		int[] totalScores = new int[10];
 
 		Game game = player.getTrainingGame();
 		Frame[] frames = game.getFrames();
-		
 
 		for (int i = 0; i < frames.length; ++i) {
 
@@ -169,7 +168,7 @@ public class PlayerService implements PlayerServiceRemote {
 
 	@Override
 	public void newTrainingGame(String playerName) {
-		
+
 		Player player = loadPlayer(playerName);
 		playerFactory.rebuildPlayerForTraining(player);
 		playerFactory.newTrainingGame(player);
@@ -186,24 +185,24 @@ public class PlayerService implements PlayerServiceRemote {
 
 	@Override
 	public int[] getTrainingFrames(String playerName) {
+
 		Player player = loadPlayer(playerName);
 		playerFactory.rebuildPlayerForTraining(player);
-
 		return getRolls(player.getTrainingGame().getFrames());
 	}
 
 	@Override
 	public boolean isGameOver(String playerName) {
 		Player player = loadPlayer(playerName);
-		
+
 		return player.getGame().isOver();
 	}
 
 	@Override
 	public boolean isTrainingGameOver(String playerName) {
+
 		Player player = loadPlayer(playerName);
 		playerFactory.rebuildPlayerForTraining(player);
-		
 		return player.getTrainingGame().isOver();
 	}
 
@@ -213,9 +212,8 @@ public class PlayerService implements PlayerServiceRemote {
 		return player.getTeam() != null;
 	}
 
-	
 	private int[] getRolls(Frame frames[]) {
-		
+
 		int[] rolls = new int[MAX_ROLLS_SIZE];
 		int j = 0;
 		for (int i = 0; i < frames.length; ++i) {
@@ -256,7 +254,4 @@ public class PlayerService implements PlayerServiceRemote {
 		}
 		return rolls;
 	}
-
-
-
 }
